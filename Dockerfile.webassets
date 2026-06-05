@@ -1,0 +1,12 @@
+FROM ghcr.io/cirruslabs/flutter:stable AS build
+WORKDIR /app
+ARG API_BASE_URL=
+
+COPY pubspec.* ./
+RUN flutter pub get
+
+COPY . .
+RUN flutter config --enable-web && flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL}
+
+FROM alpine:3.20 AS web
+COPY --from=build /app/build/web /web

@@ -1,0 +1,11 @@
+astreya.space, www.astreya.space {
+    encode gzip
+
+    handle_path /api/* {
+        reverse_proxy localhost:8082
+    }
+
+    handle {
+        reverse_proxy 127.0.0.1:8080
+    }
+}

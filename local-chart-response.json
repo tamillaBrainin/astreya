@@ -1,0 +1,294 @@
+{
+    "planets":  [
+                    {
+                        "name":  "Sun",
+                        "sign":  "Capricorn",
+                        "degrees":  24.2,
+                        "longitude":  294.2,
+                        "house":  6,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Moon",
+                        "sign":  "Virgo",
+                        "degrees":  6.59,
+                        "longitude":  156.59,
+                        "house":  2,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Mercury",
+                        "sign":  "Capricorn",
+                        "degrees":  12.16,
+                        "longitude":  282.16,
+                        "house":  6,
+                        "retrograde":  true
+                    },
+                    {
+                        "name":  "Venus",
+                        "sign":  "Aquarius",
+                        "degrees":  1.33,
+                        "longitude":  301.33,
+                        "house":  7,
+                        "retrograde":  true
+                    },
+                    {
+                        "name":  "Mars",
+                        "sign":  "Sagittarius",
+                        "degrees":  19.43,
+                        "longitude":  259.43,
+                        "house":  5,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Jupiter",
+                        "sign":  "Cancer",
+                        "degrees":  3.6,
+                        "longitude":  93.6,
+                        "house":  12,
+                        "retrograde":  true
+                    },
+                    {
+                        "name":  "Saturn",
+                        "sign":  "Capricorn",
+                        "degrees":  17.35,
+                        "longitude":  287.35,
+                        "house":  6,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Uranus",
+                        "sign":  "Capricorn",
+                        "degrees":  6.7,
+                        "longitude":  276.7,
+                        "house":  6,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Neptune",
+                        "sign":  "Capricorn",
+                        "degrees":  12.67,
+                        "longitude":  282.67,
+                        "house":  6,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Pluto",
+                        "sign":  "Scorpio",
+                        "degrees":  17.55,
+                        "longitude":  227.55,
+                        "house":  4,
+                        "retrograde":  false
+                    },
+                    {
+                        "name":  "Ascendant",
+                        "sign":  "Cancer",
+                        "degrees":  28.73,
+                        "longitude":  118.73,
+                        "house":  1,
+                        "retrograde":  false
+                    }
+                ],
+    "houses":  [
+                   {
+                       "number":  1,
+                       "sign":  "Cancer",
+                       "cusp":  118.73
+                   },
+                   {
+                       "number":  2,
+                       "sign":  "Leo",
+                       "cusp":  148.73
+                   },
+                   {
+                       "number":  3,
+                       "sign":  "Virgo",
+                       "cusp":  178.73
+                   },
+                   {
+                       "number":  4,
+                       "sign":  "Libra",
+                       "cusp":  208.73
+                   },
+                   {
+                       "number":  5,
+                       "sign":  "Scorpio",
+                       "cusp":  238.73
+                   },
+                   {
+                       "number":  6,
+                       "sign":  "Sagittarius",
+                       "cusp":  268.73
+                   },
+                   {
+                       "number":  7,
+                       "sign":  "Capricorn",
+                       "cusp":  298.73
+                   },
+                   {
+                       "number":  8,
+                       "sign":  "Aquarius",
+                       "cusp":  328.73
+                   },
+                   {
+                       "number":  9,
+                       "sign":  "Pisces",
+                       "cusp":  358.73
+                   },
+                   {
+                       "number":  10,
+                       "sign":  "Aries",
+                       "cusp":  28.73
+                   },
+                   {
+                       "number":  11,
+                       "sign":  "Taurus",
+                       "cusp":  58.73
+                   },
+                   {
+                       "number":  12,
+                       "sign":  "Gemini",
+                       "cusp":  88.73
+                   }
+               ],
+    "ascendant":  118.73,
+    "ascendantSign":  "Cancer",
+    "mc":  18.81,
+    "mcSign":  "Aries",
+    "parsFortuna":  {
+                        "longitude":  341.11,
+                        "sign":  "Pisces",
+                        "house":  8
+                    },
+    "patterns":  [
+                     "Stellium: Sun, Venus, Saturn",
+                     "Stellium: Mercury, Saturn, Uranus, Neptune",
+                     "Yod: Moon â?¹ Jupiter â?? apex Venus"
+                 ],
+    "aspects":  [
+                    {
+                        "planet1":  "Moon",
+                        "planet2":  "Uranus",
+                        "aspect":  "Trine",
+                        "orb":  0.11
+                    },
+                    {
+                        "planet1":  "Saturn",
+                        "planet2":  "Pluto",
+                        "aspect":  "Sextile",
+                        "orb":  0.2
+                    },
+                    {
+                        "planet1":  "Mercury",
+                        "planet2":  "Neptune",
+                        "aspect":  "Conjunction",
+                        "orb":  0.51
+                    },
+                    {
+                        "planet1":  "Venus",
+                        "planet2":  "Jupiter",
+                        "aspect":  "Quincunx",
+                        "orb":  2.27
+                    },
+                    {
+                        "planet1":  "Venus",
+                        "planet2":  "Ascendant",
+                        "aspect":  "Opposition",
+                        "orb":  2.6
+                    },
+                    {
+                        "planet1":  "Moon",
+                        "planet2":  "Jupiter",
+                        "aspect":  "Sextile",
+                        "orb":  2.99
+                    },
+                    {
+                        "planet1":  "Jupiter",
+                        "planet2":  "Uranus",
+                        "aspect":  "Opposition",
+                        "orb":  3.1
+                    },
+                    {
+                        "planet1":  "Sun",
+                        "planet2":  "Ascendant",
+                        "aspect":  "Opposition",
+                        "orb":  4.53
+                    },
+                    {
+                        "planet1":  "Saturn",
+                        "planet2":  "Neptune",
+                        "aspect":  "Conjunction",
+                        "orb":  4.68
+                    },
+                    {
+                        "planet1":  "Neptune",
+                        "planet2":  "Pluto",
+                        "aspect":  "Sextile",
+                        "orb":  4.88
+                    },
+                    {
+                        "planet1":  "Mercury",
+                        "planet2":  "Saturn",
+                        "aspect":  "Conjunction",
+                        "orb":  5.19
+                    },
+                    {
+                        "planet1":  "Moon",
+                        "planet2":  "Venus",
+                        "aspect":  "Quincunx",
+                        "orb":  5.26
+                    },
+                    {
+                        "planet1":  "Mercury",
+                        "planet2":  "Pluto",
+                        "aspect":  "Sextile",
+                        "orb":  5.39
+                    },
+                    {
+                        "planet1":  "Mercury",
+                        "planet2":  "Uranus",
+                        "aspect":  "Conjunction",
+                        "orb":  5.46
+                    },
+                    {
+                        "planet1":  "Moon",
+                        "planet2":  "Mercury",
+                        "aspect":  "Trine",
+                        "orb":  5.57
+                    },
+                    {
+                        "planet1":  "Uranus",
+                        "planet2":  "Neptune",
+                        "aspect":  "Conjunction",
+                        "orb":  5.97
+                    },
+                    {
+                        "planet1":  "Moon",
+                        "planet2":  "Neptune",
+                        "aspect":  "Trine",
+                        "orb":  6.08
+                    },
+                    {
+                        "planet1":  "Sun",
+                        "planet2":  "Saturn",
+                        "aspect":  "Conjunction",
+                        "orb":  6.85
+                    },
+                    {
+                        "planet1":  "Sun",
+                        "planet2":  "Venus",
+                        "aspect":  "Conjunction",
+                        "orb":  7.13
+                    }
+                ],
+    "interpretation":  "**A Soul of Service and Transformation** â?¨\n\nWith your Cancer Ascendant, you present as nurturing and intuitive, yet your Capricorn stellium (Sun, Mercury, Saturn, Uranus, Neptune) in the 6th house reveals someone deeply committed to practical service and disciplined work. You\u0027re a natural healer or helper, combining emotional sensitivity with remarkable organizational skills. Your Virgo Moon in the 2nd house reinforces this service-oriented nature while emphasizing your need for security through careful resource management.\n\n**The Pragmatic Visionary**\n\nYour retrograde Mercury in Capricorn suggests you process information differentlyâ??thinking deeply before speaking and often revisiting ideas to perfect them. This introspective quality, combined with Mars in Sagittarius in your 5th house, creates an interesting dynamic: you\u0027re both methodical and adventurous, serious yet playful. Your approach to creativity and self-expression is bold and philosophical, providing a beautiful counterbalance to your earth-heavy chart.\n\n**Relationship Patterns and Inner Growth**\n\nRetrograde Venus in Aquarius in your 7th house indicates you may approach relationships unconventionally, sometimes feeling detached from partners or attracting unique individuals who challenge traditional relationship models. Jupiter retrograde in Cancer in your 12th house suggests your greatest growth comes through private spiritual work and connecting with your intuitive giftsâ??you\u0027re meant to trust your inner wisdom.\n\n**Life Themes and Challenges**\n\nPluto in Scorpio in your 4th house points to profound transformation through family dynamics and your relationship with home/roots. Your challenge lies in balancing your strong work ethic with emotional needs, and learning that vulnerability isn\u0027t weakness. Your life purpose centers on being of genuine service while honoring both your practical nature and your deep, transformative emotional depths.",
+    "planetaryInterpretations":  {
+
+                                 },
+    "patternInterpretations":  {
+
+                               },
+    "aspectInterpretations":  {
+
+                              }
+}
