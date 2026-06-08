@@ -159,6 +159,7 @@ class AstroChartPage extends StatefulWidget {
 class _AstroChartPageState extends State<AstroChartPage> {
   int selectedTab = 0;
   ChartResponse? _chart;
+  String? _chartInterpretation;
   bool _birthDataSubmitted = false;
 
   DateTime? _birthDate;
@@ -166,8 +167,16 @@ class _AstroChartPageState extends State<AstroChartPage> {
   String? _birthCity;
   TransitResponse? _transits;
   bool _isLoadingTransits = false;
+  bool _isLoadingInterpretation = false;
   String? _transitsError;
   String _language = 'Eng';
+
+  bool get _isWaitingForGeneral {
+    return _birthDataSubmitted &&
+        _chart != null &&
+        _isLoadingInterpretation &&
+        (_chartInterpretation == null || _chartInterpretation!.trim().isEmpty);
+  }
 
   List<String> get _tabs {
     switch (_language) {
@@ -186,11 +195,50 @@ class _AstroChartPageState extends State<AstroChartPage> {
       _birthTime = time;
       _birthCity = location;
       _chart = null;
+      _chartInterpretation = null;
       _transits = null;
+      _isLoadingInterpretation = false;
       _isLoadingTransits = false;
       _transitsError = null;
     });
     _loadChart(date, time, location);
+  }
+
+  Future<void> _loadInterpretation(
+    DateTime date,
+    TimeOfDay time,
+    String location,
+  ) async {
+    if (mounted) {
+      setState(() {
+        _isLoadingInterpretation = true;
+        _chartInterpretation = null;
+      });
+    }
+    try {
+      final interpretation = await ApiService.getChartInterpretation(
+        year: date.year,
+        month: date.month,
+        day: date.day,
+        hour: time.hour,
+        minute: time.minute,
+        city: location,
+        language: _language,
+      );
+      if (mounted) {
+        setState(() {
+          _chartInterpretation = interpretation;
+          _isLoadingInterpretation = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _chartInterpretation = '';
+          _isLoadingInterpretation = false;
+        });
+      }
+    }
   }
 
   Future<void> _loadTransits() async {
@@ -256,8 +304,10 @@ class _AstroChartPageState extends State<AstroChartPage> {
       if (mounted) {
         setState(() {
           _chart = chart;
+          _chartInterpretation = null;
         });
       }
+      _loadInterpretation(date, time, location);
       _loadTransits();
     } catch (e, stack) {
       // Print error and stack trace for debugging
@@ -300,7 +350,7 @@ class _AstroChartPageState extends State<AstroChartPage> {
                       children: [
                         if (!_birthDataSubmitted)
                           _BirthInputCard(onSubmit: _onBirthSubmit)
-                        else if (_chart == null)
+                        else if (_chart == null || _isWaitingForGeneral)
                           const _ChartLoadingAnimation()
                         else ...[
                           _NatalChartWheel(chart: _chart),
@@ -335,7 +385,9 @@ class _AstroChartPageState extends State<AstroChartPage> {
       selectedTab = 0;
       _language = lang;
       _chart = null;
+      _chartInterpretation = null;
       _transits = null;
+      _isLoadingInterpretation = false;
       _isLoadingTransits = false;
       _transitsError = null;
     });
@@ -394,7 +446,8 @@ class _AstroChartPageState extends State<AstroChartPage> {
     switch (selectedTab) {
       case 0:
         return _GeneralTab(
-          interpretation: _chart?.interpretation,
+          interpretation: _chartInterpretation,
+          isLoading: _isLoadingInterpretation,
           language: _language,
         );
       case 1:

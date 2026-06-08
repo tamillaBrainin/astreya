@@ -277,6 +277,36 @@ class ApiService {
     throw Exception('Failed to load chart: ${response.statusCode}\n${response.body}');
   }
 
+  static Future<String> getChartInterpretation({
+    required int year,
+    required int month,
+    required int day,
+    required int hour,
+    required int minute,
+    required String city,
+    String language = 'Eng',
+  }) async {
+    final uri = Uri.parse('$baseUrl/chart/interpretation').replace(
+      queryParameters: {
+        'year': '$year',
+        'month': '$month',
+        'day': '$day',
+        'hour': '$hour',
+        'minute': '$minute',
+        'city': city,
+        'language': language,
+      },
+    );
+    final response = await _get(uri);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      return data['interpretation'] as String? ?? '';
+    }
+    throw Exception(
+      'Failed to load chart interpretation: ${response.statusCode}\n${response.body}',
+    );
+  }
+
   static Future<DailyEnergyResponse> getDailyEnergy() async {
     final response = await _get(Uri.parse('$baseUrl/daily/energy'));
     if (response.statusCode == 200) {
