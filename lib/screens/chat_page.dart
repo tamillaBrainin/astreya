@@ -10,23 +10,79 @@ class _ChatMessage {
 }
 
 class AstroChatPage extends StatefulWidget {
-  const AstroChatPage({super.key});
+  final String language;
+
+  const AstroChatPage({super.key, this.language = 'Eng'});
 
   @override
   State<AstroChatPage> createState() => _AstroChatPageState();
 }
 
 class _AstroChatPageState extends State<AstroChatPage> {
-  final List<_ChatMessage> _messages = [
-    _ChatMessage(
-      text:
-          'Hi! ✨ I am Astreya. I can help you with transits, compatibility, your natal chart, and your daily forecast.',
-      isBot: true,
-    ),
-  ];
+  static const Map<String, Map<String, String>> _copy = {
+    'Eng': {
+      'greeting': 'Hi! ✨ I am Astreya. I can help you with transits, compatibility, your natal chart, and your daily forecast.',
+      'assistantSubtitle': 'AI astrology assistant',
+      'introTitle': 'What do you want to know?',
+      'introSubtitle': 'Ask about love, money, transits, compatibility, or your natal chart.',
+      'askHint': 'Ask Astreya...',
+      'error': 'Sorry, something went wrong. Please try again.',
+    },
+    'Heb': {
+      'greeting': 'היי! ✨ אני אסטרייה. אני יכולה לעזור עם מעברים, התאמה זוגית, מפת לידה והתחזית היומית שלך.',
+      'assistantSubtitle': 'עוזרת אסטרולוגית מבוססת AI',
+      'introTitle': 'מה תרצו לדעת?',
+      'introSubtitle': 'אפשר לשאול על אהבה, כסף, מעברים, התאמה זוגית או מפת הלידה שלכם.',
+      'askHint': 'שאלו את אסטרייה...',
+      'error': 'מצטערת, משהו השתבש. נסו שוב בבקשה.',
+    },
+    'Rus': {
+      'greeting': 'Привет! ✨ Я Астрея. Помогу с транзитами, совместимостью, натальной картой и прогнозом на день.',
+      'assistantSubtitle': 'AI-астрологический помощник',
+      'introTitle': 'Что хотите узнать?',
+      'introSubtitle': 'Спросите о любви, деньгах, транзитах, совместимости или натальной карте.',
+      'askHint': 'Спросите Астрею...',
+      'error': 'Извините, что-то пошло не так. Попробуйте еще раз.',
+    },
+    'Spa': {
+      'greeting': 'Hola! ✨ Soy Astreya. Puedo ayudarte con transitos, compatibilidad, carta natal y pronostico diario.',
+      'assistantSubtitle': 'asistente astrologica con IA',
+      'introTitle': 'Que quieres saber?',
+      'introSubtitle': 'Pregunta sobre amor, dinero, transitos, compatibilidad o tu carta natal.',
+      'askHint': 'Preguntale a Astreya...',
+      'error': 'Lo siento, algo salio mal. Intentalo de nuevo.',
+    },
+  };
+
+  static const Map<String, List<String>> _quickPromptsByLanguage = {
+    'Eng': ['Love', 'Career', 'Transits', 'Compatibility'],
+    'Heb': ['אהבה', 'קריירה', 'מעברים', 'התאמה זוגית'],
+    'Rus': ['Любовь', 'Карьера', 'Транзиты', 'Совместимость'],
+    'Spa': ['Amor', 'Carrera', 'Transitos', 'Compatibilidad'],
+  };
+
+  late final List<_ChatMessage> _messages;
   bool _isTyping = false;
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
+
+  String get _lang => _copy.containsKey(widget.language) ? widget.language : 'Eng';
+
+  String _t(String key) => _copy[_lang]?[key] ?? _copy['Eng']![key] ?? key;
+
+  List<String> get _quickPrompts =>
+      _quickPromptsByLanguage[_lang] ?? _quickPromptsByLanguage['Eng']!;
+
+  @override
+  void initState() {
+    super.initState();
+    _messages = [
+      _ChatMessage(
+        text: _t('greeting'),
+        isBot: true,
+      ),
+    ];
+  }
 
   @override
   void dispose() {
@@ -45,7 +101,10 @@ class _AstroChatPageState extends State<AstroChatPage> {
     });
     _scrollToBottom();
     try {
-      final reply = await ApiService.sendChatMessage(trimmed);
+      final reply = await ApiService.sendChatMessage(
+        trimmed,
+        language: _lang,
+      );
       if (mounted) {
         setState(() {
           _isTyping = false;
@@ -58,7 +117,7 @@ class _AstroChatPageState extends State<AstroChatPage> {
         setState(() {
           _isTyping = false;
           _messages.add(_ChatMessage(
-            text: 'Sorry, something went wrong. Please try again.',
+            text: _t('error'),
             isBot: true,
           ));
         });
@@ -91,14 +150,17 @@ class _AstroChatPageState extends State<AstroChatPage> {
           SafeArea(
             child: Column(
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
-                  child: _ChatTopBar(),
+                  child: _ChatTopBar(subtitle: _t('assistantSubtitle')),
                 ),
                 const SizedBox(height: 18),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: _ChatIntroCard(),
+                  child: _ChatIntroCard(
+                    title: _t('introTitle'),
+                    subtitle: _t('introSubtitle'),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Expanded(
@@ -112,7 +174,10 @@ class _AstroChatPageState extends State<AstroChatPage> {
                       if (i == 0) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16),
-                          child: _QuickPromptRow(onTap: _send),
+                          child: _QuickPromptRow(
+                            onTap: _send,
+                            prompts: _quickPrompts,
+                          ),
                         );
                       }
                       final msgIndex = i - 1;
@@ -142,6 +207,7 @@ class _AstroChatPageState extends State<AstroChatPage> {
                   child: _ChatInputBar(
                     controller: _controller,
                     onSend: _send,
+                    hintText: _t('askHint'),
                   ),
                 ),
               ],
@@ -154,7 +220,9 @@ class _AstroChatPageState extends State<AstroChatPage> {
 }
 
 class _ChatTopBar extends StatelessWidget {
-  const _ChatTopBar();
+  final String subtitle;
+
+  const _ChatTopBar({required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -196,11 +264,11 @@ class _ChatTopBar extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Astreya',
                 style: TextStyle(
                   color: AstroPalette.darkText,
@@ -210,7 +278,7 @@ class _ChatTopBar extends StatelessWidget {
               ),
               SizedBox(height: 2),
               Text(
-                'AI astrology assistant',
+                subtitle,
                 style: TextStyle(
                   color: AstroPalette.darkSecondary,
                   fontSize: 13,
@@ -252,7 +320,10 @@ class _ChatTopBar extends StatelessWidget {
 }
 
 class _ChatIntroCard extends StatelessWidget {
-  const _ChatIntroCard();
+  final String title;
+  final String subtitle;
+
+  const _ChatIntroCard({required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -286,12 +357,12 @@ class _ChatIntroCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'What do you want to know?',
+                  title,
                   style: TextStyle(
                     color: AstroPalette.darkText,
                     fontSize: 18,
@@ -300,7 +371,7 @@ class _ChatIntroCard extends StatelessWidget {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'Ask about love, money, transits, compatibility, or your natal chart.',
+                  subtitle,
                   style: TextStyle(
                     color: AstroPalette.darkSecondary,
                     fontSize: 14,
@@ -410,11 +481,12 @@ class _UserMessage extends StatelessWidget {
 
 class _QuickPromptRow extends StatelessWidget {
   final void Function(String) onTap;
-  const _QuickPromptRow({required this.onTap});
+  final List<String> prompts;
+
+  const _QuickPromptRow({required this.onTap, required this.prompts});
 
   @override
   Widget build(BuildContext context) {
-    const prompts = ['Love', 'Career', 'Transits', 'Compatibility'];
     return Wrap(
       spacing: 10,
       runSpacing: 10,
@@ -542,8 +614,13 @@ class _TypingIndicatorState extends State<_TypingIndicator>
 class _ChatInputBar extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String) onSend;
+  final String hintText;
 
-  const _ChatInputBar({required this.controller, required this.onSend});
+  const _ChatInputBar({
+    required this.controller,
+    required this.onSend,
+    required this.hintText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -571,16 +648,16 @@ class _ChatInputBar extends StatelessWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Ask Astreya...',
-                    hintStyle: TextStyle(
+                    hintText: hintText,
+                    hintStyle: const TextStyle(
                       color: AstroPalette.darkSecondary,
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),
                     isDense: true,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
                   ),
                   onSubmitted: onSend,
                 ),

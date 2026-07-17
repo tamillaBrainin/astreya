@@ -125,7 +125,7 @@ class _AstroHomePageState extends State<AstroHomePage> {
                     ),
                   )),
                   const SizedBox(height: 22),
-                  const _AskBotCard(),
+                  _AskBotCard(language: _language),
                 ],
               ),
             ),
@@ -384,7 +384,22 @@ class _TransitCard extends StatelessWidget {
 }
 
 class _AskBotCard extends StatelessWidget {
-  const _AskBotCard();
+  final String language;
+
+  const _AskBotCard({required this.language});
+
+  String get _cardText {
+    switch (language) {
+      case 'Heb':
+        return 'שאלו את אסטרייה על אהבה, מעברים, כסף או מצב הרוח של היום.';
+      case 'Rus':
+        return 'Спросите Астрею о любви, транзитах, деньгах или настроении дня.';
+      case 'Spa':
+        return 'Pregunta a Astreya sobre amor, transitos, dinero o el estado del dia.';
+      default:
+        return "Ask Astreya about love, transits, money, or today's mood.";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -416,9 +431,9 @@ class _AskBotCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Text(
-              "Ask Astreya about love, transits, money, or today's mood.",
+              _cardText,
               style: TextStyle(
                 color: AstroPalette.darkText,
                 fontSize: 15,
@@ -431,7 +446,7 @@ class _AskBotCard extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => const AstroChatPage(),
+                builder: (_) => AstroChatPage(language: language),
               ),
             ),
             child: Container(

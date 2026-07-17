@@ -33,6 +33,13 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Node/Playwright generated artifacts
+node_modules/
+playwright-report/
+test-results/
+*.png
+tmp_probe*.txt
+
 # Symbolication related
 app.*.symbols
 

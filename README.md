@@ -101,6 +101,42 @@ Point your domain A record to the Droplet IP, then terminate TLS with Caddy or N
 
 This project is a starting point for a Flutter application.
 
+## Local Backend Note (Claude API Key)
+
+If transit or natal AI interpretation falls back, backend may be running without a Claude API key.
+
+Set key in CMD before backend start:
+
+```cmd
+cd /d c:\dev\astrologyAnalyzer\astrologyAnylizer
+set "CLAUDE_API_KEY=YOUR_REAL_KEY"
+mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8082"
+```
+
+If backend is already running in another CMD window:
+
+```cmd
+:: CMD #1 (where backend is running)
+netstat -ano | findstr :8082
+taskkill /F /PID <PID_FROM_8082>
+
+:: CMD #2 (set key and run backend in the SAME window)
+cd /d c:\dev\astrologyAnalyzer\astrologyAnylizer
+set "CLAUDE_API_KEY=YOUR_REAL_KEY"
+echo %CLAUDE_API_KEY%
+mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8082"
+```
+
+Important: backend must be started in the same CMD window where `set "CLAUDE_API_KEY=..."` was executed.
+
+Persist key for new terminal sessions:
+
+```cmd
+setx CLAUDE_API_KEY "YOUR_REAL_KEY"
+```
+
+For full local verification steps, see [tests.md](tests.md).
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
