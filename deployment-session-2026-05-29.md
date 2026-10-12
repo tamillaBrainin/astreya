@@ -119,6 +119,34 @@ systemctl status caddy
 - `curl -i "https://astreya.space/api/chart?year=1990&month=1&day=1&hour=21&minute=0&city=Tashkent&language=Eng"` should return 200 + JSON.
 - `docker compose -f /root/AstroBot/docker-compose.prod.yml logs -f backend` should show the request reaching the backend with all params.
 
+### Quick restart on the droplet
+
+If both services are running from the current compose file:
+
+```bash
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml restart backend web
+docker ps --filter name=astreya-backend
+docker ps --filter name=astreya-web
+```
+
+If you only changed backend code:
+
+```bash
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml build backend
+docker compose -f docker-compose.prod.yml up -d backend
+docker logs --tail 120 astreya-backend
+```
+
+If the UI is being served from `/srv` through Caddy instead of the `web` container:
+
+```bash
+cp -r /root/AstroBot/build/web/* /srv/
+systemctl restart caddy
+systemctl status caddy
+```
+
 ### Lessons
 - In Caddy v2, directive **order matters only inside `route`**; at the site level Caddy uses its own ordering, which is why static handlers can shadow `/api/*`. Wrapping static serving in `handle` (or `handle_path`) makes routing explicit and predictable.
 - Always proxy to `localhost:<published-port>` when Caddy runs on the host and the upstream runs in Docker with a published port.
@@ -315,3 +343,151 @@ echo
 ### Current remaining product note
 - Hebrew still may feel incomplete compared with English because the AI interpretation returns, but some of the non-General surfaces are still driven by the original `/chart` payload and existing local UI formatting rules.
 - The critical production fix is complete: General is now fetched separately and no longer blocks the whole chart screen.
+
+## Direct Deployment From Windows CMD (2026-07-25)
+
+Use this workflow when deploying local frontend and backend changes directly, without Git.
+
+### 1. Create deployment archives
+
+Run in CMD:
+
+```cmd
+tar -czf C:\dev\AstroBot_upload.tgz --exclude=.git --exclude=build --exclude=node_modules --exclude=.dart_tool -C C:\dev\AstroBot .
+tar -czf C:\dev\astrologyAnylizer_upload.tgz --exclude=.git --exclude=target --exclude=.idea --exclude=.vscode -C C:\dev\astrologyAnalyzer\astrologyAnylizer .
+```
+
+### 2. Upload both archives in one connection
+
+Open a separate Windows CMD window and run:
+
+```cmd
+scp -i "C:\Users\zibit\.ssh\id_ed25519_do" "C:\dev\AstroBot_upload.tgz" "C:\dev\astrologyAnylizer_upload.tgz" root@164.92.192.21:/root/
+```
+
+Enter the SSH key passphrase directly in CMD. Nothing appears while typing. Wait until both transfers reach `100%`.
+
+### 3. Deploy on the droplet
+
+From CMD, connect with:
+
+```cmd
+ssh -i "C:\Users\zibit\.ssh\id_ed25519_do" root@164.92.192.21
+```
+
+Then run on the droplet:
+
+```bash
+set -e
+mkdir -p /root/AstroBot /root/astrologyAnylizer /root/astrologyAnalyzer
+tar -xzf /root/AstroBot_upload.tgz -C /root/AstroBot
+tar -xzf /root/astrologyAnylizer_upload.tgz -C /root/astrologyAnylizer
+ln -sfn /root/astrologyAnylizer /root/astrologyAnalyzer/astrologyAnylizer
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml up -d --build backend web
+caddy validate --config /etc/caddy/Caddyfile
+systemctl reload caddy
+docker compose -f docker-compose.prod.yml ps
+curl -sS --max-time 30 http://127.0.0.1:8082/daily/energy
+curl -I --max-time 30 https://astreya.space/
+```
+
+### Important terminal note
+
+Use a separate external CMD window for SSH/SCP passphrase prompts. Typing the passphrase into a normal PowerShell command prompt causes PowerShell to treat it as a command.
+
+## Deployment Checkpoint (2026-10-11)
+
+### Production access and security
+- Droplet: `164.92.192.21`, hostname `astreya-prod`, user `root`; domain `https://astreya.space`.
+- Deployment is direct archive upload from Windows CMD, not Git.
+- Working SSH identity used during this session: `%USERPROFILE%\.ssh\id_ed25519_do`.
+- A new key setup was attempted but the public/private key material was accidentally pasted into chat. Treat that key as compromised; do not use or reproduce it. Remove its public key from `/root/.ssh/authorized_keys` when safe, and rotate/revoke any compromised credentials. Never put private keys or passphrases in this file or chat.
+- The working old SSH key successfully connected and uploaded files. Its passphrase was also accidentally entered as a PowerShell command and appeared in chat; rotate the key passphrase using `ssh-keygen -p -f "%USERPROFILE%\.ssh\id_ed25519_do"` from local CMD, then verify SSH still works. Do not record the passphrase here.
+- Claude key belongs only in `/root/AstroBot/.env` on the Droplet. It was created with mode `600`; never print or upload it. Docker Compose maps `CLAUDE_API_KEY` from this file.
+
+### Production layout
+- Caddy runs on the host and proxies `/api/*` to `localhost:8082`, and other requests to `127.0.0.1:8080`.
+- `astreya-backend` publishes `8082`; `astreya-web` publishes `127.0.0.1:8080`.
+- The web nginx config proxies `/api/` to Docker service `backend:8082`.
+- Compose file: `C:\dev\AstroBot\docker-compose.prod.yml`; on Droplet: `/root/AstroBot/docker-compose.prod.yml`.
+- Backend source on Droplet: `/root/astrologyAnylizer`; Compose build context expects `/root/astrologyAnalyzer/astrologyAnylizer`, provided by symlink:
+    `ln -sfn /root/astrologyAnylizer /root/astrologyAnalyzer/astrologyAnylizer`
+- A full `docker compose up -d --build backend web` took a very long time on the Droplet; Flutter web compilation was still running after ~17 minutes and the Web Console session ended with exit 255. Avoid building Flutter on the Droplet.
+
+### Known-good direct deployment workflow
+Run from local Windows CMD, not PowerShell and not the Droplet shell:
+
+```cmd
+cd /d C:\dev\AstroBot
+flutter build web --release --pwa-strategy=none --dart-define=API_BASE_URL=/api
+tar -czf C:\dev\AstroBot_web_build.tgz -C C:\dev\AstroBot\build\web .
+scp -i "%USERPROFILE%\.ssh\id_ed25519_do" "C:\dev\AstroBot_web_build.tgz" root@164.92.192.21:/root/
+```
+
+For backend source-only changes, upload individual files or the backend archive using `scp` from local CMD. Connect with `ssh -i "%USERPROFILE%\.ssh\id_ed25519_do" root@164.92.192.21` and run Docker commands only after the prompt is `root@astreya-prod`.
+
+Install the prebuilt Flutter assets and build the small nginx image on the Droplet:
+
+```bash
+rm -rf /root/web-image/html
+mkdir -p /root/web-image/html
+tar -xzf /root/AstroBot_web_build.tgz -C /root/web-image/html
+cp /root/AstroBot/deploy/nginx.conf /root/web-image/nginx.conf
+```
+
+The `/root/web-image/Dockerfile` should be:
+
+```dockerfile
+FROM nginx:1.27-alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY html /usr/share/nginx/html
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+Before building, add a unique cache-busting version to Flutter entrypoints (update the value for every release):
+
+```bash
+STAMP=YYYYMMDD-N
+sed -i "s|flutter_bootstrap.js\"|flutter_bootstrap.js?v=$STAMP\"|" /root/web-image/html/index.html
+sed -i "s|main.dart.js\"|main.dart.js?v=$STAMP\"|g" /root/web-image/html/flutter_bootstrap.js
+docker build -t astreya-web:latest /root/web-image
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml up -d --no-build --force-recreate web
+docker compose -f docker-compose.prod.yml ps
+```
+
+Do not use `docker build ... /root/AstroBot` with `COPY build/web`: `.dockerignore` excludes `build`, causing `CopyIgnoredFile` and missing-context errors. Use the isolated `/root/web-image` context above.
+
+For backend-only changes:
+
+```bash
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml build backend
+docker compose -f docker-compose.prod.yml up -d backend
+docker compose -f docker-compose.prod.yml ps
+```
+
+### Latest production work verified
+- Production frontend build `20261011-2` is live. Browser confirmed the `FR` selector, frontend startup, cache headers `no-cache, no-store, must-revalidate` on `index.html` and `flutter_bootstrap.js`, and cache-busted Flutter entrypoints.
+- Caddy routes production API correctly; `/api/chart` and `/api/daily/energy` returned HTTP 200.
+- Backend natal text validation requires exactly 10 `##` sections, substantial body text for every section, and a completed ending. Natal max-token budgets were increased; Hebrew no longer fails only due to shorter script length.
+- Hebrew natal frontend timeout was increased to 160s with retry disabled. Backend retry logic changed from two serial long Claude calls to one bounded 140s call, then localized fallback. Production API checks after backend update: Hebrew 10 sections in ~99s, Spanish 10 in ~59s, French 10 in ~66s; no English leakage and all endings complete.
+- The previous generation could take ~120-138s because the first 60s call was discarded and started again; latest backend change addresses that.
+- API checks used sample birth data `1979-12-02 02:40`, `Tashkent`.
+
+### Pending local UI release (not yet deployed)
+- In `lib/screens/chart_page.dart`, light birth-form title, description, quick-step badge, and submit label were changed to dark lilac (`AstroPalette.darkText` / `darkSecondary`). White icons remain intentionally white.
+- Remaining light-surface section titles/descriptions and loading labels in `chart_page.dart` were changed from `lightText`/`lightTextSoft` to dark lilac.
+- In `lib/screens/home_page.dart`, selected language label and LIVE badge text were changed to dark lilac.
+- The chart tabs were reordered: General, Today/transits, Planets, Aspects, Key Themes. Localized short tab labels: RU `Сегодня`, HE `היום`, ES `Hoy`, FR `Aujourd’hui`, EN `Today`. The second tab opens `_TransitsTab`; its localized title is “What Today Brings” / equivalent. Min tab width reduced to 96px and inactive tab labels changed from near-white to `darkSecondary`.
+- Local Playwright at 390x844 visually confirmed readable birth-form text. Source checks confirmed all five tab arrays and selected-index mapping. Flutter Chrome debug app launched, but its debug API mock stalled before chart tabs rendered; no app runtime errors were reported. Existing unused-declaration analyzer warnings are unrelated.
+- These latest contrast/tab changes have NOT yet been built or deployed to production. Next: run the local CMD build/archive/scp commands above, then install via `/root/web-image`, use new cache-bust stamp `20261011-3`, recreate only `astreya-web`, and verify production mobile labels/order and text contrast. Do not rebuild the backend for this UI-only release.
+
+### Troubleshooting reminders
+- SSH/SCP passphrase prompts must be answered in a live local CMD prompt. Never send secrets through chat or paste them after the prompt disappeared; PowerShell will interpret the text as a command.
+- `Permission denied (publickey)` was resolved by using the existing working key `id_ed25519_do`, not the unverified attempted new key.
+- If Web Console reports authentication/session failure during long Docker tasks, reconnect over local CMD SSH and inspect `docker compose ps`; do not assume the build finished successfully.
+- If the site returns an old/blank Flutter app after a release, inspect `/index.html` and `/flutter_bootstrap.js`, verify unique query-string cache busting, then use `curl` or Playwright with `cache: 'reload'`.
+- After web release, verify `https://astreya.space/`, `/api/chart?...`, and `/api/chart/interpretation?...`; use `docker compose -f docker-compose.prod.yml ps` for container state.

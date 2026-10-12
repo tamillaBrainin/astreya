@@ -1,0 +1,1246 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "playwright-transits-check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				".\\node_modules\\@playwright\\test\\cli.js",
+				"test",
+				"tests\\transits-check.spec.js",
+				"--config=playwright.config.js"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "playwright-transits-check-2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"./node_modules/@playwright/test/cli.js",
+				"test",
+				"transits-check.spec.js",
+				"--config=playwright.config.js"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "playwright-transits-strict",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"./node_modules/@playwright/test/cli.js",
+				"test",
+				"transits-check.spec.js",
+				"--config=playwright.config.js"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-frontend-8081",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-backend-8082",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8082/daily/energy"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "start-backend-8082",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd /d c:\\dev\\astrologyAnalyzer\\astrologyAnylizer && mvnw.cmd spring-boot:run \"-Dspring-boot.run.arguments=--server.port=8082\""
+			],
+			"isBackground": true
+		},
+		{
+			"label": "health-check-8081-8082",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$ErrorActionPreference='SilentlyContinue'; $f = try { (Invoke-WebRequest -Uri 'http://localhost:8081' -UseBasicParsing -TimeoutSec 5).StatusCode } catch { 'DOWN' }; $b = try { (Invoke-WebRequest -Uri 'http://localhost:8082/transits?year=1979&month=12&day=2&hour=2&minute=40&city=Tashkent' -UseBasicParsing -TimeoutSec 10).StatusCode } catch { 'DOWN' }; Write-Output \"FRONTEND=$f\"; Write-Output \"BACKEND=$b\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-check-frontend-8081",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-check-backend-8082",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" \"http://localhost:8082/transits?year=1979^&month=12^&day=2^&hour=2^&minute=40^&city=Tashkent\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-check-frontend-8081-after-start",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "playwright-transits-strict-check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"./node_modules/@playwright/test/cli.js",
+				"test",
+				"transits-check.spec.js",
+				"--config=playwright.config.js"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-8081-owner",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"netstat -ano | findstr :8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "inspect-pid-8081",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"tasklist /FI \"PID eq 18780\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "inspect-pid-8081-ps",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-Process -Id 18780 | Select-Object Id,ProcessName,Path"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "inspect-dartvm-cmdline",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"(Get-CimInstance Win32_Process -Filter \"ProcessId = 18780\").CommandLine"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "inspect-dartvm-cmdline-wmic",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"wmic process where processid=18780 get name,commandline /value"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "flutter-build-web-check",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-8081-owner-2",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"netstat -ano | findstr :8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-8082-health",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8082/daily/energy"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "kill-8081-pid",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"taskkill /PID 18780 /F"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-python",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"--version"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-8081-before-python",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"netstat -ano | findstr LISTENING | findstr :8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "inspect-pid-16436",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-Process -Id 16436 | Select-Object Id,ProcessName,Path"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "kill-pid-16436",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"taskkill /PID 16436 /F"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-frontend-127",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://127.0.0.1:8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "health-backend-8082",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8082/daily/energy"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "playwright-transits-strict-run",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"./node_modules/@playwright/test/cli.js",
+				"test",
+				"transits-check.spec.js",
+				"--config=playwright.config.js",
+				"--reporter=list"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "transits-ru-natal",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s \"http://localhost:8082/transits?year=1979&month=12&day=2&hour=2&minute=40&city=Tashkent&language=Rus\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "transits-ru-natal-fixed-cmd",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s \"http://localhost:8082/transits?year=1979^&month=12^&day=2^&hour=2^&minute=40^&city=Tashkent^&language=Rus\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "playwright-transits-strict-rerun",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"./node_modules/@playwright/test/cli.js",
+				"test",
+				"transits-check.spec.js",
+				"--config=playwright.config.js",
+				"--reporter=list"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "playwright-transits-strict-final",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"./node_modules/@playwright/test/cli.js",
+				"test",
+				"transits-check.spec.js",
+				"--config=playwright.config.js",
+				"--reporter=list"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-short",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-post-clean",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-stage-and-commit",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"git add -A; git restore --staged .vscode/tasks.json 2>$null; git commit -m \"Add strict transits checks, RU natal verification docs, and test tooling\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-after-fail",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-commit-final",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"commit",
+				"-m",
+				"chore_transits_ru_ui_checks"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-final",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-web-after-aspects-change",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-web-no-pwa",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-web-hebrew-aspects",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-web-hebrew-transits-rtl",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-web-ru-aspects-phrasing",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "preflight-git-state",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-frontend-git",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"c:\\dev\\AstroBot",
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-backend-git",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"c:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "list-dev-root",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"c:\\dev",
+				"/b"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "list-astrologyAnalyzer",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"c:\\dev\\astrologyAnalyzer",
+				"/b"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "list-astrology",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"c:\\dev\\astrology",
+				"/b"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-git-analyzer",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"c:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"rev-parse",
+				"--is-inside-work-tree"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "check-git-astrology",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"c:\\dev\\astrology\\astrology",
+				"rev-parse",
+				"--is-inside-work-tree"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-git-root-check",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer",
+				"rev-parse",
+				"--show-toplevel"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-list",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"C:\\dev\\astrologyAnalyzer",
+				"/b"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-nested-git-check",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"rev-parse",
+				"--show-toplevel"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-show-hidden",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"/a"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-check-existing-git-dir",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"if",
+				"exist",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer\\.git",
+				"(echo EXISTS)",
+				"else",
+				"(echo MISSING)"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-check-dotgit",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer\\.git",
+				"/a"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-git-init",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"init"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-status-before-commit",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-initial-commit",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"git",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"add",
+				".",
+				"&&",
+				"git",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"commit",
+				"-m",
+				"backend_initial_commit"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-git-add",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"add",
+				"."
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-git-status-staged",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-git-commit",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"commit",
+				"-m",
+				"backend_initial_commit"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-status-after-commit",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-remote-check",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"remote",
+				"-v"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-remote-verify",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"remote",
+				"-v"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-branch-verify",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"branch",
+				"-vv"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-upstream-verify",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"rev-parse",
+				"--abbrev-ref",
+				"--symbolic-full-name",
+				"@{u}"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-add-origin",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"remote",
+				"add",
+				"origin",
+				"https://github.com/tamillaBrainin/astreya.git"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-set-main",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"branch",
+				"-M",
+				"main"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-remote-verify-2",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"remote",
+				"-v"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-push-main",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"push",
+				"-u",
+				"origin",
+				"main"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-push-new-branch",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"push",
+				"-u",
+				"origin",
+				"main:backend-initial-import"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-amend-add",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"add",
+				"src/main/java/com/example/astrologyanalyzer/MyTelegramBot.java"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-amend-commit",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"commit",
+				"--amend",
+				"--no-edit"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "backend-push-branch-retry",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"push",
+				"-u",
+				"origin",
+				"main:backend-initial-import"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "verify-deploy-archives",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"C:\\dev\\AstroBot_upload.tgz",
+				"C:\\dev\\astrologyAnylizer_upload.tgz"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "pack-frontend-tgz",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"tar",
+				"-czf",
+				"C:\\dev\\AstroBot_upload.tgz",
+				"--exclude=.git",
+				"--exclude=build",
+				"--exclude=node_modules",
+				"--exclude=.dart_tool",
+				"-C",
+				"C:\\dev\\AstroBot",
+				"."
+			],
+			"isBackground": false
+		},
+		{
+			"label": "pack-backend-tgz",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"tar",
+				"-czf",
+				"C:\\dev\\astrologyAnylizer_upload.tgz",
+				"--exclude=.git",
+				"--exclude=target",
+				"--exclude=.idea",
+				"--exclude=.vscode",
+				"-C",
+				"C:\\dev\\astrologyAnalyzer\\astrologyAnylizer",
+				"."
+			],
+			"isBackground": false
+		},
+		{
+			"label": "verify-tgz-created",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"dir",
+				"C:\\dev\\*upload.tgz"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "verify-archives-on-droplet",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"ls -lh /root/*upload.tgz"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "upload-frontend-archive",
+			"type": "shell",
+			"command": "scp",
+			"args": [
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"C:\\dev\\AstroBot_upload.tgz",
+				"root@164.92.192.21:/root/AstroBot_upload.tgz"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "upload-backend-archive",
+			"type": "shell",
+			"command": "scp",
+			"args": [
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"C:\\dev\\astrologyAnylizer_upload.tgz",
+				"root@164.92.192.21:/root/astrologyAnylizer_upload.tgz"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "verify-uploaded-archives",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"ls -lh /root/AstroBot_upload.tgz /root/astrologyAnylizer_upload.tgz"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "deploy-on-droplet",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"bash -lc \"set -e; mkdir -p /root/AstroBot /root/astrologyAnylizer /root/astrologyAnalyzer; tar -xzf /root/AstroBot_upload.tgz -C /root/AstroBot; tar -xzf /root/astrologyAnylizer_upload.tgz -C /root/astrologyAnylizer; ln -sfn /root/astrologyAnylizer /root/astrologyAnalyzer/astrologyAnylizer; cd /root/AstroBot; docker compose -f docker-compose.prod.yml up -d --build backend web; caddy validate --config /etc/caddy/Caddyfile; systemctl reload caddy; echo ==== CONTAINERS ====; docker compose -f docker-compose.prod.yml ps; echo ==== BACKEND SAMPLE ====; curl -sS --max-time 30 'http://127.0.0.1:8082/chart?year=1990&month=1&day=14&hour=17&minute=15&city=Tel%20Aviv&language=Eng' | head -c 400; echo; echo ==== PUBLIC SITE ====; curl -sS --max-time 30 https://astreya.space/ | head -c 200; echo\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "deploy-on-droplet-safe",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"ssh",
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"bash -lc \"set -e; mkdir -p /root/AstroBot /root/astrologyAnylizer /root/astrologyAnalyzer; tar -xzf /root/AstroBot_upload.tgz -C /root/AstroBot; tar -xzf /root/astrologyAnylizer_upload.tgz -C /root/astrologyAnylizer; ln -sfn /root/astrologyAnylizer /root/astrologyAnalyzer/astrologyAnylizer; cd /root/AstroBot; docker compose -f docker-compose.prod.yml up -d --build backend web; caddy validate --config /etc/caddy/Caddyfile; systemctl reload caddy; echo ==== CONTAINERS ====; docker compose -f docker-compose.prod.yml ps; echo ==== API DAILY ENERGY ====; curl -sS --max-time 30 http://127.0.0.1:8082/daily/energy | head -c 400; echo; echo ==== PUBLIC SITE ====; curl -sS --max-time 30 https://astreya.space/ | head -c 200; echo\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "ssh-droplet-session",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "ssh-batchmode-probe",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-o",
+				"BatchMode=yes",
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"echo connected"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "ssh-probe-batchmode",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-o",
+				"BatchMode=yes",
+				"-o",
+				"ConnectTimeout=8",
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"echo",
+				"ok"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "probe-ping-droplet",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Test-Connection 164.92.192.21 -Count 2"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "probe-port22-droplet",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Test-NetConnection 164.92.192.21 -Port 22"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "ssh-verbose-diagnose",
+			"type": "shell",
+			"command": "ssh",
+			"args": [
+				"-vvv",
+				"-o",
+				"ConnectTimeout=15",
+				"-i",
+				"C:\\Users\\zibit\\.ssh\\id_ed25519_do",
+				"root@164.92.192.21",
+				"echo",
+				"ok"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "flutter-build-web-check",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd",
+				"/d",
+				"C:\\dev\\AstroBot",
+				"&&",
+				"flutter",
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "flutter-clean-build-web",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd",
+				"/d",
+				"C:\\dev\\AstroBot",
+				"&&",
+				"flutter",
+				"clean",
+				"&&",
+				"flutter",
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "find-port-8081",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -LocalPort 8081 | Select-Object LocalAddress,LocalPort,State,OwningProcess; if (Get-NetTCPConnection -LocalPort 8081 -ErrorAction SilentlyContinue) { Get-Process -Id (Get-NetTCPConnection -LocalPort 8081).OwningProcess | Select-Object Id,ProcessName,Path }"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "home-clean-rebuild",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd",
+				"/d",
+				"C:\\dev\\AstroBot",
+				"&&",
+				"flutter",
+				"clean",
+				"&&",
+				"flutter",
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "inspect-8081-process",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$pid=(Get-NetTCPConnection -LocalPort 8081 | Where-Object {$_.State -eq 'Listen'} | Select-Object -First 1).OwningProcess; if($pid){ Get-Process -Id $pid | Select-Object Id,ProcessName,Path,StartTime } else { 'No listener found' }"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "netstat-8081",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"netstat",
+				"-ano",
+				"|",
+				"findstr",
+				":8081"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "tasklist-20700",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"tasklist",
+				"/fi",
+				"PID eq 20700",
+				"/v"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-home-black",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-gold-silver-home",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-champagne-gold",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rebuild-champagne-metallic",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"build",
+				"web",
+				"--pwa-strategy=none"
+			],
+			"isBackground": false
+		}
+	]
+}

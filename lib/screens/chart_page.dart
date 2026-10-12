@@ -10,22 +10,23 @@ import '../theme/astro_palette.dart';
 
 // ─── Premium lilac theme for showDatePicker / showTimePicker dialogs ─────────
 const _lilacBg = AstroPalette.appBgTop;
-const _lilacSurface = Color(0xFFFFFBFF);
+const _lilacSurface = Color(0xFFF8F1FF);
 const _lilacPrimary = Color(0xFF8F73E8);
-const _lilacSoft = Color(0xFFEAD9FF);
+const _lilacSoft = Color(0xFFE6D4FF);
 const _lilacText = AstroPalette.darkText;
 const _lilacTextSoft = AstroPalette.darkSecondary;
 const _lilacBorder = Color(0xFFEFE6FF);
 
 const _chartCardSurface = Color(0xFFF8F3FF);
 const _chartCardBorder = Color(0xFFDCCBED);
-const _chartTextStrong = Color(0xFF2E214F);
-const _chartTextBody = Color(0xFF4F3D78);
+const _chartTextStrong = Color(0xFF2F2552);
+const _chartTextBody = Color(0xFF6C5F91);
 
 Widget _lilacPickerTheme(BuildContext context, Widget? child) {
   final base = Theme.of(context);
   return Theme(
     data: base.copyWith(
+      useMaterial3: true,
       colorScheme: const ColorScheme.light(
         primary: _lilacPrimary,
         onPrimary: Colors.white,
@@ -37,6 +38,8 @@ Widget _lilacPickerTheme(BuildContext context, Widget? child) {
         outline: _lilacBorder,
       ),
       scaffoldBackgroundColor: _lilacBg,
+      canvasColor: _lilacSurface,
+      cardColor: _lilacSurface,
       dialogTheme: const DialogThemeData(
         backgroundColor: _lilacSurface,
         surfaceTintColor: _lilacSurface,
@@ -47,18 +50,23 @@ Widget _lilacPickerTheme(BuildContext context, Widget? child) {
       datePickerTheme: DatePickerThemeData(
         backgroundColor: _lilacSurface,
         surfaceTintColor: _lilacSurface,
-        headerBackgroundColor: _lilacPrimary,
-        headerForegroundColor: Colors.white,
+        shadowColor: Colors.transparent,
+        headerBackgroundColor: _lilacSoft,
+        headerForegroundColor: _lilacText,
+        rangePickerBackgroundColor: _lilacSurface,
+        rangePickerSurfaceTintColor: _lilacSurface,
+        rangePickerHeaderBackgroundColor: _lilacSoft,
+        rangePickerHeaderForegroundColor: _lilacText,
         headerHeadlineStyle: const TextStyle(
           fontSize: 26,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
+          fontWeight: FontWeight.w700,
+          color: _lilacText,
         ),
         headerHelpStyle: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.8,
-          color: Colors.white,
+          color: _lilacTextSoft,
         ),
         weekdayStyle: const TextStyle(
           color: _lilacTextSoft,
@@ -105,6 +113,22 @@ Widget _lilacPickerTheme(BuildContext context, Widget? child) {
       ),
       timePickerTheme: TimePickerThemeData(
         backgroundColor: _lilacSurface,
+        dialTextStyle: const TextStyle(
+          color: _lilacText,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+        dayPeriodTextStyle: const TextStyle(
+          color: _lilacText,
+          fontWeight: FontWeight.w700,
+        ),
+        hourMinuteTextStyle: const TextStyle(
+          color: _lilacText,
+          fontWeight: FontWeight.w700,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(28)),
+        ),
         hourMinuteColor: _lilacSoft.withOpacity(0.55),
         hourMinuteTextColor: _lilacText,
         dayPeriodColor: _lilacSoft.withOpacity(0.55),
@@ -126,9 +150,6 @@ Widget _lilacPickerTheme(BuildContext context, Widget? child) {
         dayPeriodShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
           side: const BorderSide(color: _lilacBorder),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
@@ -162,9 +183,159 @@ Widget _lilacPickerTheme(BuildContext context, Widget? child) {
   );
 }
 
+ThemeData _astreyaTimePickerTheme(BuildContext context) {
+  final base = Theme.of(context);
+  return base.copyWith(
+    useMaterial3: true,
+    colorScheme: const ColorScheme.light(
+      primary: Color(0xFF9278E8),
+      onPrimary: Colors.white,
+      secondary: Color(0xFFC95AC4),
+      onSecondary: Colors.white,
+      surface: Color(0xFFF8F3FF),
+      onSurface: Color(0xFF30254F),
+    ),
+    dialogTheme: const DialogThemeData(
+      backgroundColor: Color(0xFFF8F3FF),
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+      ),
+    ),
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: const Color(0xFFF8F3FF),
+      hourMinuteColor: const Color(0xFFDCCBFF),
+      hourMinuteTextColor: const Color(0xFF30254F),
+      dialBackgroundColor: const Color(0xFFF0E7FF),
+      dialHandColor: const Color(0xFF49C8CE),
+      dialTextColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return Colors.white;
+        return const Color(0xFF30254F);
+      }),
+      entryModeIconColor: const Color(0xFF9278E8),
+      helpTextStyle: const TextStyle(
+        color: Color(0xFF746796),
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+      ),
+      hourMinuteTextStyle: const TextStyle(
+        color: Color(0xFF30254F),
+        fontSize: 30,
+        fontWeight: FontWeight.w700,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: const Color(0xFF8B7CA8),
+        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: const Color(0xFF49C8CE),
+        textStyle: const TextStyle(fontWeight: FontWeight.w700),
+      ),
+    ),
+  );
+}
+
+ThemeData _astreyaDatePickerTheme(BuildContext context) {
+  final base = Theme.of(context);
+  return base.copyWith(
+    useMaterial3: true,
+    colorScheme: const ColorScheme.light(
+      primary: Color(0xFF49C8CE),
+      onPrimary: Colors.white,
+      secondary: Color(0xFF9278E8),
+      onSecondary: Colors.white,
+      surface: Color(0xFFFBF8FF),
+      onSurface: Color(0xFF30254F),
+    ),
+    dialogTheme: const DialogThemeData(
+      backgroundColor: Color(0xFFF8F3FF),
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+      ),
+    ),
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: const Color(0xFFF8F3FF),
+      surfaceTintColor: Colors.transparent,
+      headerBackgroundColor: const Color(0xFFEDE2FF).withOpacity(0.78),
+      headerForegroundColor: const Color(0xFF30254F),
+      headerHeadlineStyle: const TextStyle(
+        color: Color(0xFF30254F),
+        fontSize: 26,
+        fontWeight: FontWeight.w600,
+      ),
+      headerHelpStyle: const TextStyle(
+        color: Color(0xFF746796),
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+      ),
+      weekdayStyle: const TextStyle(
+        color: Color(0xFF746796),
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+      ),
+      dayStyle: const TextStyle(
+        color: Color(0xFF30254F),
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+      ),
+      dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return Colors.white;
+        if (states.contains(WidgetState.disabled)) {
+          return const Color(0xFFB8AEC9);
+        }
+        return const Color(0xFF30254F);
+      }),
+      dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const Color(0xFF49C8CE);
+        }
+        if (states.contains(WidgetState.hovered)) {
+          return const Color(0xFFEDE2FF);
+        }
+        return Colors.transparent;
+      }),
+      todayForegroundColor: const WidgetStatePropertyAll(Color(0xFF9278E8)),
+      todayBorder: const BorderSide(color: Color(0xFF9278E8), width: 1.3),
+      dayShape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      yearForegroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return Colors.white;
+        return const Color(0xFF30254F);
+      }),
+      yearBackgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const Color(0xFF49C8CE);
+        }
+        return Colors.transparent;
+      }),
+      yearShape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      ),
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: const Color(0xFF9184AE),
+        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: const Color(0xFF49C8CE),
+        textStyle: const TextStyle(fontWeight: FontWeight.w700),
+      ),
+      dividerColor: const Color(0xFFD7CAE9).withOpacity(0.55),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+    ),
+  );
+}
+
 class AstroChartPage extends StatefulWidget {
   final String initialLanguage;
-  const AstroChartPage({super.key, this.initialLanguage = 'Eng'});
+  final bool openBirthDateOnStart;
+  const AstroChartPage({
+    super.key,
+    this.initialLanguage = 'Eng',
+    this.openBirthDateOnStart = false,
+  });
 
   @override
   State<AstroChartPage> createState() => _AstroChartPageState();
@@ -195,19 +366,39 @@ class _AstroChartPageState extends State<AstroChartPage> {
   List<String> get _tabs {
     switch (_language) {
       case 'Rus':
-        return ['Общее', 'Планеты', 'Аспекты', 'Конфигурации', 'Транзиты'];
+        return [
+          'Общее',
+          'Прогноз на сегодня',
+          'Планеты',
+          'Аспекты',
+          'Главные темы',
+        ];
       case 'Heb':
-        return ['כללי', 'כוכבי לכת', 'אספקטים', 'קונפיגורציות', 'מעברים'];
+        return ['כללי', 'תחזית להיום', 'כוכבי לכת', 'היבטים', 'נושאים מרכזיים'];
       case 'Spa':
         return [
           'General',
+          'Pronóstico para hoy',
           'Planetas',
           'Aspectos',
-          'Configuraciones',
-          'Tránsitos',
+          'Temas clave',
+        ];
+      case 'Fra':
+        return [
+          'Général',
+          'Prévisions pour aujourd’hui',
+          'Planètes',
+          'Aspects',
+          'Thèmes clés',
         ];
       default:
-        return ['General', 'Planets', 'Aspects', 'Configurations', 'Transits'];
+        return [
+          'General',
+          "Today's Forecast",
+          'Planets',
+          'Aspects',
+          'Key Themes',
+        ];
     }
   }
 
@@ -411,23 +602,32 @@ class _AstroChartPageState extends State<AstroChartPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-                  child: _ChartTopBar(),
+                  child: _ChartTopBar(language: _language),
                 ),
                 const SizedBox(height: 20),
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+                    padding: EdgeInsets.fromLTRB(
+                      20,
+                      0,
+                      20,
+                      MediaQuery.paddingOf(context).bottom + 40,
+                    ),
                     child: Column(
                       children: [
                         if (!_birthDataSubmitted)
-                          _BirthInputCard(onSubmit: _onBirthSubmit)
+                          _BirthInputCard(
+                            onSubmit: _onBirthSubmit,
+                            language: _language,
+                            autoOpenDatePicker: widget.openBirthDateOnStart,
+                          )
                         else if (_chart == null || _isWaitingForGeneral)
-                          const _ChartLoadingAnimation()
+                          _ChartLoadingAnimation(language: _language)
                         else ...[
-                          _NatalChartWheel(chart: _chart),
+                          _NatalChartWheel(chart: _chart, language: _language),
                           const SizedBox(height: 18),
-                          const _SummaryCard(),
+                          _SummaryCard(language: _language),
                           const SizedBox(height: 18),
                           _TabsRow(
                             tabs: _tabs,
@@ -475,8 +675,9 @@ class _AstroChartPageState extends State<AstroChartPage> {
     final langs = [
       {'code': 'Eng', 'flag': '🇬🇧', 'label': 'EN'},
       {'code': 'Rus', 'flag': '🇷🇺', 'label': 'RU'},
-      {'code': 'Heb', 'flag': '🇮🇱', 'label': 'HE'},
+      {'code': 'Heb', 'flag': '🇮🇱', 'label': 'עברית'},
       {'code': 'Spa', 'flag': '🇪🇸', 'label': 'ES'},
+      {'code': 'Fra', 'flag': '🇫🇷', 'label': 'FR'},
     ];
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -504,8 +705,8 @@ class _AstroChartPageState extends State<AstroChartPage> {
                   '${l['flag']} ${l['label']}',
                   style: TextStyle(
                     color: selected
-                        ? AstroPalette.darkText
-                        : AstroPalette.darkSecondary,
+                        ? AstroPalette.accentStrong
+                        : AstroPalette.mutedLabel,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -538,19 +739,26 @@ class _AstroChartPageState extends State<AstroChartPage> {
           detailLevel: 'deep',
         );
       case 1:
+        return _TransitsTab(
+          response: _transits,
+          language: _language,
+          isLoading: _isLoadingTransits,
+          error: _transitsError,
+        );
+      case 2:
         return _PlanetsTab(
           planets: _chart?.planets,
           interpretations: _chart?.planetaryInterpretations ?? {},
           language: _language,
         );
-      case 2:
+      case 3:
         return _AspectsTab(
           planets: _chart?.planets,
           backendAspects: _chart?.aspects,
           aspectInterpretations: _chart?.aspectInterpretations ?? {},
           language: _language,
         );
-      case 3:
+      case 4:
         final backendPatterns = _chart?.patterns ?? [];
         final localPatterns = _ConfigurationsTab.computeFromPlanets(
           _chart?.planets ?? [],
@@ -564,13 +772,6 @@ class _AstroChartPageState extends State<AstroChartPage> {
           patternInterpretations: _chart?.patternInterpretations ?? {},
           language: _language,
         );
-      case 4:
-        return _TransitsTab(
-          response: _transits,
-          language: _language,
-          isLoading: _isLoadingTransits,
-          error: _transitsError,
-        );
       default:
         return const SizedBox.shrink();
     }
@@ -578,6 +779,39 @@ class _AstroChartPageState extends State<AstroChartPage> {
 }
 
 class _ChartTopBar extends StatelessWidget {
+  final String language;
+  const _ChartTopBar({required this.language});
+
+  String get _title {
+    switch (language) {
+      case 'Rus':
+        return 'Натальная карта';
+      case 'Heb':
+        return 'מפת לידה';
+      case 'Spa':
+        return 'Carta natal';
+      case 'Fra':
+        return 'Thème natal';
+      default:
+        return 'Birth Chart';
+    }
+  }
+
+  String get _subtitle {
+    switch (language) {
+      case 'Rus':
+        return 'Астрологический разбор';
+      case 'Heb':
+        return 'ניתוח אסטרולוגי';
+      case 'Spa':
+        return 'Analisis astrologico';
+      case 'Fra':
+        return 'Analyse astrologique';
+      default:
+        return 'Natal chart';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -593,22 +827,22 @@ class _ChartTopBar extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 14),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Birth Chart',
-                style: TextStyle(
+                _title,
+                style: const TextStyle(
                   color: AstroPalette.darkText,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               Text(
-                'Natal chart',
-                style: TextStyle(
+                _subtitle,
+                style: const TextStyle(
                   color: AstroPalette.darkSecondary,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -617,7 +851,9 @@ class _ChartTopBar extends StatelessWidget {
             ],
           ),
         ),
-        _glassCircle(const Icon(Icons.tune_rounded, color: Color(0xFF6E58C8))),
+        _glassCircle(
+          const Icon(Icons.tune_rounded, color: AstroPalette.accentMagenta),
+        ),
       ],
     );
   }
@@ -631,8 +867,8 @@ class _ChartTopBar extends StatelessWidget {
           height: 44,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AstroPalette.lightGlassFill,
-            border: Border.all(color: AstroPalette.glassBorder),
+            color: Colors.white.withOpacity(0.18),
+            border: Border.all(color: Colors.white.withOpacity(0.34), width: 1),
           ),
           child: Center(child: child),
         ),
@@ -643,6 +879,7 @@ class _ChartTopBar extends StatelessWidget {
 
 class _NatalChartWheel extends StatelessWidget {
   final ChartResponse? chart;
+  final String language;
   static const double _baseSize = 260;
   static const double _cx = _baseSize / 2; // 130
   static const double _planetR = 72.0; // radius for planet ring
@@ -664,20 +901,31 @@ class _NatalChartWheel extends StatelessWidget {
   };
 
   static const Map<String, Color> _colors = {
-    'Sun': Color(0xFFFFD080),
-    'Moon': Color(0xFFB0C8FF),
-    'Mercury': Color(0xFFFFB8B8),
-    'Venus': Color(0xFFFFD8E8),
-    'Mars': Color(0xFFFF9980),
-    'Jupiter': Color(0xFFD4FFAA),
-    'Saturn': Color(0xFFFFEEAA),
-    'Uranus': Color(0xFFAAEEFF),
-    'Neptune': Color(0xFFCCAAFF),
-    'Pluto': Color(0xFFE8CCFF),
-    'Ascendant': Color(0xFFFFFFAA),
+    'Sun': Color(0xFFE9DEFF),
+    'Moon': Color(0xFFDCCBFF),
+    'Mercury': Color(0xFFAEEFED),
+    'Venus': Color(0xFFF1B3FF),
+    'Mars': Color(0xFFE96DFF),
+    'Jupiter': Color(0xFF7EE7E1),
+    'Saturn': Color(0xFFD6C0FF),
+    'Uranus': Color(0xFF58D5D0),
+    'Neptune': Color(0xFFBFA8F3),
+    'Pluto': Color(0xFFD45BFF),
+    'Ascendant': Color(0xFFF8F3FF),
   };
 
-  const _NatalChartWheel({this.chart});
+  const _NatalChartWheel({this.chart, this.language = 'Eng'});
+
+  String _loc(String key) {
+    const copy = {
+      'Eng': {'title': 'Natal Chart', 'asc': 'ASC'},
+      'Rus': {'title': 'Натальная карта', 'asc': 'ASC'},
+      'Heb': {'title': 'מפת לידה', 'asc': 'ASC'},
+      'Spa': {'title': 'Carta natal', 'asc': 'ASC'},
+      'Fra': {'title': 'Thème natal', 'asc': 'ASC'},
+    };
+    return copy[language]?[key] ?? copy['Eng']![key] ?? key;
+  }
 
   // Aries (0°) at top, clockwise
   static Offset _lonToOffset(double lon, double radius) {
@@ -689,7 +937,9 @@ class _NatalChartWheel extends StatelessWidget {
   Widget build(BuildContext context) {
     final planets = chart?.planets ?? [];
     final ascSign = chart?.ascendantSign ?? '';
-    final label = ascSign.isNotEmpty ? 'ASC: $ascSign' : 'Natal Chart';
+    final label = ascSign.isNotEmpty
+        ? '${_loc('asc')}: $ascSign'
+        : _loc('title');
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(28),
@@ -704,10 +954,10 @@ class _NatalChartWheel extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Text(
-                'Natal Chart',
-                style: TextStyle(
-                  color: AstroPalette.lightTextSoft,
+              Text(
+                _loc('title'),
+                style: const TextStyle(
+                  color: AstroPalette.darkText,
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
@@ -750,7 +1000,7 @@ class _NatalChartWheel extends StatelessWidget {
                             p.sign.length >= 3
                                 ? p.sign.substring(0, 3)
                                 : p.sign,
-                            _colors[p.name] ?? const Color(0xFFCCCCFF),
+                            _colors[p.name] ?? const Color(0xFFDCCBFF),
                             scale,
                           );
                         }),
@@ -763,7 +1013,7 @@ class _NatalChartWheel extends StatelessWidget {
               Text(
                 label,
                 style: const TextStyle(
-                  color: AstroPalette.lightTextSoft,
+                  color: AstroPalette.darkSecondary,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
@@ -812,7 +1062,7 @@ class _NatalChartWheel extends StatelessWidget {
                 style: TextStyle(
                   fontSize: fontSize,
                   height: 1,
-                  color: const Color(0xFF2A1F50),
+                  color: _chartTextStrong,
                 ),
               ),
             ),
@@ -832,7 +1082,7 @@ class _NatalChartWheel extends StatelessWidget {
               style: TextStyle(
                 fontSize: signFontSize,
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF2A1F50),
+                color: _chartTextStrong,
                 height: 1,
               ),
             ),
@@ -851,12 +1101,12 @@ class _ChartAspectPainter extends CustomPainter {
   static const _aspectAngles = [0.0, 60.0, 90.0, 120.0, 150.0, 180.0];
   static const _aspectOrbs = [8.0, 6.0, 8.0, 8.0, 3.0, 8.0];
   static const _aspectColors = [
-    Color(0xFFBB99FF),
-    Color(0xFF6DBD8C),
-    Color(0xFFE86060),
-    Color(0xFF6AACEE),
-    Color(0xFFE0B050),
-    Color(0xFFE87A50),
+    Color(0xFFD6C0FF),
+    Color(0xFF58D5D0),
+    Color(0xFFE96DFF),
+    Color(0xFF7EE7E1),
+    Color(0xFFF1B3FF),
+    Color(0xFFD45BFF),
   ];
 
   const _ChartAspectPainter(this.planets, this.scale, this.radius);
@@ -902,7 +1152,59 @@ class _ChartAspectPainter extends CustomPainter {
 }
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard();
+  final String language;
+  const _SummaryCard({this.language = 'Eng'});
+
+  String _loc(String key) {
+    const copy = {
+      'Eng': {
+        'title': 'Overall Portrait',
+        'text':
+            'You come across as serious, composed, and deep. Inside, emotional restraint, strong will, and a need for stability are combined. Your chart shows an ability to move toward goals slowly but very steadily.',
+        'chip1': 'Practicality',
+        'chip2': 'Depth',
+        'chip3': 'Self-control',
+        'chip4': 'Ambition',
+      },
+      'Rus': {
+        'title': 'Общий портрет',
+        'text':
+            'Вы производите впечатление серьезного, собранного и глубокого человека. Внутри сочетаются эмоциональная сдержанность, сильная воля и потребность в стабильности. Ваша карта показывает способность идти к целям медленно, но очень уверенно.',
+        'chip1': 'Практичность',
+        'chip2': 'Глубина',
+        'chip3': 'Самоконтроль',
+        'chip4': 'Амбиции',
+      },
+      'Heb': {
+        'title': 'דיוקן כללי',
+        'text':
+            'אתם נתפסים כרציניים, מאוזנים ועמוקים. בפנים יש שילוב של איפוק רגשי, רצון חזק וצורך ביציבות. המפה שלכם מראה יכולת להתקדם למטרות לאט אבל בצורה יציבה מאוד.',
+        'chip1': 'פרקטיות',
+        'chip2': 'עומק',
+        'chip3': 'שליטה עצמית',
+        'chip4': 'שאפתנות',
+      },
+      'Spa': {
+        'title': 'Retrato general',
+        'text':
+            'Das una impresion seria, serena y profunda. Por dentro se combinan contencion emocional, voluntad fuerte y necesidad de estabilidad. Tu carta muestra capacidad para avanzar hacia metas lentamente pero con gran constancia.',
+        'chip1': 'Practicidad',
+        'chip2': 'Profundidad',
+        'chip3': 'Autocontrol',
+        'chip4': 'Ambicion',
+      },
+      'Fra': {
+        'title': 'Portrait général',
+        'text':
+            'Vous donnez une impression de sérieux, de maîtrise et de profondeur. Une volonté forte, une certaine retenue émotionnelle et un besoin de stabilité coexistent en vous. Vous avancez vers vos objectifs avec patience et constance.',
+        'chip1': 'Pragmatisme',
+        'chip2': 'Profondeur',
+        'chip3': 'Maîtrise de soi',
+        'chip4': 'Ambition',
+      },
+    };
+    return copy[language]?[key] ?? copy['Eng']![key] ?? key;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -918,38 +1220,36 @@ class _SummaryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
             border: Border.all(color: AstroPalette.glassBorder, width: 1.2),
           ),
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Overall Portrait',
-                style: TextStyle(
-                  color: AstroPalette.lightTextSoft,
+                _loc('title'),
+                style: const TextStyle(
+                  color: AstroPalette.darkText,
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
-                'You come across as serious, composed, and deep. '
-                'Inside, emotional restraint, strong will, and a need for '
-                'stability are combined. Your chart shows an ability to move toward goals slowly but very steadily.',
-                style: TextStyle(
-                  color: AstroPalette.lightTextSoft,
+                _loc('text'),
+                style: const TextStyle(
+                  color: AstroPalette.darkSecondary,
                   fontSize: 14,
                   height: 1.45,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _TagChip(label: 'Practicality'),
-                  _TagChip(label: 'Depth'),
-                  _TagChip(label: 'Self-control'),
-                  _TagChip(label: 'Ambition'),
+                  _TagChip(label: _loc('chip1')),
+                  _TagChip(label: _loc('chip2')),
+                  _TagChip(label: _loc('chip3')),
+                  _TagChip(label: _loc('chip4')),
                 ],
               ),
             ],
@@ -971,12 +1271,12 @@ class _TagChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(999),
-        color: AstroPalette.accent.withOpacity(0.26),
+        color: AstroPalette.magentaSoft.withOpacity(0.34),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          color: AstroPalette.darkText,
+          color: AstroPalette.darkTextStrong,
           fontSize: 12,
           fontWeight: FontWeight.w600,
         ),
@@ -998,18 +1298,23 @@ class _TabsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(tabs.length, (index) {
-        final selected = index == selectedIndex;
-
-        return Expanded(
-          child: Padding(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        children: List.generate(tabs.length, (index) {
+          final selected = index == selectedIndex;
+          return Padding(
             padding: EdgeInsets.only(right: index == tabs.length - 1 ? 0 : 8),
             child: GestureDetector(
               onTap: () => onTap(index),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 220),
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                constraints: const BoxConstraints(minWidth: 96),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
                   gradient: selected ? AstroPalette.activeSurface : null,
@@ -1021,7 +1326,7 @@ class _TabsRow extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: selected
-                        ? AstroPalette.darkText
+                        ? AstroPalette.darkTextStrong
                         : AstroPalette.darkSecondary,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
@@ -1029,9 +1334,9 @@ class _TabsRow extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }
@@ -1057,6 +1362,7 @@ class _GeneralTab extends StatelessWidget {
     'Rus': 'Интерпретация недоступна',
     'Heb': 'הפרשנות אינה זמינה',
     'Spa': 'Interpretacion no disponible',
+    'Fra': 'Interprétation indisponible',
   };
 
   static const _emptyText = {
@@ -1067,6 +1373,8 @@ class _GeneralTab extends StatelessWidget {
     'Heb': 'נתוני המפה נטענו, אך הפרשנות הטקסטואלית לא חזרה בזמן.',
     'Spa':
         'Los datos de la carta se cargaron, pero la interpretacion textual no regreso a tiempo.',
+    'Fra':
+        'Les données du thème sont chargées, mais l’interprétation n’est pas revenue à temps.',
   };
 
   static const _planetNames = {
@@ -1138,36 +1446,118 @@ class _GeneralTab extends StatelessWidget {
       'Lilith': 'Lilith',
       'Selena': 'Selena',
     },
+    'Fra': {
+      'Sun': 'Soleil',
+      'Moon': 'Lune',
+      'Mercury': 'Mercure',
+      'Venus': 'Vénus',
+      'Mars': 'Mars',
+      'Jupiter': 'Jupiter',
+      'Saturn': 'Saturne',
+      'Uranus': 'Uranus',
+      'Neptune': 'Neptune',
+      'Pluto': 'Pluton',
+      'Ascendant': 'Ascendant',
+      'North Node': 'Nœud nord',
+      'South Node': 'Nœud sud',
+      'Lilith': 'Lilith',
+      'Selena': 'Séléné',
+    },
   };
 
   static const _aspectNames = {
     'Eng': {
-      'Conjunction': 'Conjunction',
-      'Sextile': 'Sextile',
-      'Square': 'Square',
-      'Trine': 'Trine',
-      'Opposition': 'Opposition',
+      'Conjunction': 'Strong combination',
+      'Sextile': 'Helpful opportunity',
+      'Square': 'Growth challenge',
+      'Trine': 'Natural strength',
+      'Opposition': 'Finding balance',
     },
     'Rus': {
-      'Conjunction': 'Соединение',
-      'Sextile': 'Секстиль',
-      'Square': 'Квадрат',
-      'Trine': 'Трин',
-      'Opposition': 'Оппозиция',
+      'Conjunction': 'Сильное объединение',
+      'Sextile': 'Благоприятная возможность',
+      'Square': 'Вызов для роста',
+      'Trine': 'Естественная сильная сторона',
+      'Opposition': 'Поиск баланса',
     },
     'Heb': {
-      'Conjunction': 'קונג׳אנקשן',
-      'Sextile': 'סקסטיל',
-      'Square': 'ריבוע',
-      'Trine': 'טרין',
-      'Opposition': 'אופוזיציה',
+      'Conjunction': 'שילוב חזק',
+      'Sextile': 'הזדמנות מועילה',
+      'Square': 'אתגר שמוביל לצמיחה',
+      'Trine': 'חוזקה טבעית',
+      'Opposition': 'מציאת איזון',
     },
     'Spa': {
-      'Conjunction': 'Conjunción',
-      'Sextile': 'Sextil',
-      'Square': 'Cuadratura',
-      'Trine': 'Trígono',
-      'Opposition': 'Oposición',
+      'Conjunction': 'Combinación fuerte',
+      'Sextile': 'Oportunidad favorable',
+      'Square': 'Desafío para crecer',
+      'Trine': 'Fortaleza natural',
+      'Opposition': 'Búsqueda de equilibrio',
+    },
+    'Fra': {
+      'Conjunction': 'Union puissante',
+      'Sextile': 'Occasion favorable',
+      'Square': 'Défi de croissance',
+      'Trine': 'Force naturelle',
+      'Opposition': 'Recherche d’équilibre',
+    },
+  };
+  static const _signNames = {
+    'Rus': {
+      'Aries': 'Овен',
+      'Taurus': 'Телец',
+      'Gemini': 'Близнецы',
+      'Cancer': 'Рак',
+      'Leo': 'Лев',
+      'Virgo': 'Дева',
+      'Libra': 'Весы',
+      'Scorpio': 'Скорпион',
+      'Sagittarius': 'Стрелец',
+      'Capricorn': 'Козерог',
+      'Aquarius': 'Водолей',
+      'Pisces': 'Рыбы',
+    },
+    'Heb': {
+      'Aries': 'טלה',
+      'Taurus': 'שור',
+      'Gemini': 'תאומים',
+      'Cancer': 'סרטן',
+      'Leo': 'אריה',
+      'Virgo': 'בתולה',
+      'Libra': 'מאזניים',
+      'Scorpio': 'עקרב',
+      'Sagittarius': 'קשת',
+      'Capricorn': 'גדי',
+      'Aquarius': 'דלי',
+      'Pisces': 'דגים',
+    },
+    'Spa': {
+      'Aries': 'Aries',
+      'Taurus': 'Tauro',
+      'Gemini': 'Géminis',
+      'Cancer': 'Cáncer',
+      'Leo': 'Leo',
+      'Virgo': 'Virgo',
+      'Libra': 'Libra',
+      'Scorpio': 'Escorpio',
+      'Sagittarius': 'Sagitario',
+      'Capricorn': 'Capricornio',
+      'Aquarius': 'Acuario',
+      'Pisces': 'Piscis',
+    },
+    'Fra': {
+      'Aries': 'Bélier',
+      'Taurus': 'Taureau',
+      'Gemini': 'Gémeaux',
+      'Cancer': 'Cancer',
+      'Leo': 'Lion',
+      'Virgo': 'Vierge',
+      'Libra': 'Balance',
+      'Scorpio': 'Scorpion',
+      'Sagittarius': 'Sagittaire',
+      'Capricorn': 'Capricorne',
+      'Aquarius': 'Verseau',
+      'Pisces': 'Poissons',
     },
   };
 
@@ -1228,6 +1618,20 @@ class _GeneralTab extends StatelessWidget {
       11: 'amistades y metas',
       12: 'vida interior y sanacion',
     },
+    'Fra': {
+      1: 'expression personnelle',
+      2: 'ressources et valeurs',
+      3: 'apprentissage et communication',
+      4: 'foyer et racines',
+      5: 'créativité et amour',
+      6: 'travail et habitudes',
+      7: 'relations et partenariats',
+      8: 'liens profonds et confiance',
+      9: 'convictions et ouverture',
+      10: 'carrière et visibilité',
+      11: 'amitiés et projets',
+      12: 'vie intérieure et guérison',
+    },
   };
 
   static const _signElements = {
@@ -1273,6 +1677,8 @@ class _GeneralTab extends StatelessWidget {
         return 'дом';
       case 'Spa':
         return 'casa';
+      case 'Fra':
+        return 'maison';
       default:
         return 'house';
     }
@@ -2214,10 +2620,129 @@ class _GeneralTab extends StatelessWidget {
     return sb.toString().trim();
   }
 
+  String _withoutTechnicalSeparators(String value) {
+    return value
+        .split('\n')
+        .where((line) => !RegExp(r'^\s*-{3,}\s*$').hasMatch(line))
+        .join('\n')
+        .trim();
+  }
+
+  List<String> _narrativeSections(String value) {
+    final cleaned = _withoutTechnicalSeparators(value);
+    return cleaned
+        .split(RegExp(r'\n\s*\n'))
+        .map((part) => part.trim())
+        .where((part) => part.isNotEmpty)
+        .toList();
+  }
+
+  List<MapEntry<String, String>> _portraitSections(String value) {
+    final sections = <MapEntry<String, String>>[];
+    var title = '';
+    final body = StringBuffer();
+
+    void addSection() {
+      final text = body.toString().trim().replaceAll('**', '');
+      if (text.isNotEmpty) {
+        sections.add(MapEntry(title, text));
+      }
+      body.clear();
+    }
+
+    for (final line in _withoutTechnicalSeparators(value).split('\n')) {
+      final markdownHeading = RegExp(
+        r'^\s*#{1,6}\s+(.+?)\s*$',
+      ).firstMatch(line);
+      final boldHeading = RegExp(r'^\s*\*\*(.+?)\*\*\s*$').firstMatch(line);
+      final heading = markdownHeading?.group(1) ?? boldHeading?.group(1);
+      if (heading != null) {
+        addSection();
+        title = heading.trim();
+      } else {
+        body.writeln(line);
+      }
+    }
+    addSection();
+
+    return sections;
+  }
+
+  bool _isHouseInterpretationLine(String line) {
+    return RegExp(
+      r'^\s*-\s*(House|Дом|Casa|בית)\s+\d+',
+      caseSensitive: false,
+    ).hasMatch(line);
+  }
+
+  String _detailedInterpretation(String methodText) {
+    return methodText
+        .split('\n')
+        .where((line) => !_isHouseInterpretationLine(line))
+        .where((line) => !RegExp(r'^\s*-{3,}\s*$').hasMatch(line))
+        .join('\n')
+        .trim();
+  }
+
+  String _reportTitle(String key) {
+    const copy = {
+      'Eng': {
+        'portrait': 'Psychological Portrait',
+        'core': 'Core Signature',
+        'themes': 'Main Life Themes',
+        'overview': 'Analysis Overview',
+        'details': 'Detailed Interpretation',
+        'planets': 'planets',
+        'aspects': 'major aspects',
+        'configurations': 'configurations',
+      },
+      'Rus': {
+        'portrait': 'Психологический портрет',
+        'core': 'Главная сигнатура',
+        'themes': 'Основные темы жизни',
+        'overview': 'Обзор анализа',
+        'details': 'Подробная интерпретация',
+        'planets': 'планет',
+        'aspects': 'мажорных аспектов',
+        'configurations': 'конфигураций',
+      },
+      'Heb': {
+        'portrait': 'דיוקן פסיכולוגי',
+        'core': 'החתימה המרכזית',
+        'themes': 'נושאי החיים המרכזיים',
+        'overview': 'סקירת הניתוח',
+        'details': 'פרשנות מפורטת',
+        'planets': 'כוכבי לכת',
+        'aspects': 'היבטים מרכזיים',
+        'configurations': 'תצורות',
+      },
+      'Spa': {
+        'portrait': 'Retrato psicológico',
+        'core': 'Firma central',
+        'themes': 'Temas principales de vida',
+        'overview': 'Resumen del análisis',
+        'details': 'Interpretación detallada',
+        'planets': 'planetas',
+        'aspects': 'aspectos mayores',
+        'configurations': 'configuraciones',
+      },
+      'Fra': {
+        'portrait': 'Portrait psychologique',
+        'core': 'Signature centrale',
+        'themes': 'Grands thèmes de vie',
+        'overview': 'Vue d’ensemble',
+        'details': 'Interprétation détaillée',
+        'planets': 'planètes',
+        'aspects': 'aspects majeurs',
+        'configurations': 'configurations',
+      },
+    };
+    return copy[language]?[key] ?? copy['Eng']![key] ?? key;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isRtl = language == 'Heb';
-    final methodText = _buildMethodGeneralInfo(language);
     if (isLoading) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -2233,7 +2758,7 @@ class _GeneralTab extends StatelessWidget {
             ),
             child: const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF9B7FD4),
+                color: AstroPalette.accentMagenta,
                 strokeWidth: 2,
               ),
             ),
@@ -2241,8 +2766,7 @@ class _GeneralTab extends StatelessWidget {
         ),
       );
     }
-    if ((interpretation == null || interpretation!.trim().isEmpty) &&
-        methodText.trim().isEmpty) {
+    if (interpretation == null || interpretation!.trim().isEmpty) {
       final lang = _emptyTitle.containsKey(language) ? language : 'Eng';
       return _InfoCard(
         title: _emptyTitle[lang] ?? _emptyTitle['Eng']!,
@@ -2250,59 +2774,171 @@ class _GeneralTab extends StatelessWidget {
       );
     }
 
-    final methodHeader = {
-      'Eng': 'Method-Based General Info',
-      'Rus': 'Общая информация по методу',
-      'Heb': 'מידע כללי לפי השיטה',
-      'Spa': 'Informacion general por metodo',
-    };
-    final narrativeHeader = {
-      'Eng': 'Narrative',
-      'Rus': 'Нарратив',
-      'Heb': 'נרטיב',
-      'Spa': 'Narrativa',
-    };
-    final lang = methodHeader.containsKey(language) ? language : 'Eng';
+    final portraitSections = _portraitSections(interpretation!);
 
-    final combined = StringBuffer();
-    if (interpretation != null && interpretation!.trim().isNotEmpty) {
-      combined.writeln('${narrativeHeader[lang] ?? narrativeHeader['Eng']!}:');
-      combined.writeln(interpretation!.trim());
-      if (methodText.trim().isNotEmpty) {
-        combined.writeln();
-        combined.writeln('----------------------------------------');
-        combined.writeln();
-      }
-    }
-    if (methodText.trim().isNotEmpty) {
-      combined.writeln('${methodHeader[lang] ?? methodHeader['Eng']!}:');
-      combined.writeln(methodText.trim());
-    }
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 980),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var index = 0; index < portraitSections.length; index++) ...[
+              if (index > 0) const SizedBox(height: 16),
+              _AnalysisGlassSection(
+                title: portraitSections[index].key.isEmpty
+                    ? _reportTitle('portrait')
+                    : portraitSections[index].key,
+                text: portraitSections[index].value,
+                accent: index.isEven
+                    ? const Color(0xFF49C8CE)
+                    : const Color(0xFF9278E8),
+                isRtl: isRtl,
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
 
+class _AnalysisGlassSection extends StatelessWidget {
+  final String title;
+  final String text;
+  final Color accent;
+  final bool isRtl;
+  final Widget? content;
+
+  const _AnalysisGlassSection({
+    required this.title,
+    required this.text,
+    required this.accent,
+    required this.isRtl,
+    this.content,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(26),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
         child: Container(
-          width: double.infinity,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: _chartCardSurface.withOpacity(0.88),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: _chartCardBorder.withOpacity(0.75)),
-          ),
-          child: Text(
-            combined.toString().trim(),
-            textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-            textAlign: isRtl ? TextAlign.right : TextAlign.left,
-            style: const TextStyle(
-              color: _chartTextStrong,
-              fontSize: 14,
-              height: 1.75,
-              fontWeight: FontWeight.w600,
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xE6FBF8FF), Color(0xD9F0E7FF)],
             ),
+            borderRadius: BorderRadius.circular(26),
+            border: Border.all(color: Colors.white.withOpacity(0.52)),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x183A2F61),
+                blurRadius: 24,
+                offset: Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 4,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: accent,
+                      borderRadius: BorderRadius.circular(99),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      title,
+                      textDirection: isRtl
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      textAlign: isRtl ? TextAlign.right : TextAlign.left,
+                      style: const TextStyle(
+                        color: Color(0xFF30254F),
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              if (content != null)
+                content!
+              else
+                Text(
+                  text,
+                  textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                  textAlign: isRtl ? TextAlign.right : TextAlign.left,
+                  style: const TextStyle(
+                    color: Color(0xFF51456F),
+                    fontSize: 14,
+                    height: 1.55,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _AnalysisMetrics extends StatelessWidget {
+  final String title;
+  final List<String> metrics;
+  final bool isRtl;
+
+  const _AnalysisMetrics({
+    required this.title,
+    required this.metrics,
+    required this.isRtl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _AnalysisGlassSection(
+      title: title,
+      text: '',
+      accent: const Color(0xFF49C8CE),
+      isRtl: isRtl,
+      content: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: metrics
+            .map(
+              (metric) => Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEDE2FF).withOpacity(0.72),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(color: Colors.white.withOpacity(0.64)),
+                ),
+                child: Text(
+                  metric,
+                  style: const TextStyle(
+                    color: Color(0xFF80739F),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
@@ -2396,6 +3032,21 @@ class _PlanetsTab extends StatelessWidget {
       'South Node': 'Nodo Sur',
       'Lilith': 'Lilith',
     },
+    'Fra': {
+      'Sun': 'Soleil',
+      'Moon': 'Lune',
+      'Mercury': 'Mercure',
+      'Venus': 'Vénus',
+      'Mars': 'Mars',
+      'Jupiter': 'Jupiter',
+      'Saturn': 'Saturne',
+      'Uranus': 'Uranus',
+      'Neptune': 'Neptune',
+      'Pluto': 'Pluton',
+      'North Node': 'Nœud nord',
+      'South Node': 'Nœud sud',
+      'Lilith': 'Lilith',
+    },
   };
 
   static const _signs = {
@@ -2455,6 +3106,20 @@ class _PlanetsTab extends StatelessWidget {
       'Aquarius': 'Acuario',
       'Pisces': 'Piscis',
     },
+    'Fra': {
+      'Aries': 'Bélier',
+      'Taurus': 'Taureau',
+      'Gemini': 'Gémeaux',
+      'Cancer': 'Cancer',
+      'Leo': 'Lion',
+      'Virgo': 'Vierge',
+      'Libra': 'Balance',
+      'Scorpio': 'Scorpion',
+      'Sagittarius': 'Sagittaire',
+      'Capricorn': 'Capricorne',
+      'Aquarius': 'Verseau',
+      'Pisces': 'Poissons',
+    },
   };
 
   static const _houseLabel = {
@@ -2462,10 +3127,37 @@ class _PlanetsTab extends StatelessWidget {
     'Rus': 'Дом',
     'Heb': 'בית',
     'Spa': 'Casa',
+    'Fra': 'Maison',
   };
 
+  String _normalizeSign(String sign) {
+    final token = sign.trim().toLowerCase().replaceAll(RegExp(r'[^a-z]'), '');
+    const aliases = {
+      'aries': 'Aries',
+      'taurus': 'Taurus',
+      'gemini': 'Gemini',
+      'cancer': 'Cancer',
+      'leo': 'Leo',
+      'virgo': 'Virgo',
+      'libra': 'Libra',
+      'scorpio': 'Scorpio',
+      'sagittarius': 'Sagittarius',
+      'sagitarius': 'Sagittarius',
+      'sagitarrius': 'Sagittarius',
+      'capricorn': 'Capricorn',
+      'aquarius': 'Aquarius',
+      'pisces': 'Pisces',
+    };
+
+    return aliases[token] ?? sign.trim();
+  }
+
   String _fallbackDescription(PlanetPosition planet, String lang) {
-    final sign = _signs[lang]?[planet.sign] ?? planet.sign;
+    final normalizedSign = _normalizeSign(planet.sign);
+    final sign =
+        _signs[lang]?[normalizedSign] ??
+        _signs['Eng']?[normalizedSign] ??
+        normalizedSign;
     switch (lang) {
       case 'Heb':
         return '${_names[lang]?[planet.name] ?? planet.name} ב-$sign מדגיש ${_planetTheme(planet.name, lang)} דרך נושאי ${_houseTheme(planet.house, lang)}.';
@@ -2473,6 +3165,8 @@ class _PlanetsTab extends StatelessWidget {
         return '${_names[lang]?[planet.name] ?? planet.name} в знаке $sign подчёркивает ${_planetTheme(planet.name, lang)} через темы ${_houseTheme(planet.house, lang)}.';
       case 'Spa':
         return '${_names[lang]?[planet.name] ?? planet.name} en $sign resalta ${_planetTheme(planet.name, lang)} a traves de ${_houseTheme(planet.house, lang)}.';
+      case 'Fra':
+        return '${_names[lang]?[planet.name] ?? planet.name} en $sign met en valeur ${_planetTheme(planet.name, lang)} à travers ${_houseTheme(planet.house, lang)}.';
       default:
         return '${planet.name} in $sign highlights ${_planetTheme(planet.name, lang)} through ${_houseTheme(planet.house, lang)}.';
     }
@@ -2527,6 +3221,18 @@ class _PlanetsTab extends StatelessWidget {
         'Uranus': 'cambio e independencia',
         'Neptune': 'imaginacion y sensibilidad',
         'Pluto': 'profundidad y transformacion',
+      },
+      'Fra': {
+        'Sun': 'l’identité et le sens de la vie',
+        'Moon': 'les besoins émotionnels et les instincts',
+        'Mercury': 'la pensée et la communication',
+        'Venus': 'les relations et les valeurs',
+        'Mars': 'l’élan et l’action',
+        'Jupiter': 'la croissance et la confiance',
+        'Saturn': 'la discipline et la responsabilité',
+        'Uranus': 'le changement et l’indépendance',
+        'Neptune': 'l’imagination et la sensibilité',
+        'Pluto': 'la profondeur et la transformation',
       },
     };
     return themes[lang]?[planet] ?? themes['Eng']?[planet] ?? 'core traits';
@@ -2589,6 +3295,20 @@ class _PlanetsTab extends StatelessWidget {
         10: 'carrera y vida publica',
         11: 'amistades y metas futuras',
         12: 'vida interior y sanacion',
+      },
+      'Fra': {
+        1: 'l’expression personnelle',
+        2: 'la sécurité et les ressources',
+        3: 'l’apprentissage et la communication',
+        4: 'le foyer et les racines',
+        5: 'la créativité et l’amour',
+        6: 'le travail et les habitudes quotidiennes',
+        7: 'les relations et les partenariats',
+        8: 'la confiance et la profondeur émotionnelle',
+        9: 'les convictions et l’ouverture',
+        10: 'la carrière et la vie publique',
+        11: 'les amitiés et les projets futurs',
+        12: 'la vie intérieure et la guérison',
       },
     };
     return themes[lang]?[house] ?? themes['Eng']?[house] ?? 'life themes';
@@ -2729,38 +3449,74 @@ class _AspectsTab extends StatelessWidget {
     this.language = 'Eng',
   });
 
+  String _emptyT(String key) {
+    const copy = {
+      'Eng': {
+        'noneTitle': 'No strong connections found',
+        'noneText': 'No major planet-to-planet influences were detected.',
+      },
+      'Rus': {
+        'noneTitle': 'Аспекты не найдены',
+        'noneText': 'Значимые аспекты в стандартных орбисах не обнаружены.',
+      },
+      'Heb': {
+        'noneTitle': 'לא נמצאו קשרים חזקים',
+        'noneText': 'לא זוהו השפעות משמעותיות בין כוכבי הלכת.',
+      },
+      'Spa': {
+        'noneTitle': 'No se encontraron conexiones fuertes',
+        'noneText':
+            'No se detectaron influencias importantes entre los planetas.',
+      },
+      'Fra': {
+        'noneTitle': 'Aucun aspect majeur trouvé',
+        'noneText':
+            'Aucune influence importante entre les planètes n’a été détectée.',
+      },
+    };
+    return copy[language]?[key] ?? copy['Eng']![key] ?? key;
+  }
+
   static const _aspectNames = {
     'Eng': {
-      'Conjunction': 'Conjunction',
-      'Sextile': 'Sextile',
-      'Square': 'Square',
-      'Trine': 'Trine',
-      'Quincunx': 'Quincunx',
-      'Opposition': 'Opposition',
+      'Conjunction': 'Strong combination',
+      'Sextile': 'Helpful opportunity',
+      'Square': 'Growth challenge',
+      'Trine': 'Natural strength',
+      'Quincunx': 'Needs adjustment',
+      'Opposition': 'Finding balance',
     },
     'Rus': {
-      'Conjunction': 'Соединение',
-      'Sextile': 'Секстиль',
-      'Square': 'Квадрат',
-      'Trine': 'Трин',
-      'Quincunx': 'Квинкункс',
-      'Opposition': 'Оппозиция',
+      'Conjunction': 'Сильное объединение',
+      'Sextile': 'Благоприятная возможность',
+      'Square': 'Вызов для роста',
+      'Trine': 'Естественная сильная сторона',
+      'Quincunx': 'Нужна корректировка',
+      'Opposition': 'Поиск баланса',
     },
     'Heb': {
-      'Conjunction': 'קונג׳אנקשן',
-      'Sextile': 'סקסטיל',
-      'Square': 'ריבוע',
-      'Trine': 'טרין',
-      'Quincunx': 'קווינקונקס',
-      'Opposition': 'אופוזיציה',
+      'Conjunction': 'שילוב חזק',
+      'Sextile': 'הזדמנות מועילה',
+      'Square': 'אתגר שמוביל לצמיחה',
+      'Trine': 'חוזקה טבעית',
+      'Quincunx': 'נדרשת התאמה',
+      'Opposition': 'מציאת איזון',
     },
     'Spa': {
-      'Conjunction': 'Conjunción',
-      'Sextile': 'Sextil',
-      'Square': 'Cuadratura',
-      'Trine': 'Trígono',
-      'Quincunx': 'Quincuncio',
-      'Opposition': 'Oposición',
+      'Conjunction': 'Combinación fuerte',
+      'Sextile': 'Oportunidad favorable',
+      'Square': 'Desafío para crecer',
+      'Trine': 'Fortaleza natural',
+      'Quincunx': 'Necesita ajuste',
+      'Opposition': 'Búsqueda de equilibrio',
+    },
+    'Fra': {
+      'Conjunction': 'Union puissante',
+      'Sextile': 'Occasion favorable',
+      'Square': 'Défi de croissance',
+      'Trine': 'Force naturelle',
+      'Quincunx': 'Ajustement nécessaire',
+      'Opposition': 'Recherche d’équilibre',
     },
   };
 
@@ -2796,6 +3552,14 @@ class _AspectsTab extends StatelessWidget {
       'Trine': 'Armonía y facilidad',
       'Quincunx': 'Ajuste necesario',
       'Opposition': 'Balance y polaridad',
+    },
+    'Fra': {
+      'Conjunction': 'Fusion des énergies',
+      'Sextile': 'Ouverture et fluidité',
+      'Square': 'Tension et croissance',
+      'Trine': 'Harmonie et aisance',
+      'Quincunx': 'Réglage nécessaire',
+      'Opposition': 'Équilibre et polarité',
     },
   };
 
@@ -2864,6 +3628,22 @@ class _AspectsTab extends StatelessWidget {
       'South Node': 'Nodo Sur',
       'Lilith': 'Lilith',
     },
+    'Fra': {
+      'Sun': 'Soleil',
+      'Moon': 'Lune',
+      'Mercury': 'Mercure',
+      'Venus': 'Vénus',
+      'Mars': 'Mars',
+      'Jupiter': 'Jupiter',
+      'Saturn': 'Saturne',
+      'Uranus': 'Uranus',
+      'Neptune': 'Neptune',
+      'Pluto': 'Pluton',
+      'Ascendant': 'Ascendant',
+      'North Node': 'Nœud nord',
+      'South Node': 'Nœud sud',
+      'Lilith': 'Lilith',
+    },
   };
 
   List<_AspectEntry> _fromBackend(List<AspectInfo> src) {
@@ -2876,12 +3656,12 @@ class _AspectsTab extends StatelessWidget {
       'Opposition': '☍',
     };
     const colorMap = {
-      'Conjunction': Color(0xFF9B7FD4),
-      'Sextile': Color(0xFF5BAD8A),
-      'Square': Color(0xFFD45C5C),
-      'Trine': Color(0xFF5B9BD4),
-      'Quincunx': Color(0xFFD4A85C),
-      'Opposition': Color(0xFFD47A5C),
+      'Conjunction': Color(0xFFD6C0FF),
+      'Sextile': Color(0xFF58D5D0),
+      'Square': Color(0xFFE96DFF),
+      'Trine': Color(0xFF3FC6D4),
+      'Quincunx': Color(0xFFF1B3FF),
+      'Opposition': Color(0xFFD45BFF),
     };
     final lang = _aspectKeywords.containsKey(language) ? language : 'Eng';
     return src
@@ -2891,7 +3671,7 @@ class _AspectsTab extends StatelessWidget {
             p2: a.planet2,
             name: a.aspect,
             sym: symMap[a.aspect] ?? '·',
-            color: colorMap[a.aspect] ?? const Color(0xFF9B7FD4),
+            color: colorMap[a.aspect] ?? const Color(0xFFD6C0FF),
             keyword: _aspectKeywords[lang]?[a.aspect] ?? '',
             orb: a.orb,
           ),
@@ -2912,12 +3692,12 @@ class _AspectsTab extends StatelessWidget {
     const angles = [0.0, 60.0, 90.0, 120.0, 150.0, 180.0];
     const maxOrbs = [8.0, 6.0, 8.0, 8.0, 3.0, 8.0];
     const colors = [
-      Color(0xFF9B7FD4),
-      Color(0xFF5BAD8A),
-      Color(0xFFD45C5C),
-      Color(0xFF5B9BD4),
-      Color(0xFFD4A85C),
-      Color(0xFFD47A5C),
+      Color(0xFFD6C0FF),
+      Color(0xFF58D5D0),
+      Color(0xFFE96DFF),
+      Color(0xFF3FC6D4),
+      Color(0xFFF1B3FF),
+      Color(0xFFD45BFF),
     ];
     final lang = _aspectKeywords.containsKey(language) ? language : 'Eng';
 
@@ -2949,22 +3729,542 @@ class _AspectsTab extends StatelessWidget {
     return results;
   }
 
+  String? _russianAspectInsight(_AspectEntry aspect) {
+    bool pair(String first, String second) =>
+        (aspect.p1 == first && aspect.p2 == second) ||
+        (aspect.p1 == second && aspect.p2 == first);
+
+    if (aspect.name == 'Square' && pair('Sun', 'Jupiter')) {
+      return 'Между желанием мыслить масштабно и необходимостью учитывать реальные возможности возникает постоянное напряжение. Большие цели мотивируют вас сильнее маленьких, но важно не переоценивать запас времени и сил.';
+    }
+    if (aspect.name == 'Trine' && pair('Venus', 'Mars')) {
+      return 'Чувства и действия обычно поддерживают друг друга: вам легче показать симпатию поступком и превратить притяжение в живое взаимодействие. Это даёт естественное обаяние и хороший баланс мягкости с инициативой.';
+    }
+    if (aspect.name == 'Sextile' && pair('Neptune', 'Pluto')) {
+      return 'Вы тонко чувствуете скрытые перемены и способны принимать глубокую внутреннюю перестройку без лишнего внешнего шума. Это поколенческий аспект, поэтому лично он особенно заметен, когда затрагивает ваши ценности и эмоциональные опоры.';
+    }
+    if (aspect.name == 'Conjunction' && pair('Mercury', 'Uranus')) {
+      return 'Ваш ум работает быстро и нестандартно: вы замечаете связи, которые другие пропускают, и можете внезапно увидеть решение целиком. Иногда мысль опережает речь, поэтому окружающим нужны промежуточные объяснения.';
+    }
+    if (aspect.name == 'Conjunction' && pair('Saturn', 'Ascendant')) {
+      return 'Вы производите серьёзное, собранное и надёжное впечатление, даже когда внутри чувствуете неуверенность. Высокие требования к себе помогают держать форму, но могут мешать быть спонтаннее и мягче к собственным ошибкам.';
+    }
+    if (aspect.name == 'Sextile' && pair('Saturn', 'Uranus')) {
+      return 'Вы способны обновлять систему, не разрушая то, что уже работает. Практичность помогает проверять смелые идеи, а независимость не даёт дисциплине превратиться в слепое следование правилам.';
+    }
+    if (aspect.name == 'Square' && pair('Sun', 'Mars')) {
+      return 'Внутри много воли и соревновательной энергии, поэтому промедление или чужое давление могут быстро вызывать раздражение. Когда у этой силы есть ясная цель, она превращается в смелость, выносливость и способность действовать там, где другие отступают.';
+    }
+    if (aspect.name == 'Conjunction' && pair('Mars', 'Jupiter')) {
+      return 'Вы действуете с размахом и легче включаетесь в задачу, если видите в ней рост или вызов. Энтузиазм заразителен, но иногда ускоряет вас раньше, чем проверены детали и последствия.';
+    }
+    if (aspect.name == 'Square' && pair('Venus', 'Ascendant')) {
+      return 'То, как вы выглядите со стороны, не всегда совпадает с тем, чего вы хотите от близости. Возможны попытки быть удобнее или сдержаннее, чем вам действительно комфортно; честная самоподача делает отношения заметно проще.';
+    }
+    if (aspect.name == 'Trine' && pair('Moon', 'Jupiter')) {
+      return 'Эмоциональная щедрость и вера в лучшее помогают вам восстанавливаться после трудностей. Вы умеете поддержать другого, но иногда можете успокаивать себя слишком широкими обещаниями вместо разговора о конкретном чувстве.';
+    }
+    if (aspect.name == 'Trine' && pair('Venus', 'Jupiter')) {
+      return 'Вам свойственны теплота, великодушие и способность видеть хорошее в людях. Удовольствие легко становится способом расширить жизнь, хотя временами хочется позволить себе больше, чем разумно.';
+    }
+    if (aspect.name == 'Quincunx' && pair('Moon', 'Neptune')) {
+      return 'Высокая чувствительность помогает улавливать настроение людей, но иногда затрудняет понимание собственных эмоций. Вам полезно отделять интуитивный сигнал от тревоги, фантазии или чужого состояния.';
+    }
+    if (aspect.name == 'Quincunx' && pair('Sun', 'Moon')) {
+      return 'Ваши сознательные цели и эмоциональные потребности не всегда движутся в одном ритме. Можно уверенно выбрать направление, а затем обнаружить внутреннее сопротивление; регулярная сверка с собственным состоянием помогает не жить через постоянное усилие.';
+    }
+    if (aspect.name == 'Sextile' && pair('Mercury', 'Saturn')) {
+      return 'Вы умеете упорядочивать сложные мысли, проверять факты и говорить по существу. Серьёзность мышления особенно полезна в долгих проектах, хотя иногда делает формулировки строже, чем требуется ситуации.';
+    }
+    if (aspect.name == 'Opposition' && pair('Moon', 'Mercury')) {
+      return 'Чувства и логика могут давать разные ответы: сначала возникает эмоциональная реакция, а затем ум пытается её объяснить или оспорить. Ваше преимущество появляется, когда вы не подавляете ни одну сторону и даёте им время договориться.';
+    }
+    if (aspect.name == 'Square' && pair('Saturn', 'Neptune')) {
+      return 'Между потребностью в ясном порядке и верой в невидимый смысл возникает напряжение. Вы можете чередовать жёсткий контроль с усталостью от ограничений; зрелый путь состоит в том, чтобы давать мечте форму, не лишая её вдохновения.';
+    }
+    return null;
+  }
+
+  String? _leadingAspectInsight(_AspectEntry aspect) {
+    bool pair(String first, String second) =>
+        (aspect.p1 == first && aspect.p2 == second) ||
+        (aspect.p1 == second && aspect.p2 == first);
+
+    String localized({
+      required String eng,
+      required String rus,
+      required String heb,
+      required String spa,
+      required String fra,
+    }) {
+      switch (language) {
+        case 'Rus':
+          return rus;
+        case 'Heb':
+          return heb;
+        case 'Spa':
+          return spa;
+        case 'Fra':
+          return fra;
+        default:
+          return eng;
+      }
+    }
+
+    if (aspect.name == 'Square' && pair('Sun', 'Jupiter')) {
+      return localized(
+        eng:
+            'There is a constant tension between thinking big and respecting real limits. Large goals motivate you, but you may overestimate your available time or energy.',
+        rus:
+            'Между желанием мыслить масштабно и необходимостью учитывать реальные возможности возникает постоянное напряжение. Большие цели мотивируют вас сильнее маленьких, но важно не переоценивать запас времени и сил.',
+        heb:
+            'קיים בכם מתח מתמיד בין הרצון לחשוב בגדול לבין הצורך להתחשב במגבלות אמיתיות. מטרות גדולות מניעות אתכם, אך לעיתים אתם מעריכים יתר על המידה את הזמן או האנרגיה הזמינים.',
+        spa:
+            'Existe una tensión constante entre pensar a lo grande y respetar los límites reales. Las metas ambiciosas te motivan, pero a veces puedes sobreestimar el tiempo o la energía disponibles.',
+        fra:
+            'Une tension constante existe entre votre envie de voir grand et la nécessité de respecter les limites réelles. Les objectifs ambitieux vous motivent, mais vous pouvez parfois surestimer le temps ou l’énergie disponibles.',
+      );
+    }
+    if (aspect.name == 'Trine' && pair('Venus', 'Mars')) {
+      return localized(
+        eng:
+            'Feelings and actions naturally support one another: you can show affection through action and turn attraction into genuine connection. This gives warmth, charm, and a healthy balance between softness and initiative.',
+        rus:
+            'Чувства и действия обычно поддерживают друг друга: вам легче показать симпатию поступком и превратить притяжение в живое взаимодействие. Это даёт естественное обаяние и хороший баланс мягкости с инициативой.',
+        heb:
+            'הרגש והפעולה תומכים זה בזה באופן טבעי: קל לכם להביע חיבה במעשים ולהפוך משיכה לקשר חי. הדבר מעניק חום, קסם ואיזון טוב בין רכות ליוזמה.',
+        spa:
+            'Los sentimientos y las acciones se apoyan de forma natural: te resulta fácil demostrar afecto con hechos y convertir la atracción en conexión real. Esto aporta calidez, encanto y equilibrio entre suavidad e iniciativa.',
+        fra:
+            'Les sentiments et les actes se soutiennent naturellement : vous exprimez facilement votre affection par des gestes et transformez l’attirance en lien réel. Cela donne de la chaleur, du charme et un bel équilibre entre douceur et initiative.',
+      );
+    }
+    if (aspect.name == 'Conjunction' && pair('Mercury', 'Uranus')) {
+      return localized(
+        eng:
+            'Your mind works quickly and unconventionally. You notice connections others miss and may see the complete solution before those around you understand the intermediate steps.',
+        rus:
+            'Ваш ум работает быстро и нестандартно. Вы замечаете связи, которые другие пропускают, и можете увидеть решение целиком раньше, чем окружающие поймут промежуточные шаги.',
+        heb:
+            'המחשבה שלכם מהירה ולא שגרתית. אתם מזהים קשרים שאחרים מפספסים ולעיתים רואים את הפתרון המלא לפני שהסביבה מבינה את שלבי הביניים.',
+        spa:
+            'Tu mente funciona con rapidez y de manera poco convencional. Detectas conexiones que otros pasan por alto y puedes ver la solución completa antes de que los demás comprendan los pasos intermedios.',
+        fra:
+            'Votre esprit fonctionne vite et de manière originale. Vous repérez des liens que d’autres ne voient pas et pouvez saisir la solution entière avant que votre entourage ne comprenne les étapes intermédiaires.',
+      );
+    }
+    if (aspect.name == 'Square' && pair('Sun', 'Mars')) {
+      return localized(
+        eng:
+            'You carry strong will and competitive energy, so delays or outside pressure can trigger irritation quickly. With a clear goal, that same force becomes courage, stamina, and decisive action.',
+        rus:
+            'Внутри много воли и соревновательной энергии, поэтому промедление или чужое давление могут быстро вызывать раздражение. При ясной цели эта сила превращается в смелость, выносливость и решительность.',
+        heb:
+            'יש בכם רצון חזק ואנרגיה תחרותית, ולכן עיכובים או לחץ חיצוני עלולים לעורר תסכול במהירות. כאשר המטרה ברורה, אותה עוצמה הופכת לאומץ, סיבולת ופעולה החלטית.',
+        spa:
+            'Tienes mucha voluntad y energía competitiva, por lo que los retrasos o la presión externa pueden irritarte con rapidez. Con una meta clara, esa fuerza se convierte en valor, resistencia y decisión.',
+        fra:
+            'Vous possédez une forte volonté et une énergie combative ; les retards ou la pression extérieure peuvent donc vous irriter rapidement. Avec un objectif clair, cette force devient courage, endurance et capacité d’action.',
+      );
+    }
+    if (aspect.name == 'Trine' && pair('Moon', 'Jupiter')) {
+      return localized(
+        eng:
+            'Emotional generosity and faith in improvement help you recover after difficulties. You know how to encourage others, though optimism can sometimes replace a direct conversation about what you truly feel.',
+        rus:
+            'Эмоциональная щедрость и вера в лучшее помогают вам восстанавливаться после трудностей. Вы умеете поддержать другого, но иногда оптимизм заменяет прямой разговор о собственных чувствах.',
+        heb:
+            'נדיבות רגשית ואמונה בטוב עוזרות לכם להתאושש מקשיים. אתם יודעים לעודד אחרים, אך לפעמים האופטימיות מחליפה שיחה ישירה על מה שאתם באמת מרגישים.',
+        spa:
+            'La generosidad emocional y la confianza en que las cosas pueden mejorar te ayudan a recuperarte. Sabes animar a otros, aunque a veces el optimismo sustituye una conversación directa sobre lo que sientes.',
+        fra:
+            'Votre générosité émotionnelle et votre confiance dans l’avenir vous aident à rebondir après les difficultés. Vous savez encourager les autres, même si l’optimisme remplace parfois une conversation directe sur vos propres émotions.',
+      );
+    }
+    return null;
+  }
+
   String _fallbackAspectDescription(
     _AspectEntry aspect,
     String p1Name,
     String p2Name,
     String aspectName,
+    int p1Count,
+    int p2Count,
   ) {
+    final orb = aspect.orb;
+    final isTight = orb <= 2.0;
+    final isSignificant = orb > 2.0 && orb <= 4.0;
+
+    String strengthLabel(String lang) {
+      if (lang == 'Rus') {
+        if (isTight) return 'Это точный и один из ключевых аспектов карты.';
+        if (isSignificant)
+          return 'Это заметный аспект, который ощутимо влияет на поведение.';
+        return 'Это фоновый аспект: он работает мягче, но добавляет важный оттенок.';
+      }
+      if (lang == 'Heb') {
+        if (isTight) return 'זהו היבט מדויק ומרכזי במפה.';
+        if (isSignificant)
+          return 'זהו היבט משמעותי עם השפעה ניכרת על ההתנהגות.';
+        return 'זהו היבט רקע: עדין יותר, אך מוסיף שכבה חשובה.';
+      }
+      if (lang == 'Spa') {
+        if (isTight) return 'Es un aspecto preciso y central de la carta.';
+        if (isSignificant)
+          return 'Es un aspecto significativo con impacto claro en la conducta.';
+        return 'Es un aspecto de fondo: mas suave, pero aun relevante.';
+      }
+      if (lang == 'Fra') {
+        if (isTight) return 'C’est un aspect précis et central du thème.';
+        if (isSignificant) {
+          return 'C’est un aspect important qui influence clairement le comportement.';
+        }
+        return 'C’est un aspect de fond : plus discret, mais toujours significatif.';
+      }
+      if (isTight) return 'This is a tight, defining aspect in the chart.';
+      if (isSignificant)
+        return 'This is a significant aspect with clear personality impact.';
+      return 'This is a background aspect: subtler, but still meaningful.';
+    }
+
+    String aspectBehavior(String lang, String name) {
+      final map = {
+        'Eng': {
+          'Conjunction': 'blends both energies into one dominant channel',
+          'Sextile': 'opens a cooperative flow and practical opportunities',
+          'Square': 'creates friction that pushes growth through challenge',
+          'Trine': 'supports natural talent and easier expression',
+          'Opposition': 'creates polarity and asks for conscious balance',
+          'Quincunx': 'shows mismatch that requires adjustment and fine tuning',
+        },
+        'Rus': {
+          'Conjunction': 'сливает две энергии в один ведущий канал',
+          'Sextile': 'даёт рабочий поток и практичные возможности',
+          'Square': 'создаёт напряжение, через которое приходит рост',
+          'Trine': 'поддерживает естественный талант и лёгкое проявление',
+          'Opposition': 'создаёт полярность и требует осознанного баланса',
+          'Quincunx':
+              'показывает нестыковку, требующую корректировки и настройки',
+        },
+        'Heb': {
+          'Conjunction': 'ממזג את שתי האנרגיות לערוץ דומיננטי אחד',
+          'Sextile': 'פותח זרימה שיתופית והזדמנויות מעשיות',
+          'Square': 'יוצר חיכוך שמקדם צמיחה דרך אתגר',
+          'Trine': 'תומך בכישרון טבעי ובהבעה זורמת',
+          'Opposition': 'יוצר קוטביות ודורש איזון מודע',
+          'Quincunx': 'מצביע על חוסר התאמה שמצריך כוונון והתאמה',
+        },
+        'Spa': {
+          'Conjunction': 'fusiona ambas energias en un solo canal dominante',
+          'Sextile': 'abre cooperacion y oportunidades practicas',
+          'Square': 'crea friccion que impulsa crecimiento',
+          'Trine': 'favorece talento natural y expresion fluida',
+          'Opposition': 'marca polaridad y exige equilibrio consciente',
+          'Quincunx': 'muestra desajuste que requiere correccion fina',
+        },
+        'Fra': {
+          'Conjunction': 'réunit les deux énergies en un seul courant dominant',
+          'Sextile':
+              'ouvre une coopération fluide et des possibilités concrètes',
+          'Square': 'crée une friction qui pousse à grandir',
+          'Trine': 'soutient un talent naturel et une expression aisée',
+          'Opposition': 'crée une polarité qui demande un équilibre conscient',
+          'Quincunx':
+              'révèle un décalage qui demande des ajustements réguliers',
+        },
+      };
+      return map[lang]?[name] ?? map['Eng']?[name] ?? name.toLowerCase();
+    }
+
+    String planetRole(String lang, String planet) {
+      final map = {
+        'Eng': {
+          'Sun': 'will and ego expression',
+          'Moon': 'emotions and inner needs',
+          'Mercury': 'thinking and communication',
+          'Venus': 'love, values, and attraction',
+          'Mars': 'action and desire',
+          'Jupiter': 'growth and beliefs',
+          'Saturn': 'discipline and limits',
+          'Uranus': 'innovation and unpredictability',
+          'Neptune': 'imagination and inspiration',
+          'Pluto': 'transformation and power dynamics',
+          'Ascendant': 'outward identity and style',
+        },
+        'Rus': {
+          'Sun': 'воля и самовыражение',
+          'Moon': 'эмоции и внутренние потребности',
+          'Mercury': 'мышление и коммуникация',
+          'Venus': 'ценности, симпатии и стиль близости',
+          'Mars': 'действие и напор',
+          'Jupiter': 'рост и убеждения',
+          'Saturn': 'дисциплина и границы',
+          'Uranus': 'новаторство и непредсказуемость',
+          'Neptune': 'вдохновение и тонкая чувствительность',
+          'Pluto': 'трансформация и контроль',
+          'Ascendant': 'внешний образ и способ самоподачи',
+        },
+        'Heb': {
+          'Sun': 'רצון וביטוי עצמי',
+          'Moon': 'רגש וצרכים פנימיים',
+          'Mercury': 'חשיבה ותקשורת',
+          'Venus': 'ערכים, אהבה ומשיכה',
+          'Mars': 'פעולה ודחף',
+          'Jupiter': 'צמיחה ואמונות',
+          'Saturn': 'משמעת וגבולות',
+          'Uranus': 'חדשנות ואי־צפיות',
+          'Neptune': 'השראה ורגישות עדינה',
+          'Pluto': 'טרנספורמציה וכוח',
+          'Ascendant': 'זהות חיצונית ואופן הצגה',
+        },
+        'Spa': {
+          'Sun': 'voluntad y expresion del yo',
+          'Moon': 'emociones y necesidades internas',
+          'Mercury': 'pensamiento y comunicacion',
+          'Venus': 'valores, amor y atraccion',
+          'Mars': 'accion y deseo',
+          'Jupiter': 'crecimiento y creencias',
+          'Saturn': 'disciplina y limites',
+          'Uranus': 'innovacion e imprevisibilidad',
+          'Neptune': 'inspiracion y sensibilidad',
+          'Pluto': 'transformacion y poder',
+          'Ascendant': 'identidad externa y estilo social',
+        },
+        'Fra': {
+          'Sun': 'volonté et expression personnelle',
+          'Moon': 'émotions et besoins intérieurs',
+          'Mercury': 'pensée et communication',
+          'Venus': 'valeurs, affection et manière d’aimer',
+          'Mars': 'action et désir',
+          'Jupiter': 'croissance et convictions',
+          'Saturn': 'discipline et limites',
+          'Uranus': 'innovation et imprévisibilité',
+          'Neptune': 'imagination et sensibilité',
+          'Pluto': 'transformation et rapports de pouvoir',
+          'Ascendant': 'image extérieure et manière de se présenter',
+        },
+      };
+      return map[lang]?[planet] ?? map['Eng']?[planet] ?? planet;
+    }
+
+    final role1 = planetRole(language, aspect.p1);
+    final role2 = planetRole(language, aspect.p2);
+    final behavior = aspectBehavior(language, aspect.name);
+    final leadingInsight = _leadingAspectInsight(aspect);
+    if (leadingInsight != null) {
+      return '$leadingInsight ${strengthLabel(language)}';
+    }
+
+    String aspectTypeLineRu() {
+      switch (aspect.name) {
+        case 'Conjunction':
+          return 'энергии работают как единый поток: сильнее всего проявляется тема объединения мотивации и реакции';
+        case 'Sextile':
+          return 'между темами есть рабочая связка: легче замечать возможности и переводить их в конкретные шаги';
+        case 'Square':
+          return 'включается продуктивное напряжение: именно через внутренний конфликт здесь формируется рост и зрелость';
+        case 'Trine':
+          return 'есть естественная гармония: качества проявляются свободно и часто воспринимаются как врождённый талант';
+        case 'Opposition':
+          return 'формируется полюсность: важно не выбирать одну сторону, а настраивать баланс между ними';
+        case 'Quincunx':
+          return 'заметна нестыковка ритмов: аспект требует регулярной подстройки привычек и ожиданий';
+        default:
+          return 'темы взаимодействуют заметно и формируют отдельный поведенческий паттерн';
+      }
+    }
+
+    String recurringNote() {
+      final maxCount = p1Count > p2Count ? p1Count : p2Count;
+      if (maxCount < 2) return '';
+      switch (language) {
+        case 'Rus':
+          return ' Повторяющаяся тема: одна из этих планет участвует в нескольких аспектах, поэтому динамика усиливается и проявляется чаще.';
+        case 'Heb':
+          return ' נושא חוזר: אחד הכוכבים כאן מופיע במספר היבטים, ולכן הדינמיקה הזו מודגשת במיוחד במפה.';
+        case 'Spa':
+          return ' Tema recurrente: uno de estos planetas aparece en varios aspectos, por lo que esta dinamica se refuerza.';
+        case 'Fra':
+          return ' Thème récurrent : l’une de ces planètes participe à plusieurs aspects, ce qui renforce cette dynamique.';
+        default:
+          return ' Recurring theme: one of these planets appears in multiple aspects, so this dynamic becomes a repeating pattern.';
+      }
+    }
+
     switch (language) {
       case 'Heb':
-        return '$p1Name ו-$p2Name יוצרים ${_aspectKeywords['Heb']?[aspect.name] ?? aspectName.toLowerCase()}, ולכן זהו נושא מרכזי במפה שדורש מודעות ודיוק.';
+        return '$p1Name ($role1) מול $p2Name ($role2): בהיבט $aspectName נוצרת דינמיקה שבה $behavior. '
+            '${strengthLabel('Heb')} אורב ${orb.toStringAsFixed(1)}° מחדד עד כמה הדפוס הזה פעיל ביומיום.${recurringNote()}';
       case 'Rus':
-        return '$p1Name и $p2Name создают тему «${_aspectKeywords['Rus']?[aspect.name] ?? aspectName.toLowerCase()}», поэтому этот аспект заметно влияет на характер и реакции.';
+        final specificInsight = _russianAspectInsight(aspect);
+        if (specificInsight != null) {
+          return '$specificInsight ${strengthLabel('Rus')}';
+        }
+        return '$p1Name ($role1) и $p2Name ($role2): $aspectName — ${aspectTypeLineRu()}. '
+            '${strengthLabel('Rus')}';
+      case 'Fra':
+        return '$p1Name ($role1) et $p2Name ($role2) : $aspectName $behavior. '
+            '${strengthLabel('Fra')} L’orbe de ${orb.toStringAsFixed(1)}° indique la force avec laquelle ce schéma tend à se manifester.${recurringNote()}';
       case 'Spa':
-        return '$p1Name y $p2Name forman una dinamica de ${_aspectKeywords['Spa']?[aspect.name] ?? aspectName.toLowerCase()}, por lo que este aspecto colorea de forma importante la experiencia personal.';
+        return '$p1Name ($role1) y $p2Name ($role2): $aspectName $behavior. '
+            '${strengthLabel('Spa')} El orbe ${orb.toStringAsFixed(1)}° marca la intensidad practica del patron.${recurringNote()}';
       default:
-        return '$p1Name and $p2Name create a pattern of ${_aspectKeywords['Eng']?[aspect.name] ?? aspectName.toLowerCase()}, so this aspect meaningfully shapes the chart experience.';
+        return '$p1Name ($role1) with $p2Name ($role2): $aspectName $behavior. '
+            '${strengthLabel('Eng')} Orb ${orb.toStringAsFixed(1)}° shows how strongly this pattern tends to manifest.${recurringNote()}';
     }
+  }
+
+  String _t(Map<String, String> m) => m[language] ?? m['Eng'] ?? '';
+
+  String _groupTitleTight() => _t({
+    'Eng': 'Strongest connections',
+    'Rus': 'Самые сильные связи',
+    'Heb': 'הקשרים החזקים ביותר',
+    'Spa': 'Conexiones más fuertes',
+    'Fra': 'Liens les plus puissants',
+  });
+
+  String _groupTitleSignificant() => _t({
+    'Eng': 'Important connections',
+    'Rus': 'Важные связи',
+    'Heb': 'קשרים חשובים',
+    'Spa': 'Conexiones importantes',
+    'Fra': 'Liens importants',
+  });
+
+  String _groupTitleBackground() => _t({
+    'Eng': 'Background connections',
+    'Rus': 'Фоновые связи',
+    'Heb': 'קשרים ברקע',
+    'Spa': 'Conexiones de fondo',
+    'Fra': 'Liens de fond',
+  });
+
+  String _overallTitle() => _t({
+    'Eng': 'Overall Picture',
+    'Rus': 'Общая картина',
+    'Heb': 'התמונה הכוללת',
+    'Spa': 'Panorama general',
+    'Fra': 'Vue d’ensemble',
+  });
+
+  bool _isTenseAspect(String name) =>
+      name == 'Square' || name == 'Opposition' || name == 'Quincunx';
+
+  String _overallPictureText(List<_AspectEntry> aspects) {
+    if (aspects.isEmpty) {
+      return _t({
+        'Eng': 'No major recurring themes were detected between the planets.',
+        'Rus':
+            'По текущему набору аспектов не выявлено выраженных повторяющихся тем.',
+        'Heb': 'לא זוהו נושאים חוזרים בולטים בין כוכבי הלכת.',
+        'Spa': 'No se detectaron temas recurrentes claros entre los planetas.',
+      });
+    }
+
+    final byPlanet = <String, int>{};
+    int tenseCount = 0;
+    for (final a in aspects) {
+      byPlanet[a.p1] = (byPlanet[a.p1] ?? 0) + 1;
+      byPlanet[a.p2] = (byPlanet[a.p2] ?? 0) + 1;
+      if (_isTenseAspect(a.name)) tenseCount++;
+    }
+
+    final dominant = byPlanet.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    final dominantPlanet = dominant.isNotEmpty ? dominant.first.key : '';
+    final dominantCount = dominant.isNotEmpty ? dominant.first.value : 0;
+    final pLang = _planetNames.containsKey(language) ? language : 'Eng';
+    final dominantName = _planetNames[pLang]?[dominantPlanet] ?? dominantPlanet;
+
+    final tight = aspects.where((a) => a.orb <= 2.0).toList();
+    final lead = tight.isNotEmpty ? tight.first : aspects.first;
+    final aLang = _aspectNames.containsKey(language) ? language : 'Eng';
+    final leadAspectName = _aspectNames[aLang]?[lead.name] ?? lead.name;
+    final p1 = _planetNames[pLang]?[lead.p1] ?? lead.p1;
+    final p2 = _planetNames[pLang]?[lead.p2] ?? lead.p2;
+
+    switch (language) {
+      case 'Rus':
+        return 'Ключевая связка: $p1 $leadAspectName $p2 (орб ${lead.orb.toStringAsFixed(1)}°). '
+            'Повторяющаяся тема: $dominantName участвует в $dominantCount аспектах, поэтому его функции выражены особенно ярко. '
+            'Баланс карты: напряжённых аспектов $tenseCount из ${aspects.length}, что задаёт заметную динамику роста через задачи и настройку реакций.';
+      case 'Heb':
+        return 'הקשר המרכזי: $p1 ו-$p2 יוצרים $leadAspectName. '
+            'נושא חוזר: $dominantName מופיע ב-$dominantCount קשרים ולכן ההשפעה שלו חזקה במיוחד. '
+            'בתמונה הכוללת יש $tenseCount אתגרי צמיחה מתוך ${aspects.length} קשרים.';
+      case 'Spa':
+        return 'Conexión principal: $p1 y $p2 crean una dinámica de $leadAspectName. '
+            'Tema recurrente: $dominantName aparece en $dominantCount conexiones, por lo que su influencia es especialmente fuerte. '
+            'En general hay $tenseCount desafíos de crecimiento entre ${aspects.length} conexiones.';
+      case 'Fra':
+        return 'Lien principal : $p1 et $p2 forment une dynamique de type $leadAspectName. '
+            'Thème récurrent : $dominantName participe à $dominantCount aspects, ce qui renforce son influence. '
+            'Dans l’ensemble, $tenseCount aspects sur ${aspects.length} demandent un ajustement ou un effort de croissance.';
+      default:
+        return 'Main connection: $p1 and $p2 create a $leadAspectName dynamic. '
+            'Recurring theme: $dominantName appears in $dominantCount connections, making its influence especially strong. '
+            'Overall, there are $tenseCount growth challenges among ${aspects.length} connections.';
+    }
+  }
+
+  Widget _sectionHeader(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: _chartTextStrong,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _overallCard(String text) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: _chartCardSurface.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: _chartCardBorder.withOpacity(0.72)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _overallTitle(),
+                style: const TextStyle(
+                  color: _chartTextStrong,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: _chartTextBody,
+                  fontSize: 12.8,
+                  height: 1.6,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -2984,7 +4284,7 @@ class _AspectsTab extends StatelessWidget {
             ),
             child: const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF9B7FD4),
+                color: AstroPalette.accentMagenta,
                 strokeWidth: 2,
               ),
             ),
@@ -2998,25 +4298,43 @@ class _AspectsTab extends StatelessWidget {
         : (planets != null ? _compute(planets!) : <_AspectEntry>[]);
 
     if (aspects.isEmpty) {
-      return const _InfoCard(
-        title: 'No aspects found',
-        text: 'No major aspects detected within standard orbs.',
-      );
+      return _InfoCard(title: _emptyT('noneTitle'), text: _emptyT('noneText'));
     }
 
-    final aspectCards = List.generate(aspects.length, (i) {
-      final a = aspects[i];
+    final planetFrequency = <String, int>{};
+    for (final a in aspects) {
+      planetFrequency[a.p1] = (planetFrequency[a.p1] ?? 0) + 1;
+      planetFrequency[a.p2] = (planetFrequency[a.p2] ?? 0) + 1;
+    }
+
+    List<Widget> buildCards(
+      List<_AspectEntry> src,
+    ) => List.generate(src.length, (i) {
+      final a = src[i];
       final lang = _aspectNames.containsKey(language) ? language : 'Eng';
       final pLang = _planetNames.containsKey(language) ? language : 'Eng';
       final p1Name = _planetNames[pLang]?[a.p1] ?? a.p1;
       final p2Name = _planetNames[pLang]?[a.p2] ?? a.p2;
       final aspectName = _aspectNames[lang]?[a.name] ?? a.name;
-      final descKey = '${a.p1} ${a.name} ${a.p2}';
-      final desc = (aspectInterpretations[descKey] ?? '').trim().isNotEmpty
-          ? aspectInterpretations[descKey]!
-          : _fallbackAspectDescription(a, p1Name, p2Name, aspectName);
+      final directKey = '${a.p1} ${a.name} ${a.p2}';
+      final reverseKey = '${a.p2} ${a.name} ${a.p1}';
+      final backendDescription =
+          (aspectInterpretations[directKey] ??
+                  aspectInterpretations[reverseKey] ??
+                  '')
+              .trim();
+      final desc = backendDescription.isNotEmpty
+          ? backendDescription
+          : _fallbackAspectDescription(
+              a,
+              p1Name,
+              p2Name,
+              aspectName,
+              planetFrequency[a.p1] ?? 1,
+              planetFrequency[a.p2] ?? 1,
+            );
       return Padding(
-        padding: EdgeInsets.only(bottom: i < aspects.length - 1 ? 10 : 0),
+        padding: EdgeInsets.only(bottom: i < src.length - 1 ? 10 : 0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
           child: BackdropFilter(
@@ -3094,7 +4412,34 @@ class _AspectsTab extends StatelessWidget {
       );
     });
 
-    return Column(children: aspectCards);
+    final tight = aspects.where((a) => a.orb <= 2.0).toList();
+    final significant = aspects
+        .where((a) => a.orb > 2.0 && a.orb <= 4.0)
+        .toList();
+    final background = aspects
+        .where((a) => a.orb > 4.0 && a.orb <= 7.0)
+        .toList();
+
+    final sections = <Widget>[];
+
+    if (tight.isNotEmpty) {
+      sections.add(_sectionHeader(_groupTitleTight()));
+      sections.addAll(buildCards(tight));
+      sections.add(const SizedBox(height: 12));
+    }
+    if (significant.isNotEmpty) {
+      sections.add(_sectionHeader(_groupTitleSignificant()));
+      sections.addAll(buildCards(significant));
+      sections.add(const SizedBox(height: 12));
+    }
+    if (background.isNotEmpty) {
+      sections.add(_sectionHeader(_groupTitleBackground()));
+      sections.addAll(buildCards(background));
+      sections.add(const SizedBox(height: 12));
+    }
+
+    sections.add(_overallCard(_overallPictureText(aspects)));
+    return Column(children: sections);
   }
 }
 
@@ -3113,6 +4458,7 @@ class _ConfigurationsTab extends StatelessWidget {
     'Rus': 'Нет конфигураций',
     'Heb': 'אין קונפיגורציות',
     'Spa': 'Sin configuraciones',
+    'Fra': 'Aucune configuration',
   };
   static const _emptyText = {
     'Eng':
@@ -3122,6 +4468,8 @@ class _ConfigurationsTab extends StatelessWidget {
     'Heb': 'לא נמצאו קונפיגורציות עיקריות (T-Square, Grand Trine, Yod וכד׳).',
     'Spa':
         'No se detectaron configuraciones principales (T-Cuadrado, Gran Trígono, Yod, etc.).',
+    'Fra':
+        'Aucune configuration majeure (carré en T, grand trigone, yod, etc.) n’a été détectée.',
   };
 
   static const _patternIcons = {
@@ -3180,6 +4528,19 @@ class _ConfigurationsTab extends StatelessWidget {
       if (pattern.startsWith('Kite'))
         return 'La configuracion cometa combina talento natural con una direccion clara para avanzar.';
       return 'Esta configuracion muestra un patron importante en la carta y como varias fuerzas trabajan juntas.';
+    }
+    if (language == 'Fra') {
+      if (pattern.startsWith('Stellium'))
+        return 'Un stellium concentre beaucoup d’énergie dans un même domaine de vie, qui devient alors particulièrement important.';
+      if (pattern.startsWith('T-Square'))
+        return 'Le carré en T crée une tension constructive qui pousse à grandir, agir et trouver un nouvel équilibre.';
+      if (pattern.startsWith('Grand Trine'))
+        return 'Le grand trigone révèle une aisance naturelle et un talent qu’il est utile de développer consciemment.';
+      if (pattern.startsWith('Yod'))
+        return 'Le yod indique un chemin d’ajustements subtils et une direction qui prend progressivement tout son sens.';
+      if (pattern.startsWith('Kite'))
+        return 'La configuration en cerf-volant relie les talents naturels à une direction claire pour avancer.';
+      return 'Cette configuration révèle un schéma important du thème et la manière dont plusieurs forces agissent ensemble.';
     }
     if (pattern.startsWith('Stellium'))
       return 'A stellium concentrates a lot of energy in one area of life, making that theme especially dominant.';
@@ -3465,28 +4826,32 @@ class _TransitsTab extends StatelessWidget {
   });
 
   static const _todayTitle = {
-    'Eng': "Today's Transits",
-    'Rus': 'Транзиты сегодня',
-    'Heb': 'מעברים היום',
-    'Spa': 'Tránsitos de hoy',
+    'Eng': 'What Today Brings',
+    'Rus': 'Что вас ждёт сегодня',
+    'Heb': 'מה מחכה לכם היום',
+    'Spa': 'Qué te espera hoy',
+    'Fra': 'Ce qui vous attend aujourd’hui',
   };
   static const _noneTitle = {
     'Eng': 'No active transits',
     'Rus': 'Нет активных транзитов',
     'Heb': 'אין מעברים פעילים',
     'Spa': 'Sin tránsitos activos',
+    'Fra': 'Aucun transit actif',
   };
   static const _noneText = {
     'Eng': 'No significant transit aspects within 5° today.',
     'Rus': 'Сегодня нет значимых транзитных аспектов в пределах 5°.',
     'Heb': 'אין אספקטי מעבר משמעותיים בתוך 5° היום.',
     'Spa': 'Hoy no hay aspectos de tránsito significativos dentro de 5°.',
+    'Fra': 'Aucun aspect de transit significatif à moins de 5° aujourd’hui.',
   };
   static const _errorTitle = {
     'Eng': 'Transits unavailable',
     'Rus': 'Транзиты недоступны',
     'Heb': 'המעברים אינם זמינים',
     'Spa': 'Transitos no disponibles',
+    'Fra': 'Transits indisponibles',
   };
   static const _errorText = {
     'Eng':
@@ -3496,18 +4861,22 @@ class _TransitsTab extends StatelessWidget {
     'Heb': 'לא ניתן היה לטעון את נתוני המעברים. מפת הלידה עדיין זמינה.',
     'Spa':
         'No se pudieron cargar los transitos. La carta natal sigue disponible.',
+    'Fra':
+        'Les transits n’ont pas pu être chargés. Le thème natal reste disponible.',
   };
   static const _natalLabel = {
     'Eng': 'natal',
     'Rus': 'натальный',
     'Heb': 'נטלי',
     'Spa': 'natal',
+    'Fra': 'natal',
   };
   static const _houseLabel = {
     'Eng': 'house',
     'Rus': 'дом',
     'Heb': 'בית',
     'Spa': 'casa',
+    'Fra': 'maison',
   };
   static const _planetNames = {
     'Eng': {
@@ -3574,39 +4943,121 @@ class _TransitsTab extends StatelessWidget {
       'South Node': 'Nodo Sur',
       'Lilith': 'Lilith',
     },
+    'Fra': {
+      'Sun': 'Soleil',
+      'Moon': 'Lune',
+      'Mercury': 'Mercure',
+      'Venus': 'Vénus',
+      'Mars': 'Mars',
+      'Jupiter': 'Jupiter',
+      'Saturn': 'Saturne',
+      'Uranus': 'Uranus',
+      'Neptune': 'Neptune',
+      'Pluto': 'Pluton',
+      'Ascendant': 'Ascendant',
+      'North Node': 'Nœud nord',
+      'South Node': 'Nœud sud',
+      'Lilith': 'Lilith',
+    },
   };
   static const _aspectNames = {
     'Eng': {
-      'Conjunction': 'Conjunction',
-      'Sextile': 'Sextile',
-      'Square': 'Square',
-      'Trine': 'Trine',
-      'Quincunx': 'Quincunx',
-      'Opposition': 'Opposition',
+      'Conjunction': 'Strong combination',
+      'Sextile': 'Helpful opportunity',
+      'Square': 'Growth challenge',
+      'Trine': 'Natural strength',
+      'Quincunx': 'Needs adjustment',
+      'Opposition': 'Finding balance',
     },
     'Rus': {
-      'Conjunction': 'Соединение',
-      'Sextile': 'Секстиль',
-      'Square': 'Квадрат',
-      'Trine': 'Трин',
-      'Quincunx': 'Квинкункс',
-      'Opposition': 'Оппозиция',
+      'Conjunction': 'Сильное объединение',
+      'Sextile': 'Благоприятная возможность',
+      'Square': 'Вызов для роста',
+      'Trine': 'Естественная сильная сторона',
+      'Quincunx': 'Нужна корректировка',
+      'Opposition': 'Поиск баланса',
     },
     'Heb': {
-      'Conjunction': 'קונג׳אנקשן',
-      'Sextile': 'סקסטיל',
-      'Square': 'ריבוע',
-      'Trine': 'טרין',
-      'Quincunx': 'קווינקונקס',
-      'Opposition': 'אופוזיציה',
+      'Conjunction': 'שילוב חזק',
+      'Sextile': 'הזדמנות מועילה',
+      'Square': 'אתגר שמוביל לצמיחה',
+      'Trine': 'חוזקה טבעית',
+      'Quincunx': 'נדרשת התאמה',
+      'Opposition': 'מציאת איזון',
     },
     'Spa': {
-      'Conjunction': 'Conjunción',
-      'Sextile': 'Sextil',
-      'Square': 'Cuadratura',
-      'Trine': 'Trígono',
-      'Quincunx': 'Quincuncio',
-      'Opposition': 'Oposición',
+      'Conjunction': 'Combinación fuerte',
+      'Sextile': 'Oportunidad favorable',
+      'Square': 'Desafío para crecer',
+      'Trine': 'Fortaleza natural',
+      'Quincunx': 'Necesita ajuste',
+      'Opposition': 'Búsqueda de equilibrio',
+    },
+    'Fra': {
+      'Conjunction': 'Union puissante',
+      'Sextile': 'Occasion favorable',
+      'Square': 'Défi de croissance',
+      'Trine': 'Force naturelle',
+      'Quincunx': 'Ajustement nécessaire',
+      'Opposition': 'Recherche d’équilibre',
+    },
+  };
+  static const _signNames = {
+    'Rus': {
+      'Aries': 'Овен',
+      'Taurus': 'Телец',
+      'Gemini': 'Близнецы',
+      'Cancer': 'Рак',
+      'Leo': 'Лев',
+      'Virgo': 'Дева',
+      'Libra': 'Весы',
+      'Scorpio': 'Скорпион',
+      'Sagittarius': 'Стрелец',
+      'Capricorn': 'Козерог',
+      'Aquarius': 'Водолей',
+      'Pisces': 'Рыбы',
+    },
+    'Heb': {
+      'Aries': 'טלה',
+      'Taurus': 'שור',
+      'Gemini': 'תאומים',
+      'Cancer': 'סרטן',
+      'Leo': 'אריה',
+      'Virgo': 'בתולה',
+      'Libra': 'מאזניים',
+      'Scorpio': 'עקרב',
+      'Sagittarius': 'קשת',
+      'Capricorn': 'גדי',
+      'Aquarius': 'דלי',
+      'Pisces': 'דגים',
+    },
+    'Spa': {
+      'Aries': 'Aries',
+      'Taurus': 'Tauro',
+      'Gemini': 'Géminis',
+      'Cancer': 'Cáncer',
+      'Leo': 'Leo',
+      'Virgo': 'Virgo',
+      'Libra': 'Libra',
+      'Scorpio': 'Escorpio',
+      'Sagittarius': 'Sagitario',
+      'Capricorn': 'Capricornio',
+      'Aquarius': 'Acuario',
+      'Pisces': 'Piscis',
+    },
+    'Fra': {
+      'Aries': 'Bélier',
+      'Taurus': 'Taureau',
+      'Gemini': 'Gémeaux',
+      'Cancer': 'Cancer',
+      'Leo': 'Lion',
+      'Virgo': 'Vierge',
+      'Libra': 'Balance',
+      'Scorpio': 'Scorpion',
+      'Sagittarius': 'Sagittaire',
+      'Capricorn': 'Capricorne',
+      'Aquarius': 'Verseau',
+      'Pisces': 'Poissons',
     },
   };
 
@@ -3623,11 +5074,13 @@ class _TransitsTab extends StatelessWidget {
           final aspect = _aspectNames[lang]?[item.aspect] ?? item.aspect;
           switch (lang) {
             case 'Heb':
-              return '$transitPlanet ב-${_houseLabel[lang] ?? 'בית'} ${item.transitHouse} יוצר $aspect עם $natalPlanet';
+              return '$transitPlanet ב-${_houseLabel[lang] ?? 'בית'} ${item.transitHouse} יוצר $aspect עם $natalPlanet (${_orbStrengthLabel(item.orb, lang)})';
             case 'Rus':
               return '$transitPlanet в ${_houseLabel[lang] ?? 'дом'} ${item.transitHouse} формирует $aspect к $natalPlanet';
             case 'Spa':
               return '$transitPlanet en ${_houseLabel[lang] ?? 'casa'} ${item.transitHouse} crea $aspect con $natalPlanet';
+            case 'Fra':
+              return '$transitPlanet en ${_houseLabel[lang] ?? 'maison'} ${item.transitHouse} forme $aspect avec $natalPlanet';
             default:
               return '$transitPlanet in ${_houseLabel[lang] ?? 'house'} ${item.transitHouse} forms a $aspect with $natalPlanet';
           }
@@ -3636,14 +5089,43 @@ class _TransitsTab extends StatelessWidget {
 
     switch (lang) {
       case 'Heb':
-        return 'המעברים הפעילים מדגישים כרגע נושאים של קשרים, תגובות רגשיות ותזמון מעשי. מוקדי היום: $highlights.';
+        return 'המעברים הפעילים היום מדגישים שילוב בין צרכים רגשיים, מערכות יחסים והחלטות מעשיות. '
+            'כדאי לפעול בקצב מדורג: קודם דיוק פנימי, אחר כך תגובה חיצונית. '
+            'מוקדי היום: $highlights.';
       case 'Rus':
         return 'Текущие транзиты подчёркивают темы отношений, эмоциональных реакций и практических решений. Главные акценты дня: $highlights.';
       case 'Spa':
         return 'Los transitos activos resaltan temas de relaciones, respuestas emocionales y decisiones practicas. Enfoques del dia: $highlights.';
+      case 'Fra':
+        return 'Les transits actifs mettent en lumière les relations, les réactions émotionnelles et les décisions concrètes. Points forts du jour : $highlights.';
       default:
         return 'The active transits currently emphasize relationships, emotional responses, and practical timing. Today\'s main highlights: $highlights.';
     }
+  }
+
+  String _displayInterpretation(String text, String lang) {
+    var cleaned = text
+        .replaceAll(RegExp(r'^\s*---+\s*$', multiLine: true), '')
+        .replaceAll(RegExp(r'^\s*#{1,6}\s*', multiLine: true), '')
+        .replaceAll('**', '')
+        .replaceAll('*', '');
+    if (lang == 'Rus') {
+      cleaned = cleaned.replaceAll(
+        RegExp(r'\borb\b', caseSensitive: false),
+        'орбис',
+      );
+    }
+    return cleaned.replaceAll(RegExp(r'\n{3,}'), '\n\n').trim();
+  }
+
+  bool _isTechnicalInterpretation(String text) {
+    final normalized = text.toLowerCase();
+    return normalized.contains('claude api') ||
+        normalized.contains('fallback') ||
+        normalized.contains('structural template') ||
+        normalized.contains('structured guidance') ||
+        normalized.contains('структурный разбор') ||
+        normalized.contains('структуре при недоступном');
   }
 
   static const _symMap = {
@@ -3655,12 +5137,12 @@ class _TransitsTab extends StatelessWidget {
     'Opposition': '☍',
   };
   static const _colorMap = {
-    'Conjunction': Color(0xFF9B7FD4),
-    'Sextile': Color(0xFF5BAD8A),
-    'Square': Color(0xFFD45C5C),
-    'Trine': Color(0xFF5B9BD4),
-    'Quincunx': Color(0xFFD4A85C),
-    'Opposition': Color(0xFFD47A5C),
+    'Conjunction': Color(0xFFD6C0FF),
+    'Sextile': Color(0xFF58D5D0),
+    'Square': Color(0xFFE96DFF),
+    'Trine': Color(0xFF3FC6D4),
+    'Quincunx': Color(0xFFF1B3FF),
+    'Opposition': Color(0xFFD45BFF),
   };
 
   static const _houseMeanings = {
@@ -3719,6 +5201,20 @@ class _TransitsTab extends StatelessWidget {
       10: 'carrera, reputacion y direccion publica',
       11: 'comunidad, amistades y metas futuras',
       12: 'vida interior, sanacion y liberacion',
+    },
+    'Fra': {
+      1: 'identité et initiative personnelle',
+      2: 'argent, valeurs et estime de soi',
+      3: 'communication et déplacements quotidiens',
+      4: 'foyer, racines et sécurité émotionnelle',
+      5: 'créativité, amour et expression personnelle',
+      6: 'travail, habitudes et bien-être',
+      7: 'relations et coopération',
+      8: 'ressources partagées, confiance et transformation',
+      9: 'voyages, convictions et ouverture',
+      10: 'carrière, réputation et orientation publique',
+      11: 'communauté, amitiés et projets futurs',
+      12: 'vie intérieure, guérison et lâcher-prise',
     },
   };
 
@@ -3873,28 +5369,96 @@ class _TransitsTab extends StatelessWidget {
         'important life themes';
   }
 
+  String _orbStrengthLabel(double orb, String lang) {
+    if (orb <= 1.5) {
+      switch (lang) {
+        case 'Heb':
+          return 'השפעה חזקה מאוד';
+        case 'Rus':
+          return 'очень сильное влияние';
+        case 'Spa':
+          return 'influencia muy fuerte';
+        case 'Fra':
+          return 'influence très forte';
+        default:
+          return 'very strong influence';
+      }
+    }
+    if (orb <= 3.0) {
+      switch (lang) {
+        case 'Heb':
+          return 'השפעה מורגשת';
+        case 'Rus':
+          return 'заметное влияние';
+        case 'Spa':
+          return 'influencia notable';
+        case 'Fra':
+          return 'influence sensible';
+        default:
+          return 'noticeable influence';
+      }
+    }
+    switch (lang) {
+      case 'Heb':
+        return 'השפעת רקע';
+      case 'Rus':
+        return 'фоновое влияние';
+      case 'Spa':
+        return 'influencia de fondo';
+      case 'Fra':
+        return 'influence de fond';
+      default:
+        return 'background influence';
+    }
+  }
+
+  String _hebAspectGuidance(String aspect) {
+    switch (aspect) {
+      case 'Conjunction':
+        return 'פותח התחלה חדשה ומבקש מיקוד בכיוון אחד ברור.';
+      case 'Sextile':
+        return 'יוצר הזדמנות שדורשת פעולה יזומה ועדינה.';
+      case 'Square':
+        return 'מעלה חיכוך בריא שדוחף לשינוי דפוס ישן.';
+      case 'Trine':
+        return 'זורם בטבעיות ומאפשר התקדמות עם פחות מאמץ.';
+      case 'Quincunx':
+        return 'מבקש כיוונון מחדש וסבלנות לפני החלטה.';
+      case 'Opposition':
+        return 'מדגיש קוטביות ודורש איזון בין שני צרכים.';
+      default:
+        return 'מדגיש צורך במודעות ובבחירה מדויקת.';
+    }
+  }
+
   String _transitMeaningLine(TransitItem item, String lang) {
     final planet =
         _planetNames[lang]?[item.transitPlanet] ?? item.transitPlanet;
+    final natalPlanet =
+        _planetNames[lang]?[item.natalPlanet] ?? item.natalPlanet;
+    final aspectName = _aspectNames[lang]?[item.aspect] ?? item.aspect;
     final houseLabel = _houseLabel[lang] ?? 'house';
     final houseMeaning = _houseMeaning(item.transitHouse, lang);
     final planetTheme =
-        _planetTransitThemes[lang]?[item.transitPlanet]?[item.transitHouse] ??
-        _planetTransitThemes['Eng']?[item.transitPlanet]?[item.transitHouse];
+        _planetTransitThemes[lang]?[item.transitPlanet]?[item.transitHouse];
 
     switch (lang) {
       case 'Heb':
-        return planetTheme == null
-            ? '$planet ב-$houseLabel ${item.transitHouse}: $houseMeaning'
-            : '$planet ב-$houseLabel ${item.transitHouse}: $planetTheme';
+        return '$planet ב-$houseLabel ${item.transitHouse} מדגיש $houseMeaning. '
+            '$aspectName מול $natalPlanet: ${_hebAspectGuidance(item.aspect)} '
+            '(${_orbStrengthLabel(item.orb, lang)}).';
       case 'Rus':
         return planetTheme == null
-            ? '$planet в $houseLabel ${item.transitHouse}: $houseMeaning'
-            : '$planet в $houseLabel ${item.transitHouse}: $planetTheme';
+            ? '$planet в доме ${item.transitHouse}: $houseMeaning'
+            : '$planet в доме ${item.transitHouse}: $planetTheme';
       case 'Spa':
         return planetTheme == null
             ? '$planet en $houseLabel ${item.transitHouse}: $houseMeaning'
             : '$planet en $houseLabel ${item.transitHouse}: $planetTheme';
+      case 'Fra':
+        return planetTheme == null
+            ? '$planet en maison ${item.transitHouse} : $houseMeaning'
+            : '$planet en maison ${item.transitHouse} : $planetTheme';
       default:
         return planetTheme == null
             ? '$planet in $houseLabel ${item.transitHouse}: $houseMeaning'
@@ -3920,7 +5484,7 @@ class _TransitsTab extends StatelessWidget {
             ),
             child: const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF9B7FD4),
+                color: AstroPalette.accentMagenta,
                 strokeWidth: 2,
               ),
             ),
@@ -3936,147 +5500,163 @@ class _TransitsTab extends StatelessWidget {
     }
 
     final items = response!.transits;
-    final interp = response!.interpretation.trim().isNotEmpty
-        ? response!.interpretation
+    final backendInterpretation = response!.interpretation.trim();
+    final interp =
+        backendInterpretation.isNotEmpty &&
+            !_isTechnicalInterpretation(backendInterpretation)
+        ? backendInterpretation
         : _fallbackInterpretation(items, lang);
+    final displayInterp = _displayInterpretation(interp, lang);
+    final strongestItems = [...items]
+      ..sort((first, second) => first.orb.compareTo(second.orb));
+    final visibleItems = strongestItems.take(12).toList();
     final isRtl = lang == 'Heb';
 
-    return Column(
-      children: [
-        if (interp.trim().isNotEmpty) ...[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: _chartCardSurface.withOpacity(0.88),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: _chartCardBorder.withOpacity(0.75)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _todayTitle[lang] ?? "Today's Transits",
-                      style: const TextStyle(
-                        color: _chartTextStrong,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
+    return Directionality(
+      textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (displayInterp.isNotEmpty) ...[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: _chartCardSurface.withOpacity(0.88),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: _chartCardBorder.withOpacity(0.75),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      interp,
-                      textDirection: isRtl
-                          ? TextDirection.rtl
-                          : TextDirection.ltr,
-                      textAlign: isRtl ? TextAlign.right : TextAlign.left,
-                      style: const TextStyle(
-                        color: _chartTextBody,
-                        fontSize: 13.5,
-                        height: 1.65,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 14),
-        ],
-        if (items.isEmpty)
-          _InfoCard(
-            title: _noneTitle[lang] ?? 'No active transits',
-            text:
-                _noneText[lang] ??
-                'No significant transit aspects within 5° today.',
-          )
-        else
-          ...List.generate(items.length, (i) {
-            final t = items[i];
-            final sym = _symMap[t.aspect] ?? '·';
-            final color = _colorMap[t.aspect] ?? const Color(0xFF9B7FD4);
-            return Padding(
-              padding: EdgeInsets.only(bottom: i < items.length - 1 ? 10 : 0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 13,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _chartCardSurface.withOpacity(0.86),
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(
-                        color: _chartCardBorder.withOpacity(0.72),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: color.withOpacity(0.18),
-                          ),
-                          child: Center(
-                            child: Text(
-                              sym,
-                              style: TextStyle(fontSize: 16, color: color),
-                            ),
-                          ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _todayTitle[lang] ?? "Today's Transits",
+                        textAlign: isRtl ? TextAlign.right : TextAlign.left,
+                        style: const TextStyle(
+                          color: _chartTextStrong,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${_planetNames[lang]?[t.transitPlanet] ?? t.transitPlanet}  $sym  ${_planetNames[lang]?[t.natalPlanet] ?? t.natalPlanet} (${_natalLabel[lang] ?? 'natal'})',
-                                style: const TextStyle(
-                                  color: _chartTextStrong,
-                                  fontSize: 13.5,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                _transitMeaningLine(t, lang),
-                                style: const TextStyle(
-                                  color: _chartTextBody,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.25,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                '${_aspectNames[lang]?[t.aspect] ?? t.aspect} · ${t.transitSign}, ${_houseLabel[lang] ?? 'house'} ${t.transitHouse} (${_houseMeaning(t.transitHouse, lang)}) · ${t.orb.toStringAsFixed(1)}°',
-                                style: const TextStyle(
-                                  color: _chartTextBody,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        displayInterp,
+                        textDirection: isRtl
+                            ? TextDirection.rtl
+                            : TextDirection.ltr,
+                        textAlign: isRtl ? TextAlign.right : TextAlign.left,
+                        style: const TextStyle(
+                          color: _chartTextBody,
+                          fontSize: 13.5,
+                          height: 1.65,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            );
-          }),
-      ],
+            ),
+            const SizedBox(height: 14),
+          ],
+          if (items.isEmpty)
+            _InfoCard(
+              title: _noneTitle[lang] ?? 'No active transits',
+              text:
+                  _noneText[lang] ??
+                  'No significant transit aspects within 5° today.',
+            )
+          else
+            ...List.generate(visibleItems.length, (i) {
+              final t = visibleItems[i];
+              final sym = _symMap[t.aspect] ?? '·';
+              final color = _colorMap[t.aspect] ?? const Color(0xFFD6C0FF);
+              return Padding(
+                padding: EdgeInsets.only(
+                  bottom: i < visibleItems.length - 1 ? 10 : 0,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 13,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _chartCardSurface.withOpacity(0.86),
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: _chartCardBorder.withOpacity(0.72),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: color.withOpacity(0.18),
+                            ),
+                            child: Center(
+                              child: Text(
+                                sym,
+                                style: TextStyle(fontSize: 16, color: color),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${_planetNames[lang]?[t.transitPlanet] ?? t.transitPlanet}  $sym  ${_planetNames[lang]?[t.natalPlanet] ?? t.natalPlanet} (${_natalLabel[lang] ?? 'natal'})',
+                                  style: const TextStyle(
+                                    color: _chartTextStrong,
+                                    fontSize: 13.5,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  _transitMeaningLine(t, lang),
+                                  style: const TextStyle(
+                                    color: _chartTextBody,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.25,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  '${_aspectNames[lang]?[t.aspect] ?? t.aspect} · ${_signNames[lang]?[t.transitSign] ?? t.transitSign}, ${_houseLabel[lang] ?? 'house'} ${t.transitHouse} (${_houseMeaning(t.transitHouse, lang)}) · ${t.orb.toStringAsFixed(1)}°',
+                                  style: const TextStyle(
+                                    color: _chartTextBody,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+        ],
+      ),
     );
   }
 }
@@ -4136,7 +5716,7 @@ class _InfoCard extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
-                  color: Color(0xFF3C2F67),
+                  color: _chartTextStrong,
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),
@@ -4195,9 +5775,7 @@ class _PlanetCard extends StatelessWidget {
                 height: 50,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFF1E6FF), Color(0xFFD9C5FF)],
-                  ),
+                  gradient: AstroPalette.iconBubble,
                 ),
                 child: Center(
                   child: Text(
@@ -4216,7 +5794,7 @@ class _PlanetCard extends StatelessWidget {
                         Text(
                           planet.split(' ').last,
                           style: const TextStyle(
-                            color: Color(0xFF3C2F67),
+                            color: _chartTextStrong,
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),
@@ -4274,7 +5852,13 @@ class _PlanetCard extends StatelessWidget {
 
 class _BirthInputCard extends StatefulWidget {
   final void Function(DateTime date, TimeOfDay time, String location) onSubmit;
-  const _BirthInputCard({required this.onSubmit});
+  final String language;
+  final bool autoOpenDatePicker;
+  const _BirthInputCard({
+    required this.onSubmit,
+    required this.language,
+    this.autoOpenDatePicker = false,
+  });
 
   @override
   State<_BirthInputCard> createState() => _BirthInputCardState();
@@ -4284,6 +5868,20 @@ class _BirthInputCardState extends State<_BirthInputCard> {
   DateTime? _date;
   TimeOfDay? _time;
   final _locationCtrl = TextEditingController();
+  bool _didAutoOpenDatePicker = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didAutoOpenDatePicker && widget.autoOpenDatePicker) {
+      _didAutoOpenDatePicker = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && _date == null) {
+          _pickDate();
+        }
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -4294,13 +5892,24 @@ class _BirthInputCardState extends State<_BirthInputCard> {
   bool get _canSubmit =>
       _date != null && _time != null && _locationCtrl.text.trim().isNotEmpty;
 
+  static const _selectDateAction = {
+    'Eng': 'Select',
+    'Rus': 'Выбрать',
+    'Heb': 'בחירה',
+    'Spa': 'Seleccionar',
+    'Fra': 'Sélectionner',
+  };
+
   Future<void> _pickDate() async {
     final picked = await showDatePicker(
       context: context,
       initialDate: DateTime(1990),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
-      builder: (context, child) => _lilacPickerTheme(context, child),
+      confirmText: _selectDateAction[_lang] ?? _selectDateAction['Eng']!,
+      builder: (context, child) {
+        return Theme(data: _astreyaDatePickerTheme(context), child: child!);
+      },
     );
     if (picked != null) setState(() => _date = picked);
   }
@@ -4309,130 +5918,381 @@ class _BirthInputCardState extends State<_BirthInputCard> {
     final picked = await showTimePicker(
       context: context,
       initialTime: const TimeOfDay(hour: 12, minute: 0),
-      builder: (context, child) => _lilacPickerTheme(context, child),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: Theme(data: _astreyaTimePickerTheme(context), child: child!),
+        );
+      },
     );
     if (picked != null) setState(() => _time = picked);
   }
 
-  static const _months = [
-    '',
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  static const _months = {
+    'Eng': [
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    'Rus': [
+      '',
+      'января',
+      'февраля',
+      'марта',
+      'апреля',
+      'мая',
+      'июня',
+      'июля',
+      'августа',
+      'сентября',
+      'октября',
+      'ноября',
+      'декабря',
+    ],
+    'Heb': [
+      '',
+      'ינואר',
+      'פברואר',
+      'מרץ',
+      'אפריל',
+      'מאי',
+      'יוני',
+      'יולי',
+      'אוגוסט',
+      'ספטמבר',
+      'אוקטובר',
+      'נובמבר',
+      'דצמבר',
+    ],
+    'Spa': [
+      '',
+      'enero',
+      'febrero',
+      'marzo',
+      'abril',
+      'mayo',
+      'junio',
+      'julio',
+      'agosto',
+      'septiembre',
+      'octubre',
+      'noviembre',
+      'diciembre',
+    ],
+    'Fra': [
+      '',
+      'janvier',
+      'février',
+      'mars',
+      'avril',
+      'mai',
+      'juin',
+      'juillet',
+      'août',
+      'septembre',
+      'octobre',
+      'novembre',
+      'décembre',
+    ],
+  };
 
-  String _formatDate() => _date == null
-      ? 'Select date'
-      : '${_months[_date!.month]} ${_date!.day}, ${_date!.year}';
+  static const _selectDate = {
+    'Eng': 'Select date',
+    'Rus': 'Выберите дату',
+    'Heb': 'בחר/י תאריך',
+    'Spa': 'Selecciona fecha',
+    'Fra': 'Choisir une date',
+  };
+
+  static const _selectTime = {
+    'Eng': 'Select time',
+    'Rus': 'Выберите время',
+    'Heb': 'בחר/י שעה',
+    'Spa': 'Selecciona hora',
+    'Fra': 'Choisir une heure',
+  };
+
+  String _formatDate() {
+    if (_date == null) return _selectDate[_lang] ?? _selectDate['Eng']!;
+    final months = _months[_lang] ?? _months['Eng']!;
+    return '${months[_date!.month]} ${_date!.day}, ${_date!.year}';
+  }
 
   String _formatTime() => _time == null
-      ? 'Select time'
+      ? (_selectTime[_lang] ?? _selectTime['Eng']!)
       : '${_time!.hour.toString().padLeft(2, '0')}:${_time!.minute.toString().padLeft(2, '0')}';
+
+  static const _introEyebrow = {
+    'Eng': 'YOUR NATAL CHART',
+    'Rus': 'ВАША НАТАЛЬНАЯ КАРТА',
+    'Heb': 'מפת הלידה שלך',
+    'Spa': 'TU CARTA NATAL',
+    'Fra': 'VOTRE THÈME NATAL',
+  };
+
+  static const _introTitle = {
+    'Eng': 'Begin with your birth details',
+    'Rus': 'Начните с данных о рождении',
+    'Heb': 'מתחילים עם פרטי הלידה',
+    'Spa': 'Comienza con tus datos de nacimiento',
+    'Fra': 'Commencez par vos données de naissance',
+  };
+
+  static const _introDescription = {
+    'Eng':
+        'Add your date, exact time, and birthplace to calculate your personal chart.',
+    'Rus':
+        'Укажите дату, точное время и место рождения, чтобы рассчитать личную карту.',
+    'Heb': 'הוסיפו תאריך, שעה מדויקת ומקום לידה כדי לחשב את המפה האישית שלכם.',
+    'Spa':
+        'Añade tu fecha, hora exacta y lugar de nacimiento para calcular tu carta personal.',
+    'Fra':
+        'Indiquez votre date, votre heure exacte et votre lieu de naissance pour calculer votre thème personnel.',
+  };
+
+  static const _quickSteps = {
+    'Eng': '3 quick steps',
+    'Rus': '3 простых шага',
+    'Heb': '3 שלבים קצרים',
+    'Spa': '3 pasos rápidos',
+    'Fra': '3 étapes simples',
+  };
+
+  static const _step1Label = {
+    'Eng': 'DATE OF BIRTH',
+    'Rus': 'ДАТА РОЖДЕНИЯ',
+    'Heb': 'תאריך לידה',
+    'Spa': 'FECHA DE NACIMIENTO',
+    'Fra': 'DATE DE NAISSANCE',
+  };
+
+  static const _step2Label = {
+    'Eng': 'TIME OF BIRTH',
+    'Rus': 'ВРЕМЯ РОЖДЕНИЯ',
+    'Heb': 'שעת לידה',
+    'Spa': 'HORA DE NACIMIENTO',
+    'Fra': 'HEURE DE NAISSANCE',
+  };
+
+  static const _placeLabel = {
+    'Eng': 'PLACE OF BIRTH',
+    'Rus': 'МЕСТО РОЖДЕНИЯ',
+    'Heb': 'מקום לידה',
+    'Spa': 'LUGAR DE NACIMIENTO',
+    'Fra': 'LIEU DE NAISSANCE',
+  };
+
+  static const _placeHint = {
+    'Eng': 'City, Country',
+    'Rus': 'Город, Страна',
+    'Heb': 'עיר, מדינה',
+    'Spa': 'Ciudad, Pais',
+    'Fra': 'Ville, Pays',
+  };
+
+  static const _calculateLabel = {
+    'Eng': 'Create my natal chart',
+    'Rus': 'Создать мою натальную карту',
+    'Heb': 'יצירת מפת הלידה שלי',
+    'Spa': 'Crear mi carta natal',
+    'Fra': 'Créer mon thème natal',
+  };
+
+  String get _lang => widget.language;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(28),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-        child: Container(
-          padding: const EdgeInsets.all(20),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 880),
+        child: DecoratedBox(
           decoration: BoxDecoration(
-            color: AstroPalette.darkGlassFill,
             borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: AstroPalette.glassBorder, width: 1.2),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Birth Data',
-                style: TextStyle(
-                  color: AstroPalette.lightText,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                'Enter your birth details to calculate your natal chart',
-                style: TextStyle(
-                  color: AstroPalette.lightTextSoft,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 20),
-              _BirthFieldRow(
-                icon: Icons.calendar_today_rounded,
-                label: 'Date of birth',
-                value: _formatDate(),
-                hasValue: _date != null,
-                onTap: _pickDate,
-              ),
-              const SizedBox(height: 12),
-              _BirthFieldRow(
-                icon: Icons.access_time_rounded,
-                label: 'Time of birth',
-                value: _formatTime(),
-                hasValue: _time != null,
-                onTap: _pickTime,
-              ),
-              const SizedBox(height: 12),
-              _BirthLocationField(
-                controller: _locationCtrl,
-                onChanged: (_) => setState(() {}),
-              ),
-              const SizedBox(height: 24),
-              GestureDetector(
-                onTap: _canSubmit
-                    ? () => widget.onSubmit(
-                        _date!,
-                        _time!,
-                        _locationCtrl.text.trim(),
-                      )
-                    : null,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    gradient: _canSubmit
-                        ? const LinearGradient(
-                            colors: [Color(0xFFE8D7FF), Color(0xFFB493F7)],
-                          )
-                        : null,
-                    color: _canSubmit ? null : AstroPalette.lightGlassFill,
-                    border: Border.all(
-                      color: _canSubmit
-                          ? AstroPalette.glassBorder
-                          : AstroPalette.glassBorder,
-                    ),
-                  ),
-                  child: Text(
-                    'Calculate Chart',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: _canSubmit
-                          ? AstroPalette.darkText
-                          : AstroPalette.mutedLabel,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x183A2F61),
+                blurRadius: 26,
+                offset: Offset(0, 12),
               ),
             ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0x38FFFFFF), Color(0x18DCCBFF)],
+                  ),
+                  borderRadius: BorderRadius.circular(28),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.32),
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            _introEyebrow[_lang] ?? _introEyebrow['Eng']!,
+                            style: const TextStyle(
+                              color: Color(0xFF49C8CE),
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1.1,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.14),
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.26),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            _quickSteps[_lang] ?? _quickSteps['Eng']!,
+                            style: const TextStyle(
+                              color: AstroPalette.darkSecondary,
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _introTitle[_lang] ?? _introTitle['Eng']!,
+                      style: const TextStyle(
+                        color: AstroPalette.darkText,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        height: 1.1,
+                      ),
+                    ),
+                    const SizedBox(height: 7),
+                    Text(
+                      _introDescription[_lang] ?? _introDescription['Eng']!,
+                      style: const TextStyle(
+                        color: AstroPalette.darkSecondary,
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w500,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    _BirthFieldRow(
+                      icon: Icons.calendar_month_rounded,
+                      label: _step1Label[_lang] ?? _step1Label['Eng']!,
+                      value: _formatDate(),
+                      hasValue: _date != null,
+                      onTap: _pickDate,
+                    ),
+                    const SizedBox(height: 12),
+                    _BirthFieldRow(
+                      icon: Icons.schedule_rounded,
+                      label: _step2Label[_lang] ?? _step2Label['Eng']!,
+                      value: _formatTime(),
+                      hasValue: _time != null,
+                      onTap: _pickTime,
+                    ),
+                    const SizedBox(height: 12),
+                    _BirthLocationField(
+                      controller: _locationCtrl,
+                      label: _placeLabel[_lang] ?? _placeLabel['Eng']!,
+                      hintText: _placeHint[_lang] ?? _placeHint['Eng']!,
+                      onChanged: (_) => setState(() {}),
+                    ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: _canSubmit
+                          ? () => widget.onSubmit(
+                              _date!,
+                              _time!,
+                              _locationCtrl.text.trim(),
+                            )
+                          : null,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: double.infinity,
+                        height: 54,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: _canSubmit
+                                ? const [
+                                    Color(0xFF63D9D7),
+                                    Color(0xFF9C88F2),
+                                    Color(0xFFC968C4),
+                                  ]
+                                : const [
+                                    Color(0x8063D9D7),
+                                    Color(0x809C88F2),
+                                    Color(0x80C968C4),
+                                  ],
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x2049C8CE),
+                              blurRadius: 16,
+                              offset: Offset(0, 7),
+                            ),
+                            BoxShadow(color: Color(0x16C95AC4), blurRadius: 14),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.auto_awesome_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                            const SizedBox(width: 9),
+                            Text(
+                              _calculateLabel[_lang] ?? _calculateLabel['Eng']!,
+                              style: const TextStyle(
+                                color: AstroPalette.darkText,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -4457,22 +6317,39 @@ class _BirthFieldRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconColor = icon == Icons.calendar_month_rounded
+        ? const Color(0xFF49C8CE)
+        : const Color(0xFF9C88F2);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        height: 74,
+        padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.18),
-          borderRadius: BorderRadius.circular(16),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xB8FFFFFF), Color(0x96EEE7FF)],
+          ),
+          borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: hasValue
-                ? const Color(0xFF9B7EF5).withOpacity(0.50)
-                : Colors.white.withOpacity(0.35),
+                ? const Color(0xFF49C8CE).withOpacity(0.45)
+                : Colors.white.withOpacity(0.48),
+            width: 1,
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x12382A62),
+              blurRadius: 16,
+              offset: Offset(0, 7),
+            ),
+          ],
         ),
         child: Row(
           children: [
-            Icon(icon, size: 18, color: const Color(0xFF8B6EF0)),
+            _StepIconBubble(icon, iconColor: iconColor),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -4481,18 +6358,17 @@ class _BirthFieldRow extends StatelessWidget {
                   Text(
                     label,
                     style: const TextStyle(
-                      color: Color(0xFF9C8EC0),
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF7E719F),
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.7,
                     ),
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 7),
                   Text(
                     value,
-                    style: TextStyle(
-                      color: hasValue
-                          ? const Color(0xFF3C2F67)
-                          : const Color(0xFFB0A0D0),
+                    style: const TextStyle(
+                      color: Color(0xFF30254F),
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                     ),
@@ -4500,10 +6376,18 @@ class _BirthFieldRow extends StatelessWidget {
                 ],
               ),
             ),
+            if (hasValue) ...[
+              const Icon(
+                Icons.check_circle_rounded,
+                size: 16,
+                color: Color(0xFF49C8CE),
+              ),
+              const SizedBox(width: 6),
+            ],
             const Icon(
               Icons.chevron_right_rounded,
-              color: Color(0xFF9C8EC0),
-              size: 20,
+              color: Color(0xFF8E80AD),
+              size: 18,
             ),
           ],
         ),
@@ -4514,72 +6398,130 @@ class _BirthFieldRow extends StatelessWidget {
 
 class _BirthLocationField extends StatelessWidget {
   final TextEditingController controller;
+  final String label;
+  final String hintText;
   final ValueChanged<String> onChanged;
 
   const _BirthLocationField({
     required this.controller,
+    required this.label,
+    required this.hintText,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    final hasValue = controller.text.isNotEmpty;
+
     return Container(
-      padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 6),
+      height: 74,
+      padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.18),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: controller.text.isNotEmpty
-              ? const Color(0xFF9B7EF5).withOpacity(0.50)
-              : Colors.white.withOpacity(0.35),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xB8FFFFFF), Color(0x96EEE7FF)],
         ),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: hasValue
+              ? const Color(0xFF49C8CE).withOpacity(0.45)
+              : Colors.white.withOpacity(0.48),
+          width: 1,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x12382A62),
+            blurRadius: 16,
+            offset: Offset(0, 7),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
+          const _StepIconBubble(
             Icons.location_on_rounded,
-            size: 18,
-            color: Color(0xFF8B6EF0),
+            iconColor: Color(0xFFC95AC4),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Place of birth',
-                  style: TextStyle(
-                    color: Color(0xFF9C8EC0),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: Color(0xFF7E719F),
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.7,
                   ),
                 ),
+                const SizedBox(height: 7),
                 TextField(
                   controller: controller,
                   onChanged: onChanged,
                   style: const TextStyle(
-                    color: Color(0xFF3C2F67),
+                    color: Color(0xFF30254F),
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'City, Country',
-                    hintStyle: TextStyle(
-                      color: Color(0xFFB0A0D0),
+                    hintText: hintText,
+                    hintStyle: const TextStyle(
+                      color: Color(0xFF9184AE),
                       fontSize: 15,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w600,
                     ),
                     isDense: true,
-                    contentPadding: EdgeInsets.symmetric(vertical: 4),
+                    contentPadding: EdgeInsets.zero,
                   ),
                 ),
               ],
             ),
           ),
+          if (hasValue) ...[
+            const Icon(
+              Icons.check_circle_rounded,
+              size: 16,
+              color: Color(0xFF49C8CE),
+            ),
+            const SizedBox(width: 6),
+          ],
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: Color(0xFF8E80AD),
+            size: 18,
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _StepIconBubble extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+
+  const _StepIconBubble(this.icon, {required this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 38,
+      height: 38,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFAEEFED), Color(0xFFDCCBFF)],
+        ),
+        border: Border.all(color: Colors.white.withOpacity(0.65)),
+      ),
+      child: Icon(icon, size: 18, color: iconColor),
     );
   }
 }
@@ -4638,7 +6580,11 @@ class _ChartBackgroundState extends State<_ChartBackground> {
               ),
             ),
           ),
-        Positioned.fill(child: Container(color: const Color(0x22886CDA))),
+        Positioned.fill(
+          child: Container(
+            decoration: const BoxDecoration(gradient: AstroPalette.heroOverlay),
+          ),
+        ),
         Positioned(
           top: -90,
           left: -40,
@@ -4674,7 +6620,9 @@ class _ChartBackgroundState extends State<_ChartBackground> {
 // ── Natal chart loading animation ──────────────────────────────────────────
 
 class _ChartLoadingAnimation extends StatefulWidget {
-  const _ChartLoadingAnimation();
+  final String language;
+
+  const _ChartLoadingAnimation({required this.language});
   @override
   State<_ChartLoadingAnimation> createState() => _ChartLoadingAnimationState();
 }
@@ -4682,6 +6630,64 @@ class _ChartLoadingAnimation extends StatefulWidget {
 class _ChartLoadingAnimationState extends State<_ChartLoadingAnimation> {
   late VideoPlayerController _ctrl;
   bool _initialized = false;
+  int _factIndex = 0;
+  Timer? _factTimer;
+
+  static const _sunFacts = {
+    'Eng': [
+      'Sun in Aries brings energy, confidence, and leadership.',
+      'Sun in Taurus emphasizes stability, practicality, and comfort.',
+      'Sun in Gemini highlights communication, curiosity, and adaptability.',
+      'Sun in Cancer focuses on emotional security, home, and care.',
+      'Sun in Leo brings creativity, confidence, and self-expression.',
+      'Sun in Virgo emphasizes detail, service, and practical improvement.',
+      'Sun in Libra focuses on relationships, balance, and harmony.',
+      'Sun in Scorpio brings intensity, depth, and transformation.',
+      'Sun in Sagittarius brings optimism, freedom, and broad horizons.',
+      'Sun in Capricorn emphasizes discipline, ambition, and long-term goals.',
+      'Sun in Aquarius highlights innovation, independence, and social vision.',
+      'Sun in Pisces brings compassion, intuition, and spiritual depth.',
+    ],
+    'Rus': [
+      'Солнце в Овне раскрывает силу действия и лидерства.',
+      'Солнце в Тельце усиливает устойчивость и практичность.',
+      'Солнце в Близнецах приносит гибкость мышления и общительность.',
+      'Солнце в Раке подчёркивает чувствительность и связь с домом.',
+      'Солнце во Льве усиливает творческий свет и уверенность.',
+      'Солнце в Деве даёт точность, порядок и полезность.',
+      'Солнце в Весах стремится к гармонии и партнёрству.',
+      'Солнце в Скорпионе даёт глубину и трансформацию.',
+      'Солнце в Стрельце несёт свободу, смысл и оптимизм.',
+      'Солнце в Козероге усиливает дисциплину и стратегичность.',
+      'Солнце в Водолее подчёркивает независимость и новаторство.',
+      'Солнце в Рыбах усиливает интуицию и сострадание.',
+    ],
+    'Heb': [
+      'שמש בטלה מביאה אנרגיה, אומץ ורצון להוביל.',
+      'שמש בשור מדגישה יציבות, מעשיות ונאמנות.',
+      'שמש בתאומים מביאה סקרנות, תקשורת וגמישות.',
+      'שמש בסרטן מחזקת רגישות, חמלה וחיבור לבית.',
+      'שמש באריה מדגישה ביטחון, יצירתיות וביטוי עצמי.',
+      'שמש בבתולה מביאה דיוק, סדר ושירות.',
+      'שמש במאזניים שואפת להרמוניה ואיזון ביחסים.',
+      'שמש בעקרב מביאה עומק, עוצמה והתחדשות.',
+      'שמש בקשת מדגישה חופש, חוכמה ואמת.',
+      'שמש בגדי מחזקת משמעת, אחריות והישגיות.',
+      'שמש בדלי מביאה חדשנות וחשיבה קהילתית.',
+      'שמש בדגים מדגישה חמלה, השראה ורוחניות.',
+    ],
+  };
+
+  static const _factTitle = {
+    'Eng': 'Sun Facts While We Build Your Chart',
+    'Rus': 'Факты о Солнце, пока строится карта',
+    'Heb': 'עובדות על השמש בזמן בניית המפה',
+    'Spa': 'Datos del Sol mientras se construye tu carta',
+  };
+
+  List<String> get _facts => _sunFacts[widget.language] ?? _sunFacts['Eng']!;
+
+  String get _title => _factTitle[widget.language] ?? _factTitle['Eng']!;
 
   @override
   void initState() {
@@ -4700,30 +6706,82 @@ class _ChartLoadingAnimationState extends State<_ChartLoadingAnimation> {
           setState(() => _initialized = true);
         }
       });
+
+    _factTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+      if (!mounted || _facts.isEmpty) return;
+      setState(() {
+        _factIndex = (_factIndex + 1) % _facts.length;
+      });
+    });
   }
 
   @override
   void dispose() {
+    _factTimer?.cancel();
     _ctrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _initialized
-        ? AspectRatio(
-            aspectRatio: _ctrl.value.aspectRatio,
-            child: VideoPlayer(_ctrl),
-          )
-        : const SizedBox(
-            height: 300,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Color(0xFF9B7FD4),
-                strokeWidth: 2,
+    final facts = _facts;
+    final fact = facts.isEmpty ? '' : facts[_factIndex % facts.length];
+
+    return Column(
+      children: [
+        _initialized
+            ? AspectRatio(
+                aspectRatio: _ctrl.value.aspectRatio,
+                child: VideoPlayer(_ctrl),
+              )
+            : const SizedBox(
+                height: 300,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AstroPalette.accentMagenta,
+                    strokeWidth: 2,
+                  ),
+                ),
               ),
-            ),
-          );
+        const SizedBox(height: 14),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: AstroPalette.darkGlassFill,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AstroPalette.glassBorder),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _title,
+                style: const TextStyle(
+                  color: AstroPalette.darkText,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 280),
+                child: Text(
+                  fact,
+                  key: ValueKey<String>(fact),
+                  style: const TextStyle(
+                    color: AstroPalette.darkSecondary,
+                    fontSize: 13,
+                    height: 1.4,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -4736,11 +6794,11 @@ class _AstroPainter extends CustomPainter {
 
   // radius, speed multiplier, planet size, color, start angle offset
   static const _orbits = [
-    (r: 40.0, s: 1.0, sz: 9.0, c: Color(0xFFFFD700), a: 0.0),
-    (r: 62.0, s: 1.55, sz: 7.0, c: Color(0xFFB8A0FF), a: 1.2),
-    (r: 82.0, s: 2.1, sz: 6.0, c: Color(0xFF60D0FF), a: 2.5),
-    (r: 100.0, s: 0.65, sz: 8.0, c: Color(0xFFFF90BC), a: 0.8),
-    (r: 118.0, s: 1.85, sz: 6.0, c: Color(0xFFFF6B6B), a: 3.9),
+    (r: 40.0, s: 1.0, sz: 9.0, c: Color(0xFFD45BFF), a: 0.0),
+    (r: 62.0, s: 1.55, sz: 7.0, c: Color(0xFFD6C0FF), a: 1.2),
+    (r: 82.0, s: 2.1, sz: 6.0, c: Color(0xFF58D5D0), a: 2.5),
+    (r: 100.0, s: 0.65, sz: 8.0, c: Color(0xFFF1B3FF), a: 0.8),
+    (r: 118.0, s: 1.85, sz: 6.0, c: Color(0xFF7EE7E1), a: 3.9),
   ];
 
   static final _stars = List.generate(30, (i) {
@@ -4774,7 +6832,7 @@ class _AstroPainter extends CustomPainter {
         Offset(cx, cy),
         o.r,
         Paint()
-          ..color = const Color(0xFF9B7FD4).withOpacity(0.20)
+          ..color = const Color(0xFFD6C0FF).withOpacity(0.20)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 0.8,
       );
@@ -4785,20 +6843,20 @@ class _AstroPainter extends CustomPainter {
       Offset(cx, cy),
       18 + 5 * pulse,
       Paint()
-        ..color = const Color(0xFFFFD700).withOpacity(0.15 + 0.15 * pulse)
+        ..color = const Color(0xFFE96DFF).withOpacity(0.15 + 0.15 * pulse)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18),
     );
     // Sun
     canvas.drawCircle(
       Offset(cx, cy),
       12,
-      Paint()..color = const Color(0xFFFFE44D),
+      Paint()..color = const Color(0xFFDCCBFF),
     );
     canvas.drawCircle(
       Offset(cx, cy),
       12,
       Paint()
-        ..color = const Color(0xFFFFAA00).withOpacity(0.5)
+        ..color = const Color(0xFF58D5D0).withOpacity(0.5)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
     );
 

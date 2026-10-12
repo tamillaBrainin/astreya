@@ -6,6 +6,48 @@ import 'chart_page.dart';
 import '../services/api_service.dart';
 import '../theme/astro_palette.dart';
 
+const _turquoise1 = Color(0xFF7EE7E1);
+const _turquoise2 = Color(0xFF58D5D0);
+const _turquoise3 = Color(0xFF3FC6D4);
+const _magenta1 = Color(0xFFFF7AD9);
+const _magenta2 = Color(0xFFE96DFF);
+const _magenta3 = Color(0xFFD45BFF);
+const _accentTurquoiseSoft = Color(0xFFAEEFED);
+const _accentMagentaSoft = Color(0xFFF1B3FF);
+const _silver1 = Color(0xFFF3F2F7);
+const _silver2 = Color(0xFFD8D7E2);
+const _silver3 = Color(0xFFBBB9C9);
+
+const _turquoiseGradient = LinearGradient(
+  colors: [
+    Color(0xFFAEEFED),
+    Color(0xFFDCCBFF),
+  ],
+);
+
+const _magentaGradient = LinearGradient(
+  colors: [
+    Color(0xFFF1B3FF),
+    Color(0xFFD6C0FF),
+  ],
+);
+
+const _cosmicAccentGradient = LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [
+    Color(0xFF6FE3E1),
+    Color(0xFFE96DFF),
+  ],
+);
+
+const _silverGradient = LinearGradient(
+  colors: [
+    Color(0xFFF4F3F8),
+    Color(0xFFD4D2DE),
+  ],
+);
+
 class AstroHomePage extends StatefulWidget {
   const AstroHomePage({super.key});
 
@@ -18,6 +60,371 @@ class _AstroHomePageState extends State<AstroHomePage> {
   final List<TransitItem> _transits = [];
   String _language = 'Eng';
 
+  String _t(String key) {
+    const copy = {
+      'Eng': {
+        'greeting': 'Good morning ✨',
+        'upcomingTransits': 'Upcoming Transits',
+        'viewAll': 'View all',
+        'todayEnergy': "Today's Energy",
+        'live': 'LIVE',
+        'defaultHeadline': 'A day for clarity\nand new beginnings',
+        'energyPhasePrefix': 'Action phase: Moon in',
+        'defaultDescription':
+            'The Moon in Aquarius brings fresh ideas and inspiration.',
+        'fallbackTransit1Title': 'Moon Trine Mercury',
+        'fallbackTransit1Subtitle':
+            'Good time for communication and sharing ideas.',
+        'fallbackTransit2Title': 'Venus Square Mars',
+        'fallbackTransit2Subtitle': 'Watch for emotional intensity.',
+        'home': 'Home',
+        'chart': 'Chart',
+        'insights': 'Insights',
+        'profile': 'Profile',
+      },
+      'Rus': {
+        'greeting': 'Доброе утро ✨',
+        'upcomingTransits': 'Ближайшие транзиты',
+        'viewAll': 'Смотреть все',
+        'todayEnergy': 'Энергия дня',
+        'live': 'LIVE',
+        'defaultHeadline': 'День ясности\nи новых начинаний',
+        'energyPhasePrefix': 'Фаза действия: Луна в',
+        'defaultDescription':
+            'Луна в Водолее приносит свежие идеи и вдохновение.',
+        'fallbackTransit1Title': 'Луна тригон Меркурий',
+        'fallbackTransit1Subtitle': 'Хорошее время для общения и обмена идеями.',
+        'fallbackTransit2Title': 'Венера квадрат Марс',
+        'fallbackTransit2Subtitle': 'Следите за эмоциональной напряженностью.',
+        'home': 'Главная',
+        'chart': 'Карта',
+        'insights': 'Инсайты',
+        'profile': 'Профиль',
+      },
+      'Heb': {
+        'greeting': 'בוקר טוב ✨',
+        'upcomingTransits': 'מעברים קרובים',
+        'viewAll': 'לצפייה בהכל',
+        'todayEnergy': 'אנרגיית היום',
+        'live': 'LIVE',
+        'defaultHeadline': 'יום של בהירות\nוהתחלות חדשות',
+        'energyPhasePrefix': 'שלב פעולה: הירח ב',
+        'defaultDescription': 'הירח בדלי מביא רעיונות רעננים והשראה.',
+        'fallbackTransit1Title': 'ירח טריין מרקורי',
+        'fallbackTransit1Subtitle': 'זמן טוב לתקשורת ולשיתוף רעיונות.',
+        'fallbackTransit2Title': 'ונוס סקוור מרס',
+        'fallbackTransit2Subtitle': 'שימו לב למתח רגשי.',
+        'home': 'בית',
+        'chart': 'מפה',
+        'insights': 'תובנות',
+        'profile': 'פרופיל',
+      },
+      'Spa': {
+        'greeting': 'Buenos dias ✨',
+        'upcomingTransits': 'Transitos proximos',
+        'viewAll': 'Ver todo',
+        'todayEnergy': 'Energia de hoy',
+        'live': 'LIVE',
+        'defaultHeadline': 'Un dia de claridad\ny nuevos comienzos',
+        'energyPhasePrefix': 'Fase de accion: Luna en',
+        'defaultDescription':
+            'La Luna en Acuario trae ideas frescas e inspiracion.',
+        'fallbackTransit1Title': 'Luna trigono Mercurio',
+        'fallbackTransit1Subtitle':
+            'Buen momento para comunicar y compartir ideas.',
+        'fallbackTransit2Title': 'Venus cuadratura Marte',
+        'fallbackTransit2Subtitle':
+            'Atencion a la intensidad emocional.',
+        'home': 'Inicio',
+        'chart': 'Carta',
+        'insights': 'Insights',
+        'profile': 'Perfil',
+      },
+      'Fra': {
+        'greeting': 'Bonjour ✨',
+        'upcomingTransits': 'Transits à venir',
+        'viewAll': 'Voir tout',
+        'todayEnergy': 'Énergie du jour',
+        'live': 'DIRECT',
+        'defaultHeadline': 'Une journée de clarté\net de nouveaux départs',
+        'energyPhasePrefix': 'Phase d’action : Lune en',
+        'defaultDescription':
+            'La Lune en Verseau apporte des idées nouvelles et de l’inspiration.',
+        'fallbackTransit1Title': 'Lune trigone Mercure',
+        'fallbackTransit1Subtitle':
+            'Un bon moment pour communiquer et partager vos idées.',
+        'fallbackTransit2Title': 'Vénus carré Mars',
+        'fallbackTransit2Subtitle':
+            'Restez attentif aux tensions émotionnelles.',
+        'home': 'Accueil',
+        'chart': 'Carte',
+        'insights': 'Éclairages',
+        'profile': 'Profil',
+      },
+    };
+
+    return copy[_language]?[key] ?? copy['Eng']![key] ?? key;
+  }
+
+  String _signName(String sign) {
+    final normalized = _normalizeSign(sign);
+    const signs = {
+      'Eng': {
+        'Aries': 'Aries',
+        'Taurus': 'Taurus',
+        'Gemini': 'Gemini',
+        'Cancer': 'Cancer',
+        'Leo': 'Leo',
+        'Virgo': 'Virgo',
+        'Libra': 'Libra',
+        'Scorpio': 'Scorpio',
+        'Sagittarius': 'Sagittarius',
+        'Capricorn': 'Capricorn',
+        'Aquarius': 'Aquarius',
+        'Pisces': 'Pisces',
+      },
+      'Rus': {
+        'Aries': 'Овне',
+        'Taurus': 'Тельце',
+        'Gemini': 'Близнецах',
+        'Cancer': 'Раке',
+        'Leo': 'Льве',
+        'Virgo': 'Деве',
+        'Libra': 'Весах',
+        'Scorpio': 'Скорпионе',
+        'Sagittarius': 'Стрельце',
+        'Capricorn': 'Козероге',
+        'Aquarius': 'Водолее',
+        'Pisces': 'Рыбах',
+      },
+      'Heb': {
+        'Aries': 'טלה',
+        'Taurus': 'שור',
+        'Gemini': 'תאומים',
+        'Cancer': 'סרטן',
+        'Leo': 'אריה',
+        'Virgo': 'בתולה',
+        'Libra': 'מאזניים',
+        'Scorpio': 'עקרב',
+        'Sagittarius': 'קשת',
+        'Capricorn': 'גדי',
+        'Aquarius': 'דלי',
+        'Pisces': 'דגים',
+      },
+      'Spa': {
+        'Aries': 'Aries',
+        'Taurus': 'Tauro',
+        'Gemini': 'Geminis',
+        'Cancer': 'Cancer',
+        'Leo': 'Leo',
+        'Virgo': 'Virgo',
+        'Libra': 'Libra',
+        'Scorpio': 'Escorpio',
+        'Sagittarius': 'Sagitario',
+        'Capricorn': 'Capricornio',
+        'Aquarius': 'Acuario',
+        'Pisces': 'Piscis',
+      },
+      'Fra': {
+        'Aries': 'Bélier',
+        'Taurus': 'Taureau',
+        'Gemini': 'Gémeaux',
+        'Cancer': 'Cancer',
+        'Leo': 'Lion',
+        'Virgo': 'Vierge',
+        'Libra': 'Balance',
+        'Scorpio': 'Scorpion',
+        'Sagittarius': 'Sagittaire',
+        'Capricorn': 'Capricorne',
+        'Aquarius': 'Verseau',
+        'Pisces': 'Poissons',
+      },
+    };
+
+    return signs[_language]?[normalized] ??
+        signs['Eng']![normalized] ??
+        normalized;
+  }
+
+  String _normalizeSign(String sign) {
+    final token = sign.trim().toLowerCase().replaceAll(RegExp(r'[^a-z]'), '');
+    const aliases = {
+      'aries': 'Aries',
+      'taurus': 'Taurus',
+      'gemini': 'Gemini',
+      'cancer': 'Cancer',
+      'leo': 'Leo',
+      'virgo': 'Virgo',
+      'libra': 'Libra',
+      'scorpio': 'Scorpio',
+      'sagittarius': 'Sagittarius',
+      'sagitarius': 'Sagittarius',
+      'sagitarrius': 'Sagittarius',
+      'capricorn': 'Capricorn',
+      'aquarius': 'Aquarius',
+      'pisces': 'Pisces',
+    };
+
+    return aliases[token] ?? sign.trim();
+  }
+
+  String _normalizeAstroTypos(String text) {
+    return text
+        .replaceAll(RegExp(r'\bSagitarius\b', caseSensitive: false), 'Sagittarius')
+        .replaceAll(RegExp(r'\bSagitarrius\b', caseSensitive: false), 'Sagittarius');
+  }
+
+  String _extractMoonSign(DailyEnergyResponse energy) {
+    final direct = _normalizeSign(energy.moonSign);
+    if (direct.isNotEmpty) return direct;
+
+    final headline = _normalizeAstroTypos(energy.headline);
+    final m = RegExp(
+      r'(?:Moon\s+in|in)\s+([A-Za-z]+)\b',
+      caseSensitive: false,
+    ).firstMatch(headline);
+    if (m != null) {
+      return _normalizeSign(m.group(1) ?? '');
+    }
+    return '';
+  }
+
+  String _phaseName(String phase) {
+    const phases = {
+      'Eng': {
+        'New Moon': 'New Moon',
+        'Waxing Crescent': 'Waxing Crescent',
+        'First Quarter': 'First Quarter',
+        'Waxing Gibbous': 'Waxing Gibbous',
+        'Full Moon': 'Full Moon',
+        'Waning Gibbous': 'Waning Gibbous',
+        'Last Quarter': 'Last Quarter',
+        'Waning Crescent': 'Waning Crescent',
+      },
+      'Rus': {
+        'New Moon': 'Новолуние',
+        'Waxing Crescent': 'Растущий серп',
+        'First Quarter': 'Первая четверть',
+        'Waxing Gibbous': 'Растущая луна',
+        'Full Moon': 'Полнолуние',
+        'Waning Gibbous': 'Убывающая луна',
+        'Last Quarter': 'Последняя четверть',
+        'Waning Crescent': 'Убывающий серп',
+      },
+      'Heb': {
+        'New Moon': 'מולד הירח',
+        'Waxing Crescent': 'סהר מתמלא',
+        'First Quarter': 'רבע ראשון',
+        'Waxing Gibbous': 'ירח מתמלא',
+        'Full Moon': 'ירח מלא',
+        'Waning Gibbous': 'ירח מתמעט',
+        'Last Quarter': 'רבע אחרון',
+        'Waning Crescent': 'סהר מתמעט',
+      },
+      'Spa': {
+        'New Moon': 'Luna nueva',
+        'Waxing Crescent': 'Creciente',
+        'First Quarter': 'Cuarto creciente',
+        'Waxing Gibbous': 'Gibosa creciente',
+        'Full Moon': 'Luna llena',
+        'Waning Gibbous': 'Gibosa menguante',
+        'Last Quarter': 'Cuarto menguante',
+        'Waning Crescent': 'Menguante',
+      },
+      'Fra': {
+        'New Moon': 'Nouvelle Lune',
+        'Waxing Crescent': 'Premier croissant',
+        'First Quarter': 'Premier quartier',
+        'Waxing Gibbous': 'Lune gibbeuse croissante',
+        'Full Moon': 'Pleine Lune',
+        'Waning Gibbous': 'Lune gibbeuse décroissante',
+        'Last Quarter': 'Dernier quartier',
+        'Waning Crescent': 'Dernier croissant',
+      },
+    };
+
+    return phases[_language]?[phase] ?? phases['Eng']![phase] ?? phase;
+  }
+
+  String _localizedEnergyHeadline(DailyEnergyResponse energy) {
+    final sign = _extractMoonSign(energy);
+    if (sign.isNotEmpty) {
+      final s = _signName(sign);
+      switch (_language) {
+        case 'Eng':
+          return '${_t('energyPhasePrefix')} $s';
+        case 'Rus':
+          return '${_t('energyPhasePrefix')} $s';
+        case 'Heb':
+          return '${_t('energyPhasePrefix')}$s';
+        case 'Spa':
+          return '${_t('energyPhasePrefix')} $s';
+        default:
+          return '${_t('energyPhasePrefix')} $s';
+      }
+    }
+
+    var text = _normalizeAstroTypos(energy.headline);
+    const signs = [
+      'Aries',
+      'Taurus',
+      'Gemini',
+      'Cancer',
+      'Leo',
+      'Virgo',
+      'Libra',
+      'Scorpio',
+      'Sagittarius',
+      'Capricorn',
+      'Aquarius',
+      'Pisces',
+    ];
+    const phases = [
+      'New Moon',
+      'Waxing Crescent',
+      'First Quarter',
+      'Waxing Gibbous',
+      'Full Moon',
+      'Waning Gibbous',
+      'Last Quarter',
+      'Waning Crescent',
+    ];
+    for (final s in signs) {
+      text = text.replaceAll(s, _signName(s));
+    }
+    for (final p in phases) {
+      text = text.replaceAll(p, _phaseName(p));
+    }
+    return text;
+  }
+
+  String _localizedEnergyDescription(DailyEnergyResponse energy) {
+    if (_language == 'Eng') return energy.description;
+
+    final m = RegExp(
+      r'Sun is in\s+([A-Za-z]+),\s*Moon in\s+([A-Za-z]+)',
+      caseSensitive: false,
+    ).firstMatch(energy.description);
+    if (m != null) {
+      final sun = _signName(m.group(1)!);
+      final moon = _signName(m.group(2)!);
+      switch (_language) {
+        case 'Rus':
+          return 'Солнце во $sun, Луна в $moon';
+        case 'Heb':
+          return 'השמש ב$sun, הירח ב$moon';
+        case 'Spa':
+          return 'Sol en $sun, Luna en $moon';
+        case 'Fra':
+          return 'Soleil en $sun, Lune en $moon';
+        default:
+          return energy.description;
+      }
+    }
+
+    return energy.description;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -26,9 +433,18 @@ class _AstroHomePageState extends State<AstroHomePage> {
 
   Future<void> _loadData() async {
     try {
-      final energy = await ApiService.getDailyEnergy();
+      final energy = await ApiService.getDailyEnergy(language: _language);
       if (mounted) setState(() => _energy = energy);
     } catch (_) {}
+  }
+
+  Future<void> _onLanguageChanged(String lang) async {
+    if (lang == _language) return;
+    setState(() {
+      _language = lang;
+      _energy = null;
+    });
+    await _loadData();
   }
 
   static IconData _planetIcon(String planet) {
@@ -60,39 +476,62 @@ class _AstroHomePageState extends State<AstroHomePage> {
           SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+              padding: EdgeInsets.fromLTRB(
+                20,
+                0,
+                20,
+                MediaQuery.of(context).padding.bottom + 120,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const _TopBar(),
+                  _TopBar(greeting: _t('greeting')),
                   const SizedBox(height: 14),
                   _LanguageSelector(
                     selected: _language,
-                    onChanged: (lang) => setState(() => _language = lang),
+                    onChanged: _onLanguageChanged,
                   ),
                   const SizedBox(height: 16),
-                  _HeroSection(isLoading: _energy == null),
-                  const SizedBox(height: 18),
+                  _HeroSection(
+                    isLoading: _energy == null,
+                    language: _language,
+                    onStartBirthFlow: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AstroChartPage(
+                          initialLanguage: _language,
+                          openBirthDateOnStart: true,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   _TodayEnergyCard(
-                    headline: _energy?.headline ?? 'A day for clarity\nand new beginnings',
-                    description: _energy?.description ?? 'The Moon in Aquarius brings fresh ideas and inspiration.',
+                    title: _t('todayEnergy'),
+                    liveLabel: _t('live'),
+                    headline: _energy == null
+                        ? _t('defaultHeadline')
+                        : _localizedEnergyHeadline(_energy!),
+                    description: _energy == null
+                        ? _t('defaultDescription')
+                        : _localizedEnergyDescription(_energy!),
                   ),
                   const SizedBox(height: 22),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
-                        'Upcoming Transits',
-                        style: TextStyle(
+                        _t('upcomingTransits'),
+                        style: const TextStyle(
                           color: AstroPalette.darkTextStrong,
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       Text(
-                        'View all',
-                        style: TextStyle(
-                          color: AstroPalette.darkSecondary,
+                        _t('viewAll'),
+                        style: const TextStyle(
+                          color: AstroPalette.mutedLabel,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -101,17 +540,17 @@ class _AstroHomePageState extends State<AstroHomePage> {
                   ),
                   const SizedBox(height: 12),
                   if (_transits.isEmpty) ...[
-                    const _TransitCard(
+                    _TransitCard(
                       icon: Icons.auto_awesome,
-                      title: 'Moon Trine Mercury',
-                      subtitle: 'Good time for communication and sharing ideas.',
+                      title: _t('fallbackTransit1Title'),
+                      subtitle: _t('fallbackTransit1Subtitle'),
                       time: '2h 34m',
                     ),
                     const SizedBox(height: 12),
-                    const _TransitCard(
+                    _TransitCard(
                       icon: Icons.star_rounded,
-                      title: 'Venus Square Mars',
-                      subtitle: 'Watch for emotional intensity.',
+                      title: _t('fallbackTransit2Title'),
+                      subtitle: _t('fallbackTransit2Subtitle'),
                       time: '5h 12m',
                     ),
                   ] else ...List.generate(_transits.length, (i) => Padding(
@@ -125,7 +564,6 @@ class _AstroHomePageState extends State<AstroHomePage> {
                     ),
                   )),
                   const SizedBox(height: 22),
-                  _AskBotCard(language: _language),
                 ],
               ),
             ),
@@ -138,7 +576,8 @@ class _AstroHomePageState extends State<AstroHomePage> {
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar();
+  final String greeting;
+  const _TopBar({required this.greeting});
 
   @override
   Widget build(BuildContext context) {
@@ -152,10 +591,10 @@ class _TopBar extends StatelessWidget {
         const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
-              'Good morning ✨',
-              style: TextStyle(
+              greeting,
+              style: const TextStyle(
                 color: AstroPalette.darkSecondary,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -183,44 +622,221 @@ class _TopBar extends StatelessWidget {
 
 class _HeroSection extends StatelessWidget {
   final bool isLoading;
-  const _HeroSection({required this.isLoading});
+  final String language;
+  final VoidCallback onStartBirthFlow;
+
+  const _HeroSection({
+    required this.isLoading,
+    required this.language,
+    required this.onStartBirthFlow,
+  });
+
+  String get _startButtonText {
+    switch (language) {
+      case 'Rus':
+        return 'Ввести дату рождения';
+      case 'Heb':
+        return 'להזין תאריך לידה';
+      case 'Spa':
+        return 'Ingresar fecha de nacimiento';
+      case 'Fra':
+        return 'Saisir ma date de naissance';
+      default:
+        return 'Create my birth chart';
+    }
+  }
+
+  String get _heroTitle {
+    switch (language) {
+      case 'Rus':
+        return 'Знаете свой гороскоп?\nНачните с даты рождения.';
+      case 'Heb':
+        return 'רוצים להכיר את ההורוסקופ שלכם?\nהתחילו מתאריך הלידה.';
+      case 'Spa':
+        return 'Conoces tu horoscopo?\nEmpieza con tu fecha de nacimiento.';
+      case 'Fra':
+        return 'Envie de découvrir votre thème ?\nCommencez par votre naissance.';
+      default:
+        return 'Know your horoscope?\nStart with your birth details.';
+    }
+  }
+
+  String get _heroSubtitle {
+    switch (language) {
+      case 'Rus':
+        return 'Введите дату, время и место рождения, чтобы открыть персональную и точную карту.';
+      case 'Heb':
+        return 'הזינו תאריך, שעה ומקום לידה כדי לפתוח מפה אישית ומדויקת.';
+      case 'Spa':
+        return 'Ingresa tu fecha, hora y lugar de nacimiento para desbloquear una carta personal y precisa.';
+      case 'Fra':
+        return 'Indiquez votre date, heure et lieu de naissance pour créer un thème personnel et précis.';
+      default:
+        return 'Enter your date, time, and place of birth to create a personal natal chart.';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
-      child: SizedBox(
-        height: 290,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Spacer(),
-              Text(
-                'Let’s align with\nthe stars',
-                style: TextStyle(
-                  color: AstroPalette.lightText,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
-                  height: 1.02,
-                ),
-              ),
-              SizedBox(height: 10),
-              SizedBox(
-                width: 235,
-                child: Text(
-                  'AI-powered insights for your cosmic journey',
-                  style: TextStyle(
-                    color: AstroPalette.lightTextSoft,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    height: 1.3,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: 0,
+          maxWidth: 350,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final compact = constraints.maxWidth < 380;
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0x665B49A4),
+                          Color(0x446D5AB8),
+                          Color(0x226FE3E0),
+                        ],
+                      ),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.28),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 18,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _heroTitle,
+                        style: TextStyle(
+                          color: const Color(0xFFF9F5FF),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          height: 1.05,
+                          letterSpacing: -0.4,
+                          shadows: const [
+                            Shadow(
+                              color: Color(0x992F2552),
+                              blurRadius: 10,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 310),
+                        child: Text(
+                          _heroSubtitle,
+                          style: TextStyle(
+                            color: const Color(0xFFE9E1F7),
+                            fontSize: 13.5,
+                            fontWeight: FontWeight.w500,
+                            height: 1.4,
+                            shadows: const [
+                              Shadow(
+                                color: Color(0x992F2552),
+                                blurRadius: 8,
+                                offset: Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      GestureDetector(
+                        onTap: onStartBirthFlow,
+                        child: Container(
+                          constraints: const BoxConstraints(minWidth: 206),
+                          height: 50,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0x66FFFFFF),
+                                Color(0x40CFE9F4),
+                              ],
+                            ),
+                            border: Border.all(
+                              color: const Color(0x66FFFFFF),
+                              width: 1,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x4458D5D0),
+                                blurRadius: 16,
+                                spreadRadius: 1,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 32,
+                                height: 32,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFFAEEFED),
+                                      Color(0xFFDCCBFF),
+                                    ],
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.auto_awesome_rounded,
+                                  size: 17,
+                                  color: Color(0xFF45C8CF),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Flexible(
+                                child: Text(
+                                  _startButtonText,
+                                  style: const TextStyle(
+                                    color: Color(0xFF392B5C),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              const Icon(
+                                Icons.arrow_forward_rounded,
+                                size: 17,
+                                color: Color(0xFFC65FC5),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -228,10 +844,14 @@ class _HeroSection extends StatelessWidget {
 }
 
 class _TodayEnergyCard extends StatelessWidget {
+  final String title;
+  final String liveLabel;
   final String headline;
   final String description;
 
   const _TodayEnergyCard({
+    required this.title,
+    required this.liveLabel,
     required this.headline,
     required this.description,
   });
@@ -247,18 +867,18 @@ class _TodayEnergyCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
                     Text(
-                      "Today's Energy",
-                      style: TextStyle(
-                        color: AstroPalette.darkSecondary,
+                      title,
+                      style: const TextStyle(
+                            color: AstroPalette.mutedLabel,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(width: 8),
-                    _LiveBadge(),
+                    const SizedBox(width: 8),
+                    _LiveBadge(label: liveLabel),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -289,13 +909,12 @@ class _TodayEnergyCard extends StatelessWidget {
             height: 88,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
-                colors: [Color(0xFFF1E6FF), Color(0xFFD9C5FF)],
-              ),
+              gradient: _cosmicAccentGradient,
+              border: Border.all(color: _magenta2.withOpacity(0.45), width: 1.0),
               boxShadow: const [
                 BoxShadow(
-                  color: Color(0x55FFFFFF),
-                  blurRadius: 24,
+                  color: Color(0x22E96DFF),
+                  blurRadius: 22,
                   spreadRadius: 2,
                 ),
               ],
@@ -303,7 +922,7 @@ class _TodayEnergyCard extends StatelessWidget {
             child: const Icon(
               Icons.waves_rounded,
               size: 42,
-              color: AstroPalette.accentStrong,
+              color: Colors.white,
             ),
           ),
         ],
@@ -337,11 +956,10 @@ class _TransitCard extends StatelessWidget {
             height: 52,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
-                colors: [Color(0xFFF1E6FF), Color(0xFFD9C5FF)],
-              ),
+              gradient: _turquoiseGradient,
+              border: Border.all(color: _turquoise1.withOpacity(0.7), width: 1.0),
             ),
-            child: Icon(icon, color: AstroPalette.accentStrong),
+            child: Icon(icon, color: _turquoise3),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -369,14 +987,14 @@ class _TransitCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Text(
-            time,
-            style: const TextStyle(
-              color: AstroPalette.darkSecondary,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+              Text(
+                time,
+                style: const TextStyle(
+                  color: AstroPalette.mutedLabel,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
         ],
       ),
     );
@@ -413,9 +1031,7 @@ class _AskBotCard extends StatelessWidget {
             height: 58,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [Color(0xFFF1E6FF), Color(0xFFB493F7)],
-              ),
+              gradient: _cosmicAccentGradient,
               boxShadow: [
                 BoxShadow(
                   color: Color(0x66FFFFFF),
@@ -455,10 +1071,11 @@ class _AskBotCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AstroPalette.lightGlassFill,
+                border: Border.all(color: _turquoise1.withOpacity(0.7), width: 1.0),
               ),
               child: const Icon(
                 Icons.arrow_forward_rounded,
-                color: AstroPalette.accentStrong,
+                color: _magenta2,
               ),
             ),
           ),
@@ -472,11 +1089,48 @@ class _BottomBar extends StatelessWidget {
   final String language;
   const _BottomBar({required this.language});
 
+  String _label(String key) {
+    const copy = {
+      'Eng': {
+        'home': 'Home',
+        'chart': 'Chart',
+        'insights': 'Insights',
+        'profile': 'Profile',
+      },
+      'Rus': {
+        'home': 'Главная',
+        'chart': 'Карта',
+        'insights': 'Инсайты',
+        'profile': 'Профиль',
+      },
+      'Heb': {
+        'home': 'בית',
+        'chart': 'מפה',
+        'insights': 'תובנות',
+        'profile': 'פרופיל',
+      },
+      'Spa': {
+        'home': 'Inicio',
+        'chart': 'Carta',
+        'insights': 'Insights',
+        'profile': 'Perfil',
+      },
+      'Fra': {
+        'home': 'Accueil',
+        'chart': 'Carte',
+        'insights': 'Éclairages',
+        'profile': 'Profil',
+      },
+    };
+
+    return copy[language]?[key] ?? copy['Eng']![key] ?? key;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 18),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: AstroPalette.lightGlassFill,
         borderRadius: BorderRadius.circular(28),
@@ -492,16 +1146,16 @@ class _BottomBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const _BottomNavItem(icon: Icons.home_rounded, label: 'Home', active: true),
+          _BottomNavItem(icon: Icons.home_rounded, label: _label('home'), active: true),
           GestureDetector(
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => AstroChartPage(initialLanguage: language)),
             ),
-            child: const _BottomNavItem(icon: Icons.blur_circular_rounded, label: 'Chart'),
+            child: _BottomNavItem(icon: Icons.blur_circular_rounded, label: _label('chart')),
           ),
-          const _BottomNavItem(icon: Icons.auto_awesome_rounded, label: 'Insights'),
-          const _BottomNavItem(icon: Icons.person_outline_rounded, label: 'Profile'),
+          _BottomNavItem(icon: Icons.auto_awesome_rounded, label: _label('insights')),
+          _BottomNavItem(icon: Icons.person_outline_rounded, label: _label('profile')),
         ],
       ),
     );
@@ -525,28 +1179,38 @@ class _BottomNavItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 46,
-          height: 46,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: active
-                ? const LinearGradient(
-                    colors: [Color(0xFFE8D7FF), Color(0xFFB493F7)],
-                  )
-                : null,
+            gradient: active ? _cosmicAccentGradient : null,
             color: active ? null : Colors.transparent,
+            border: Border.all(
+              color: active ? _magenta2.withOpacity(0.35) : Colors.transparent,
+              width: active ? 1.0 : 0,
+            ),
+            boxShadow: active
+                ? const [
+                    BoxShadow(
+                      color: Color(0x33E96DFF),
+                      blurRadius: 12,
+                      spreadRadius: 1,
+                    ),
+                  ]
+                : const [],
           ),
           child: Icon(
             icon,
-            color: active ? AstroPalette.darkText : AstroPalette.darkSecondary,
+            size: 22,
+            color: active ? AstroPalette.accentStrong : AstroPalette.mutedLabel,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 2),
         Text(
           label,
           style: TextStyle(
-            color: active ? AstroPalette.accentStrong : AstroPalette.darkSecondary,
-            fontSize: 12,
+            color: active ? AstroPalette.accentStrong : AstroPalette.mutedLabel,
+            fontSize: 11,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -566,29 +1230,38 @@ class _GlassCircleIcon extends StatelessWidget {
       height: 46,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AstroPalette.lightGlassFill,
-        border: Border.all(color: AstroPalette.glassBorder),
+        gradient: _magentaGradient,
+        border: Border.all(color: _magenta2.withOpacity(0.32), width: 0.9),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x22E96DFF),
+            blurRadius: 10,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
-      child: Icon(icon, color: AstroPalette.accentStrong),
+      child: Icon(icon, color: Colors.white),
     );
   }
 }
 
 class _LiveBadge extends StatelessWidget {
-  const _LiveBadge();
+  final String label;
+  const _LiveBadge({required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: AstroPalette.accent.withOpacity(0.22),
+        gradient: _magentaGradient,
+        border: Border.all(color: _magenta2.withOpacity(0.35), width: 0.8),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: const Text(
-        'LIVE',
-        style: TextStyle(
-          color: AstroPalette.accentStrong,
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: AstroPalette.darkText,
           fontSize: 11,
           fontWeight: FontWeight.w700,
         ),
@@ -621,7 +1294,7 @@ class GlassCard extends StatelessWidget {
             color: AstroPalette.lightGlassFill,
             borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
-              color: AstroPalette.glassBorder,
+              color: _silver2.withOpacity(0.8),
               width: 1.1,
             ),
             boxShadow: const [
@@ -694,9 +1367,11 @@ class _CosmicBackgroundState extends State<_CosmicBackground> {
               ),
             ),
           ),
-        Positioned.fill(
-          child: Container(color: const Color(0x22886CDA)),
-        ),
+            Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(gradient: AstroPalette.heroOverlay),
+              ),
+            ),
         Positioned(
           top: -90,
           left: -40,
@@ -719,6 +1394,31 @@ class _CosmicBackgroundState extends State<_CosmicBackground> {
           child: _glowBall(
             160,
             AstroPalette.glowLilacMint,
+          ),
+        ),
+        Positioned(
+          top: 200,
+          right: 28,
+          child: Container(
+            width: 18,
+            height: 18,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _silver1.withOpacity(0.45),
+              border: Border.all(color: _silver3.withOpacity(0.8), width: 0.8),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 240,
+          right: 54,
+          child: Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _magenta1.withOpacity(0.65),
+            ),
           ),
         ),
         Positioned.fill(
@@ -765,6 +1465,8 @@ class _StarsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = AstroPalette.lightText.withOpacity(0.65);
+    final silverGlow = Paint()..color = _silver1.withOpacity(0.24);
+    final accentGlow = Paint()..color = _accentMagentaSoft.withOpacity(0.34);
 
     final stars = <Offset>[
       Offset(size.width * 0.12, size.height * 0.10),
@@ -782,11 +1484,22 @@ class _StarsPainter extends CustomPainter {
 
     for (final star in stars) {
       canvas.drawCircle(star, 1.8, paint);
-      canvas.drawCircle(
-        star,
-        4.0,
-        Paint()..color = AstroPalette.glowWhiteLilac.withOpacity(0.28),
-      );
+      canvas.drawCircle(star, 4.0, silverGlow);
+    }
+
+    // A few colored sparkles for a restrained premium celestial accent.
+    final accentStars = <Offset>[
+      Offset(size.width * 0.20, size.height * 0.14),
+      Offset(size.width * 0.78, size.height * 0.18),
+      Offset(size.width * 0.44, size.height * 0.27),
+      Offset(size.width * 0.64, size.height * 0.74),
+      Offset(size.width * 0.84, size.height * 0.58),
+    ];
+    for (var i = 0; i < accentStars.length; i++) {
+      final star = accentStars[i];
+      final accentColor = i.isEven ? _magenta2 : _turquoise2;
+      canvas.drawCircle(star, 2.2, Paint()..color = accentColor.withOpacity(0.84));
+      canvas.drawCircle(star, 5.2, accentGlow);
     }
   }
 
@@ -798,9 +1511,16 @@ class _TopOrbitPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final p = Paint()
-      ..color = AstroPalette.lightText.withOpacity(0.78)
+      ..color = _silver2.withOpacity(0.75)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.2;
+
+    final pAccent = Paint()
+      ..shader = _cosmicAccentGradient.createShader(
+        Rect.fromLTWH(0, 0, size.width, size.height),
+      )
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
 
     final rect1 = Rect.fromCenter(
       center: Offset(size.width * 0.65, size.height * 0.55),
@@ -821,6 +1541,14 @@ class _TopOrbitPainter extends CustomPainter {
     canvas.drawArc(rect1, 0.1, 3.3, false, p);
     canvas.drawArc(rect2, 0.1, 3.6, false, p);
     canvas.drawArc(rect3, 0.1, 4.2, false, p);
+
+    final zodiacRect = Rect.fromCenter(
+      center: Offset(size.width * 0.65, size.height * 0.55),
+      width: size.width * 0.82,
+      height: size.height * 0.60,
+    );
+    canvas.drawArc(zodiacRect, 0.7, 0.42, false, pAccent);
+    canvas.drawArc(zodiacRect, 2.2, 0.36, false, pAccent);
   }
 
   @override
@@ -837,15 +1565,18 @@ class _LanguageSelector extends StatelessWidget {
     const langs = [
       {'code': 'Eng', 'label': 'EN'},
       {'code': 'Rus', 'label': 'RU'},
-      {'code': 'Heb', 'label': 'HE'},
+      {'code': 'Heb', 'label': 'עברית'},
       {'code': 'Spa', 'label': 'ES'},
+      {'code': 'Fra', 'label': 'FR'},
     ];
-    return Row(
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
       children: langs.map((l) {
         final code = l['code']!;
         final isSelected = selected == code;
         return Padding(
-          padding: const EdgeInsets.only(right: 8),
+          padding: EdgeInsets.zero,
           child: GestureDetector(
             onTap: () => onChanged(code),
             child: AnimatedContainer(
@@ -856,7 +1587,7 @@ class _LanguageSelector extends StatelessWidget {
                 color: isSelected
                     ? null
                     : AstroPalette.lightGlassFill,
-                gradient: isSelected ? AstroPalette.activeSurface : null,
+                gradient: isSelected ? AstroPalette.premiumAccentSurface : null,
                 border: Border.all(
                   color: isSelected
                       ? AstroPalette.glassBorder
@@ -866,7 +1597,9 @@ class _LanguageSelector extends StatelessWidget {
               child: Text(
                 l['label']!,
                 style: TextStyle(
-                  color: isSelected ? AstroPalette.darkText : AstroPalette.darkSecondary,
+                  color: isSelected
+                      ? AstroPalette.darkText
+                      : AstroPalette.mutedLabel,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),

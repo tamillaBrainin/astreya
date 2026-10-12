@@ -244,11 +244,7 @@ class _ChatTopBar extends StatelessWidget {
           height: 46,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: const LinearGradient(
-              colors: [Color(0xFFF1E6FF), Color(0xFFB493F7)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: AstroPalette.premiumAccentSurface,
             boxShadow: [
               BoxShadow(
                 color: Colors.white.withOpacity(0.45),
@@ -291,7 +287,7 @@ class _ChatTopBar extends StatelessWidget {
         _glassCircle(
           const Icon(
             Icons.more_horiz_rounded,
-            color: Color(0xFF6E58C8),
+            color: AstroPalette.accentMagenta,
           ),
         ),
       ],
@@ -337,11 +333,7 @@ class _ChatIntroCard extends StatelessWidget {
             height: 58,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
-                colors: [Color(0xFFF1E6FF), Color(0xFFD9C5FF)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: AstroPalette.iconBubble,
               boxShadow: [
                 BoxShadow(
                   color: Colors.white.withOpacity(0.45),
@@ -403,9 +395,7 @@ class _BotMessage extends StatelessWidget {
           height: 38,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: const LinearGradient(
-              colors: [Color(0xFFF1E6FF), Color(0xFFB493F7)],
-            ),
+            gradient: AstroPalette.magentaSurface,
           ),
           child: const Icon(
             Icons.smart_toy_outlined,
@@ -450,11 +440,7 @@ class _UserMessage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
-              gradient: const LinearGradient(
-                colors: [Color(0xFFE8D7FF), Color(0xFFB493F7)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: AstroPalette.magentaSurface,
               boxShadow: [
                 BoxShadow(
                   color: Colors.white.withOpacity(0.35),
@@ -507,7 +493,7 @@ class _QuickPromptRow extends StatelessWidget {
                 child: Text(
                   item,
                   style: const TextStyle(
-                    color: AstroPalette.darkSecondary,
+                    color: AstroPalette.mutedLabel,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -670,11 +656,7 @@ class _ChatInputBar extends StatelessWidget {
                   height: 46,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFE8D7FF), Color(0xFFB493F7)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    gradient: AstroPalette.premiumAccentSurface,
                   ),
                   child: const Icon(Icons.arrow_upward_rounded,
                       color: Colors.white),

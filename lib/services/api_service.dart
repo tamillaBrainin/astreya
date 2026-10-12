@@ -352,7 +352,7 @@ class ApiService {
     defaultValue: '',
   );
   static const Duration _requestTimeout = Duration(seconds: 20);
-  static const Duration _interpretationTimeout = Duration(seconds: 75);
+  static const Duration _interpretationTimeout = Duration(seconds: 160);
   static const Duration _enrichmentTimeout = Duration(seconds: 45);
   static const Duration _transitsTimeout = Duration(seconds: 150);
   static const String _chatFallbackReply =
@@ -471,7 +471,7 @@ class ApiService {
     final response = await _getWithTimeoutRetry(
       uri,
       timeout: _interpretationTimeout,
-      retries: 1,
+      retries: 0,
     );
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -517,8 +517,15 @@ class ApiService {
     );
   }
 
-  static Future<DailyEnergyResponse> getDailyEnergy() async {
-    final response = await _get(Uri.parse('$baseUrl/daily/energy'));
+  static Future<DailyEnergyResponse> getDailyEnergy({
+    String language = 'Eng',
+  }) async {
+    final uri = Uri.parse('$baseUrl/daily/energy').replace(
+      queryParameters: {
+        'language': language,
+      },
+    );
+    final response = await _get(uri);
     if (response.statusCode == 200) {
       return DailyEnergyResponse.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>,

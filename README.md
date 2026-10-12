@@ -93,6 +93,43 @@ git pull
 docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
 ```
 
+### 7) Quick restart
+
+If you only want to restart the current services on the droplet:
+
+```bash
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml restart backend web
+docker ps --filter name=astreya-backend
+docker ps --filter name=astreya-web
+```
+
+If you changed backend code and want to rebuild only backend:
+
+```bash
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml build backend
+docker compose -f docker-compose.prod.yml up -d backend
+docker logs --tail 120 astreya-backend
+```
+
+If you changed Flutter web code and want to rebuild only web:
+
+```bash
+cd /root/AstroBot
+docker compose -f docker-compose.prod.yml build web
+docker compose -f docker-compose.prod.yml up -d web
+docker logs --tail 120 astreya-web
+```
+
+If the UI is served from `/srv` with Caddy instead of the `web` container:
+
+```bash
+cp -r /root/AstroBot/build/web/* /srv/
+systemctl restart caddy
+systemctl status caddy
+```
+
 ### Optional: Domain + HTTPS
 
 Point your domain A record to the Droplet IP, then terminate TLS with Caddy or Nginx + Certbot.
